@@ -14,19 +14,23 @@
 </head>
 <body>
 
+  <!-- Sprite SVG (peça de quebra-cabeça reutilizável) -->
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+    <symbol id="ic-puzzle" viewBox="0 0 24 24"><path d="M19.439 7.85c-.049.322.059.648.289.878l1.568 1.568c.47.47.706 1.087.706 1.704s-.235 1.233-.706 1.704l-1.611 1.611a.98.98 0 0 1-.837.276c-.47-.07-.802-.48-.968-.925a2.501 2.501 0 1 0-3.214 3.214c.446.166.855.497.925.968a.979.979 0 0 1-.276.837l-1.61 1.61a2.404 2.404 0 0 1-1.705.707 2.402 2.402 0 0 1-1.704-.706l-1.568-1.568a1.026 1.026 0 0 0-.877-.29c-.493.074-.84.504-1.02.968a2.5 2.5 0 1 1-3.237-3.237c.464-.18.894-.527.967-1.02a1.026 1.026 0 0 0-.289-.877l-1.568-1.568A2.402 2.402 0 0 1 1.998 12c0-.617.236-1.234.706-1.704L4.23 8.77c.24-.24.581-.353.917-.303.515.077.877.528 1.073 1.01a2.5 2.5 0 1 0 3.259-3.259c-.482-.196-.933-.558-1.01-1.073-.05-.336.062-.676.303-.917l1.525-1.525A2.402 2.402 0 0 1 12 1.998c.617 0 1.234.236 1.704.706l1.568 1.568c.23.23.556.338.877.29.493-.074.84-.504 1.02-.968a2.5 2.5 0 1 1 3.237 3.237c-.464.18-.894.527-.967 1.02Z"/></symbol>
+  </svg>
+
   <!-- ============================ NAV (float header) ============================ -->
   <header class="nav" data-nav>
     <a class="nav__brand" href="index.html" aria-label="HD360 Moinhos — início">
-      <span class="nav__brand-mark">HD<b>360</b></span>
-      <span class="nav__brand-sub">Moinhos</span>
+      <img class="nav__logo" src="images/logo-3.png" alt="HD360 Moinhos" width="170" height="48" />
     </a>
     <nav class="nav__links" aria-label="Navegação principal">
-      <a class="nav__link" href="index.html" aria-current="page">Início</a>
-      <a class="nav__link" href="atendimento.html">Atendimento</a>
-      <a class="nav__link" href="equipe.html">Equipe</a>
-      <a class="nav__link" href="unidades.html">Unidades</a>
-      <a class="nav__link" href="ouvidoria.html">Ouvidoria</a>
-      <a class="nav__link" href="blog.html">Blog</a>
+      <a class="nav__link" href="index.html" data-color="azul" aria-current="page"><span class="nav__puzzle" aria-hidden="true"><svg viewBox="0 0 24 24"><use href="#ic-puzzle"/></svg></span>Início</a>
+      <a class="nav__link" href="atendimento.html" data-color="rosa"><span class="nav__puzzle" aria-hidden="true"><svg viewBox="0 0 24 24"><use href="#ic-puzzle"/></svg></span>Atendimento</a>
+      <a class="nav__link" href="equipe.html" data-color="amarelo"><span class="nav__puzzle" aria-hidden="true"><svg viewBox="0 0 24 24"><use href="#ic-puzzle"/></svg></span>Equipe</a>
+      <a class="nav__link" href="unidades.html" data-color="verde"><span class="nav__puzzle" aria-hidden="true"><svg viewBox="0 0 24 24"><use href="#ic-puzzle"/></svg></span>Unidades</a>
+      <a class="nav__link" href="ouvidoria.html" data-color="lilas"><span class="nav__puzzle" aria-hidden="true"><svg viewBox="0 0 24 24"><use href="#ic-puzzle"/></svg></span>Ouvidoria</a>
+      <a class="nav__link" href="blog.html" data-color="azul"><span class="nav__puzzle" aria-hidden="true"><svg viewBox="0 0 24 24"><use href="#ic-puzzle"/></svg></span>Blog</a>
     </nav>
     <a class="btn btn--primary nav__cta" href="https://wa.me/555121128884?text=Ol%C3%A1!%20Vim%20pelo%20site%20da%20HD360%20Moinhos%20e%20gostaria%20de%20agendar%20uma%20visita." target="_blank" rel="noopener">Agende uma visita</a>
     <button class="nav__burger" data-burger aria-label="Abrir menu" aria-expanded="false" aria-controls="drawer">
@@ -38,15 +42,15 @@
   <div class="drawer-backdrop" data-drawer-backdrop></div>
   <aside class="drawer" id="drawer" data-drawer aria-label="Menu">
     <div class="drawer__head">
-      <span class="nav__brand-mark">HD<b>360</b></span>
+      <img class="drawer__logo" src="images/logo-3.png" alt="HD360 Moinhos" width="150" height="42" />
       <button class="drawer__close" data-drawer-close aria-label="Fechar menu">&times;</button>
     </div>
-    <a class="drawer__link" href="index.html">Início</a>
-    <a class="drawer__link" href="atendimento.html">Atendimento</a>
-    <a class="drawer__link" href="equipe.html">Equipe</a>
-    <a class="drawer__link" href="unidades.html">Unidades</a>
-    <a class="drawer__link" href="ouvidoria.html">Ouvidoria</a>
-    <a class="drawer__link" href="blog.html">Blog</a>
+    <a class="drawer__link" href="index.html" data-color="azul"><span class="drawer__puzzle" aria-hidden="true"><svg viewBox="0 0 24 24"><use href="#ic-puzzle"/></svg></span>Início</a>
+    <a class="drawer__link" href="atendimento.html" data-color="rosa"><span class="drawer__puzzle" aria-hidden="true"><svg viewBox="0 0 24 24"><use href="#ic-puzzle"/></svg></span>Atendimento</a>
+    <a class="drawer__link" href="equipe.html" data-color="amarelo"><span class="drawer__puzzle" aria-hidden="true"><svg viewBox="0 0 24 24"><use href="#ic-puzzle"/></svg></span>Equipe</a>
+    <a class="drawer__link" href="unidades.html" data-color="verde"><span class="drawer__puzzle" aria-hidden="true"><svg viewBox="0 0 24 24"><use href="#ic-puzzle"/></svg></span>Unidades</a>
+    <a class="drawer__link" href="ouvidoria.html" data-color="lilas"><span class="drawer__puzzle" aria-hidden="true"><svg viewBox="0 0 24 24"><use href="#ic-puzzle"/></svg></span>Ouvidoria</a>
+    <a class="drawer__link" href="blog.html" data-color="azul"><span class="drawer__puzzle" aria-hidden="true"><svg viewBox="0 0 24 24"><use href="#ic-puzzle"/></svg></span>Blog</a>
     <a class="btn btn--primary drawer__cta" href="https://wa.me/555121128884" target="_blank" rel="noopener">Agende uma visita</a>
   </aside>
 
@@ -75,8 +79,27 @@
             <li>Terapia <b>ABA</b> &amp; Denver</li>
           </ul>
         </div>
-        <figure class="hero__art reveal" style="--i:2">
-          <img src="assets/img/hero-turma.png" alt="A turminha HD360 — crianças diversas e sorridentes, uma delas cadeirante e outra usando fones" class="float" width="520" height="520" />
+        <figure class="hero__media reveal" style="--i:2">
+          <div class="hero__video-frame">
+            <span class="hero__video-tag" aria-hidden="true">Conheça a HD360</span>
+            <video class="hero__video" data-hero-video poster="assets/img/hero-poster.jpg" muted loop playsinline preload="metadata" aria-label="Vídeo institucional da HD360 Moinhos">
+              <source src="assets/video/institucional.mp4" type="video/mp4" />
+            </video>
+            <div class="hero__video-controls">
+              <button class="vctrl is-playing" data-video-play aria-label="Pausar vídeo">
+                <svg class="ic-play" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+                <svg class="ic-pause" viewBox="0 0 24 24" fill="currentColor"><path d="M6 5h4v14H6zM14 5h4v14h-4z"/></svg>
+              </button>
+              <button class="vctrl is-muted" data-video-mute aria-label="Ativar som">
+                <svg class="ic-mute" viewBox="0 0 24 24" fill="currentColor"><path d="M3 9v6h4l5 5V4L7 9H3z"/><path d="M16 8.5a4.5 4.5 0 0 1 0 7 1 1 0 0 0 1-.7 5.5 5.5 0 0 0 0-5.6 1 1 0 0 0-1-.7z"/></svg>
+                <svg class="ic-unmute" viewBox="0 0 24 24" fill="currentColor"><path d="M3 9v6h4l5 5V4L7 9H3z"/><path d="m22 9.4-1.4-1.4-2.1 2.1L16.4 8 15 9.4l2.1 2.1L15 13.6 16.4 15l2.1-2.1 2.1 2.1 1.4-1.4-2.1-2.1z"/></svg>
+              </button>
+            </div>
+          </div>
+          <span class="hero__puzzle hero__puzzle--1" aria-hidden="true"><svg viewBox="0 0 24 24"><use href="#ic-puzzle"/></svg></span>
+          <span class="hero__puzzle hero__puzzle--2" aria-hidden="true"><svg viewBox="0 0 24 24"><use href="#ic-puzzle"/></svg></span>
+          <span class="hero__puzzle hero__puzzle--3" aria-hidden="true"><svg viewBox="0 0 24 24"><use href="#ic-puzzle"/></svg></span>
+          <span class="hero__peek" aria-hidden="true"><img src="assets/img/hero-turma.png" alt="" class="float float--lag" /></span>
         </figure>
       </div>
       <div class="wave wave--bottom" aria-hidden="true">
@@ -267,7 +290,7 @@
     <div class="container">
       <div class="footer__top">
         <div class="footer__brand">
-          <span class="footer__brand-mark">HD<b>360</b> Moinhos</span>
+          <img class="footer__logo" src="images/logo-3.png" alt="HD360 Moinhos" width="190" height="54" />
           <p class="footer__tagline">Especialista em autismo, atendimento humanizado. Clínica de desenvolvimento infantil e terapia ABA em Porto Alegre.</p>
           <div class="footer__social">
             <a href="https://instagram.com/hd360moinhos" target="_blank" rel="noopener" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><line x1="17.5" y1="6.5" x2="17.5" y2="6.5"/></svg></a>

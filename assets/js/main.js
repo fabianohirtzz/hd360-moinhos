@@ -137,6 +137,40 @@
     );
   }
 
+  /* ---------- Vídeo do hero (autoplay calmo + controles) ---------- */
+  const video = document.querySelector("[data-hero-video]");
+  const playBtn = document.querySelector("[data-video-play]");
+  const muteBtn = document.querySelector("[data-video-mute]");
+  if (video) {
+    // Autoplay só quando não estamos em modo calmo / movimento reduzido
+    const tryAutoplay = () => {
+      if (calm()) return;
+      const p = video.play();
+      if (p && p.catch) p.catch(() => {}); // ignora bloqueio de autoplay
+    };
+    if (video.readyState >= 2) tryAutoplay();
+    else video.addEventListener("loadeddata", tryAutoplay, { once: true });
+
+    const syncPlay = () => {
+      if (!playBtn) return;
+      const playing = !video.paused && !video.ended;
+      playBtn.classList.toggle("is-playing", playing);
+      playBtn.setAttribute("aria-label", playing ? "Pausar vídeo" : "Reproduzir vídeo");
+    };
+    video.addEventListener("play", syncPlay);
+    video.addEventListener("pause", syncPlay);
+    syncPlay();
+
+    if (playBtn) playBtn.addEventListener("click", () => {
+      if (video.paused) video.play(); else video.pause();
+    });
+    if (muteBtn) muteBtn.addEventListener("click", () => {
+      video.muted = !video.muted;
+      muteBtn.classList.toggle("is-muted", video.muted);
+      muteBtn.setAttribute("aria-label", video.muted ? "Ativar som" : "Desativar som");
+    });
+  }
+
   /* ---------- Ano dinâmico no rodapé ---------- */
   const y = document.querySelector("[data-year]");
   if (y) y.textContent = new Date().getFullYear();

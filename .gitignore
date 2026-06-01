@@ -10,6 +10,14 @@ node_modules/
 npm-debug.log*
 yarn-error.log*
 
+# Node usado só para otimizar mídia (ffmpeg-static) — não faz parte do site
+package.json
+package-lock.json
+
+# Previews temporários
+_prev-*.png
+_preview-*.png
+
 # Build output
 dist/
 .cache/

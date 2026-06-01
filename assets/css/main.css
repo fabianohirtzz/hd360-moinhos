@@ -452,3 +452,101 @@ h1, h2, h3 { font-family: var(--font-display); font-weight: 400; line-height: 1.
   .reveal { opacity: 1 !important; transform: none !important; }
   .blob, .float { transform: none !important; }
 }
+
+/* =====================================================================
+   AJUSTES — logo, menu quebra-cabeça, vídeo no hero
+   ===================================================================== */
+
+/* ---------- Logo (imagem) ---------- */
+.nav__logo { height: 40px; width: auto; display: block; transition: height .3s var(--ease-soft); }
+.nav.is-scrolled .nav__logo { height: 34px; }
+.drawer__logo { height: 36px; width: auto; }
+.footer__logo { height: 48px; width: auto; margin-bottom: 4px; }
+
+/* ---------- Menu com peças de quebra-cabeça ---------- */
+.nav__link { display: inline-flex; align-items: center; gap: 8px; }
+.nav__puzzle { display: inline-grid; place-items: center; width: 18px; height: 18px; flex-shrink: 0; }
+.nav__puzzle svg { width: 18px; height: 18px; fill: var(--c, var(--azul)); transition: fill .2s var(--ease-soft); }
+/* cor codificada por item (alternada) */
+.nav__link[data-color="azul"]   { --c: var(--azul);   --c-soft: var(--azul-soft);   --c-ink: var(--azul-ink); }
+.nav__link[data-color="rosa"]   { --c: var(--rosa);   --c-soft: var(--rosa-soft);   --c-ink: var(--rosa-ink); }
+.nav__link[data-color="amarelo"]{ --c: var(--amarelo);--c-soft: var(--amarelo-soft);--c-ink: var(--amarelo-ink); }
+.nav__link[data-color="verde"]  { --c: var(--verde);  --c-soft: var(--verde-soft);  --c-ink: var(--verde-ink); }
+.nav__link[data-color="lilas"]  { --c: var(--lilas);  --c-soft: var(--lilas-soft);  --c-ink: var(--lilas-ink); }
+/* hover / foco / página atual: fundo vira a cor (suave), texto vira a tinta da cor, peça anima */
+.nav__link:hover, .nav__link:focus-visible, .nav__link[aria-current="page"] { background: var(--c-soft); color: var(--c-ink); }
+.nav__link:hover .nav__puzzle svg, .nav__link:focus-visible .nav__puzzle svg, .nav__link[aria-current="page"] .nav__puzzle svg { fill: var(--c); }
+.nav__link:hover .nav__puzzle, .nav__link:focus-visible .nav__puzzle { animation: puzzle-pop .55s var(--ease-bounce); }
+@keyframes puzzle-pop {
+  0%   { transform: rotate(0) scale(1); }
+  35%  { transform: rotate(-14deg) scale(1.18); }
+  65%  { transform: rotate(10deg) scale(1.1); }
+  100% { transform: rotate(0) scale(1.06); }
+}
+/* drawer (mobile) também com peças */
+.drawer__link { display: flex; align-items: center; gap: 12px; }
+.drawer__puzzle { display: inline-grid; place-items: center; width: 22px; height: 22px; flex-shrink: 0; }
+.drawer__puzzle svg { width: 22px; height: 22px; fill: var(--c, var(--azul)); }
+.drawer__link[data-color="azul"]   { --c: var(--azul);   --c-soft: var(--azul-soft);   --c-ink: var(--azul-ink); }
+.drawer__link[data-color="rosa"]   { --c: var(--rosa);   --c-soft: var(--rosa-soft);   --c-ink: var(--rosa-ink); }
+.drawer__link[data-color="amarelo"]{ --c: var(--amarelo);--c-soft: var(--amarelo-soft);--c-ink: var(--amarelo-ink); }
+.drawer__link[data-color="verde"]  { --c: var(--verde);  --c-soft: var(--verde-soft);  --c-ink: var(--verde-ink); }
+.drawer__link[data-color="lilas"]  { --c: var(--lilas);  --c-soft: var(--lilas-soft);  --c-ink: var(--lilas-ink); }
+.drawer__link:hover, .drawer__link:focus-visible { background: var(--c-soft); color: var(--c-ink); }
+
+/* ---------- Vídeo no hero ---------- */
+.hero__media { position: relative; }
+.hero__video-frame {
+  position: relative; padding: 7px; border-radius: var(--r-xl);
+  background: var(--grad-marca);
+  box-shadow: 0 26px 54px rgba(46,42,57,.18);
+}
+.hero__video {
+  display: block; width: 100%; aspect-ratio: 16 / 10; object-fit: cover;
+  border-radius: calc(var(--r-xl) - 7px); background: #d8eef9;
+}
+.hero__video-controls { position: absolute; right: 16px; bottom: 16px; display: flex; gap: 8px; }
+.vctrl {
+  width: 42px; height: 42px; border-radius: 50%; display: grid; place-items: center;
+  background: rgba(255,255,255,.92); color: var(--tinta);
+  box-shadow: 0 6px 16px rgba(46,42,57,.22); backdrop-filter: blur(6px);
+  transition: transform .2s var(--ease-bounce), background .2s;
+}
+.vctrl:hover { transform: scale(1.08); background: #fff; }
+.vctrl svg { width: 20px; height: 20px; }
+.vctrl .ic-pause, .vctrl .ic-unmute { display: none; }
+.vctrl.is-playing .ic-play { display: none; }
+.vctrl.is-playing .ic-pause { display: block; }
+.vctrl.is-muted .ic-mute { display: none; }
+.vctrl.is-muted .ic-unmute { display: block; }
+/* legenda flutuante */
+.hero__video-tag {
+  position: absolute; left: 16px; top: 16px; display: inline-flex; align-items: center; gap: 7px;
+  padding: 8px 14px; border-radius: var(--r-pill); background: rgba(255,255,255,.92);
+  font: 600 12px/1 var(--font-body); letter-spacing: .04em; color: var(--tinta); text-transform: uppercase;
+  box-shadow: 0 6px 16px rgba(46,42,57,.16);
+}
+.hero__video-tag::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--rosa); animation: pulse-dot 2s ease-in-out infinite; }
+@keyframes pulse-dot { 0%,100% { opacity: 1; transform: scale(1); } 50% { opacity: .5; transform: scale(.8); } }
+/* peças de quebra-cabeça flutuando ao redor do vídeo */
+.hero__puzzle { position: absolute; z-index: 3; pointer-events: none; }
+.hero__puzzle svg { width: 100%; height: 100%; fill: currentColor; }
+.hero__puzzle--1 { width: 56px; height: 56px; top: -22px; left: -20px; color: var(--amarelo); animation: bob 6s ease-in-out infinite; }
+.hero__puzzle--2 { width: 44px; height: 44px; bottom: -18px; right: 30px; color: var(--verde); animation: bob 7s ease-in-out infinite -2s; }
+.hero__puzzle--3 { width: 38px; height: 38px; top: 40%; right: -20px; color: var(--rosa); animation: bob 5.5s ease-in-out infinite -3s; }
+/* personagem espiando o vídeo */
+.hero__peek { position: absolute; bottom: -26px; left: -34px; width: 150px; z-index: 4; pointer-events: none; }
+.hero__peek img { width: 100%; filter: drop-shadow(0 14px 22px rgba(46,42,57,.18)); }
+
+@media (max-width: 980px) {
+  .hero__media { max-width: 540px; margin-inline: auto; }
+  .hero__peek { width: 120px; left: -10px; }
+}
+@media (max-width: 560px) {
+  .hero__video-controls { right: 12px; bottom: 12px; }
+  .hero__puzzle--1 { width: 44px; height: 44px; }
+  .hero__peek { width: 96px; bottom: -18px; left: 0; }
+}
+
+/* calma: para peças e legenda */
+.calm .nav__puzzle, .calm .hero__puzzle, .calm .hero__video-tag::before { animation: none !important; transform: none !important; }

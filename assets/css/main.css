@@ -226,7 +226,7 @@ h1, h2, h3 { font-family: var(--font-display); font-weight: 400; line-height: 1.
 /* =====================================================================
    HERO
    ===================================================================== */
-.hero { position: relative; padding-top: calc(var(--nav-h) + clamp(20px, 3vw, 44px)); padding-bottom: clamp(28px, 4vw, 60px); background: var(--grad-ceu); overflow: clip; }
+.hero { position: relative; min-height: 100vh; min-height: 100svh; display: grid; align-items: center; padding-top: calc(var(--nav-h) + 12px); padding-bottom: clamp(40px, 5vw, 72px); background: var(--grad-ceu); overflow: clip; }
 .hero__bg { position: absolute; inset: 0; z-index: 0; }
 .hero__bg .blob--azul { width: 380px; height: 380px; top: -60px; left: -80px; }
 .hero__bg .blob--amarelo { width: 320px; height: 320px; bottom: -40px; right: 10%; animation-delay: -3s; }

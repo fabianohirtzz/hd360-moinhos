@@ -289,22 +289,24 @@ h1, h2, h3 { font-family: var(--font-display); font-weight: 400; line-height: 1.
 /* =====================================================================
    ESPECIALIDADES (prévia em chips)
    ===================================================================== */
-.chips { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; }
+.chips { display: flex; flex-wrap: wrap; gap: 9px; justify-content: center; max-width: 1120px; margin-inline: auto; }
+#especialidades > .container { padding-inline: clamp(16px, 3vw, 30px); }
 .chip {
-  display: inline-flex; align-items: center; gap: 9px;
-  padding: 12px 20px; border-radius: var(--r-pill);
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 9px 16px; border-radius: var(--r-pill);
   background: var(--branco); color: var(--tinta);
-  font: 600 15px/1 var(--font-body);
+  font: 600 14px/1 var(--font-body); white-space: nowrap;
   box-shadow: 0 6px 16px rgba(46,42,57,.06);
   transition: transform .2s var(--ease-gentle), box-shadow .2s, background .2s;
 }
 .chip:hover { transform: translateY(-3px); }
-.chip__dot { width: 10px; height: 10px; border-radius: 50%; }
-.chip:nth-child(5n+1) .chip__dot { background: var(--azul); }
-.chip:nth-child(5n+2) .chip__dot { background: var(--rosa); }
-.chip:nth-child(5n+3) .chip__dot { background: var(--lilas); }
-.chip:nth-child(5n+4) .chip__dot { background: var(--verde); }
-.chip:nth-child(5n+5) .chip__dot { background: var(--amarelo); }
+.chip__puzzle { display: inline-grid; place-items: center; width: 16px; height: 16px; flex-shrink: 0; }
+.chip__puzzle svg { width: 16px; height: 16px; }
+.chip:nth-child(5n+1) .chip__puzzle svg { fill: var(--azul); }
+.chip:nth-child(5n+2) .chip__puzzle svg { fill: var(--rosa); }
+.chip:nth-child(5n+3) .chip__puzzle svg { fill: var(--lilas); }
+.chip:nth-child(5n+4) .chip__puzzle svg { fill: var(--verde); }
+.chip:nth-child(5n+5) .chip__puzzle svg { fill: var(--amarelo); }
 .especialidades__cta { display: flex; justify-content: center; margin-top: 38px; }
 
 /* =====================================================================

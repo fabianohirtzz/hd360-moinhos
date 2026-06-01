@@ -331,7 +331,7 @@ Speak to a **tired, hopeful parent** searching for help for their child — and,
 | Real taglines | "Especialista em autismo, atendimento humanizado." · "Desenvolvimento Humano, Terapia ABA e Diagnóstico para Autismo." · "Atendimento com amor e dedicação, em um ambiente acolhedor e seguro." |
 | Specialty names | Use the real names: Fonoaudiologia, Musicoterapia, Psicologia, Psicopedagogia, Terapia Ocupacional, Psicomotricidade, Fisioterapia, Acompanhante Terapêutico, Terapia ABA, Avaliação Neuropsicológica. |
 | Numbers | Friendly: "+11 especialidades", "2 unidades", "atendimento de 0 a … anos". |
-| Em dashes | Real `—` (U+2014), not `--` |
+| Travessões (— em dash) | **NÃO usar travessões em textos.** O cliente os considera um "tell" de conteúdo gerado por IA. Para pausas, use **vírgulas** (ou dois-pontos quando fizer sentido). Em `<title>`/separadores, use `·` (middle dot). Isto vale para toda copy do site. |
 | Ellipsis | Real `…` (U+2026) |
 | CTA verbs | "Agende uma visita", "Conheça a equipe", "Fale no WhatsApp", "Marque uma avaliação" — action + warmth |
 | Emojis | Not in nav, buttons, or headings. Allowed only inside playful editorial/blog content if the user asks. |

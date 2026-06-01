@@ -111,37 +111,45 @@ Key rules: background is `var(--grad-ceu)` or `--creme`; blobs are big, blurred,
 
 ## 3. Button system
 
-Two primary shapes, all pills, all with soft motion.
+**No gradients on buttons** (client preference). Buttons use **solid brand colors**, and the color **varies per section** (hero/CTA global = lilás/roxo, quem somos = rosa, especialidades = azul, abordagem = verde, etc). All pills, all with the same hover (lift + colored shadow + a diagonal shine sweep; outline buttons fill with the color on hover).
+
+The system is **variable-driven**: a color class (`--azul/--rosa/--lilas/--verde/--amarelo`) sets the palette vars, and a shape class (`--solid` or `--ghost`) consumes them. Compose two classes: `class="btn btn--solid btn--lilas"` or `class="btn btn--ghost btn--verde"`.
 
 ```css
 .btn {
+  position: relative; overflow: hidden;
   display: inline-flex; align-items: center; justify-content: center; gap: 9px;
-  padding: 15px 28px; border-radius: var(--r-pill);
-  font: 600 15px/1 var(--font-body); letter-spacing: .01em;
-  cursor: pointer; border: 0; text-decoration: none;
-  transition: transform .25s var(--ease-bounce), box-shadow .25s var(--ease-soft), background .2s;
+  min-height: 48px; padding: 14px 28px; border-radius: var(--r-pill);
+  font: 600 15px/1 var(--font-body); letter-spacing: .01em; cursor: pointer; border: 0;
+  transition: transform .28s var(--ease-bounce), box-shadow .28s var(--ease-soft), background .25s, color .25s;
+  --c: var(--azul); --c-on: #fff; --c-ink: var(--azul-ink); --c-rgb: 0,165,234; /* fallback */
 }
-.btn:active { transform: scale(.97); }
+/* shine sweep */
+.btn::before { content:""; position:absolute; top:0; left:-120%; width:55%; height:100%;
+  background: linear-gradient(100deg, transparent 20%, rgba(255,255,255,.4) 50%, transparent 80%);
+  transform: skewX(-18deg); transition: left .6s var(--ease-soft); pointer-events:none; }
+.btn:hover::before { left: 135%; }
+.btn:hover { transform: translateY(-3px) scale(1.02); }
+.btn:active { transform: translateY(-1px) scale(.97); }
 
-/* Primary — warm sunny gradient, the "agende" action */
-.btn--primary {
-  background: var(--grad-sol); color: #fff;
-  box-shadow: 0 10px 26px rgba(251,60,99,.28);
-}
-.btn--primary:hover { transform: translateY(-2px) scale(1.02); box-shadow: 0 14px 34px rgba(251,60,99,.38); }
+/* palettes — text is white, EXCEPT verde/amarelo (light colors) which use dark ink */
+.btn--azul    { --c: var(--azul);    --c-on:#fff;         --c-ink: var(--azul-ink);    --c-rgb: 0,165,234; }
+.btn--rosa    { --c: var(--rosa);    --c-on:#fff;         --c-ink: var(--rosa-ink);    --c-rgb: 251,60,99; }
+.btn--lilas   { --c: var(--lilas);   --c-on:#fff;         --c-ink: var(--lilas-ink);   --c-rgb: 143,100,200; }
+.btn--verde   { --c: var(--verde);   --c-on: var(--tinta);--c-ink: var(--verde-ink);   --c-rgb: 168,196,32; }
+.btn--amarelo { --c: var(--amarelo); --c-on: var(--tinta);--c-ink: var(--amarelo-ink); --c-rgb: 255,199,0; }
 
-/* Ghost — outlined, for secondary actions */
-.btn--ghost {
-  background: var(--branco); color: var(--tinta);
-  box-shadow: inset 0 0 0 2px var(--azul-soft);
-}
-.btn--ghost:hover { box-shadow: inset 0 0 0 2px var(--azul); color: #0481b6; }
+.btn--solid { background: var(--c); color: var(--c-on); box-shadow: 0 10px 24px rgba(var(--c-rgb),.30); }
+.btn--solid:hover { box-shadow: 0 16px 34px rgba(var(--c-rgb),.44); }
+.btn--ghost { background: var(--branco); color: var(--c-ink); box-shadow: inset 0 0 0 2px var(--c); }
+.btn--ghost:hover { background: var(--c); color: var(--c-on); box-shadow: inset 0 0 0 2px var(--c), 0 14px 30px rgba(var(--c-rgb),.34); }
 
-/* Solid color — coded to a section */
-.btn--azul { background: var(--azul); color: #fff; box-shadow: 0 10px 24px rgba(0,165,234,.26); }
+/* on a colored CTA band, use white / outline-white instead of brand colors */
+.btn--white { background:#fff; color: var(--rosa); }
+.btn--ghost-on-color { background: rgba(255,255,255,.16); color:#fff; box-shadow: inset 0 0 0 2px rgba(255,255,255,.6); }
 ```
 
-Buttons may carry a leading icon (rounded SVG) but never an emoji. Minimum height 48px (touch target).
+Per-section color rotation (extend as new sections appear): **lilás → rosa → azul → verde → amarelo**, never two adjacent sections sharing the primary-button color. Buttons may carry a leading icon (rounded SVG) but never an emoji. Min height 48px (touch target). The shine + transforms collapse to instant under `prefers-reduced-motion`.
 
 ---
 

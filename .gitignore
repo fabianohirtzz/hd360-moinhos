@@ -14,9 +14,10 @@ yarn-error.log*
 package.json
 package-lock.json
 
-# Previews temporários
-_prev-*.png
-_preview-*.png
+# Previews / rascunhos temporários
+_*.png
+_*.mjs
+_*.html
 
 # Build output
 dist/

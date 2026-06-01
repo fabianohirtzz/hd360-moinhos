@@ -120,21 +120,44 @@ h1, h2, h3 { font-family: var(--font-display); font-weight: 400; line-height: 1.
 .eyebrow--amarelo .eyebrow__dot { background: var(--amarelo); }
 
 .btn {
+  position: relative; overflow: hidden;
   display: inline-flex; align-items: center; justify-content: center; gap: 9px;
   min-height: 48px; padding: 14px 28px; border-radius: var(--r-pill);
   font: 600 15px/1 var(--font-body); letter-spacing: .01em; text-align: center;
-  transition: transform .25s var(--ease-bounce), box-shadow .25s var(--ease-soft), background .2s, color .2s;
+  transition: transform .28s var(--ease-bounce), box-shadow .28s var(--ease-soft), background .25s var(--ease-soft), color .25s var(--ease-soft);
+  --c: var(--azul); --c-on: #fff; --c-ink: var(--azul-ink); --c-rgb: 0,165,234;
 }
-.btn:active { transform: scale(.97); }
-.btn--primary { background: var(--grad-sol); color: #fff; box-shadow: 0 10px 26px rgba(251,60,99,.28); }
-.btn--primary:hover { transform: translateY(-2px) scale(1.02); box-shadow: 0 14px 34px rgba(251,60,99,.4); }
-.btn--ghost { background: var(--branco); color: var(--tinta); box-shadow: inset 0 0 0 2px var(--azul-soft); }
-.btn--ghost:hover { box-shadow: inset 0 0 0 2px var(--azul); color: var(--azul-ink); transform: translateY(-2px); }
-.btn--white { background: #fff; color: var(--rosa); box-shadow: 0 10px 26px rgba(0,0,0,.12); }
-.btn--white:hover { transform: translateY(-2px) scale(1.02); }
-.btn--ghost-on-color { background: rgba(255,255,255,.16); color: #fff; box-shadow: inset 0 0 0 2px rgba(255,255,255,.55); }
-.btn--ghost-on-color:hover { background: rgba(255,255,255,.26); transform: translateY(-2px); }
+/* brilho diagonal que varre o botao no hover */
+.btn::before {
+  content: ""; position: absolute; top: 0; left: -120%; width: 55%; height: 100%;
+  background: linear-gradient(100deg, transparent 20%, rgba(255,255,255,.4) 50%, transparent 80%);
+  transform: skewX(-18deg); transition: left .6s var(--ease-soft); pointer-events: none;
+}
+.btn:hover::before { left: 135%; }
+.btn:hover { transform: translateY(-3px) scale(1.02); }
+.btn:active { transform: translateY(-1px) scale(.97); }
 .btn__ic { width: 20px; height: 20px; }
+
+/* paletas da identidade (definem as variaveis da cor) */
+.btn--azul    { --c: var(--azul);    --c-on: #fff;         --c-ink: var(--azul-ink);    --c-rgb: 0,165,234; }
+.btn--rosa    { --c: var(--rosa);    --c-on: #fff;         --c-ink: var(--rosa-ink);    --c-rgb: 251,60,99; }
+.btn--lilas   { --c: var(--lilas);   --c-on: #fff;         --c-ink: var(--lilas-ink);   --c-rgb: 143,100,200; }
+.btn--verde   { --c: var(--verde);   --c-on: var(--tinta); --c-ink: var(--verde-ink);   --c-rgb: 168,196,32; }
+.btn--amarelo { --c: var(--amarelo); --c-on: var(--tinta); --c-ink: var(--amarelo-ink); --c-rgb: 255,199,0; }
+
+/* solido — preenchido na cor da secao */
+.btn--solid { background: var(--c); color: var(--c-on); box-shadow: 0 10px 24px rgba(var(--c-rgb), .30); }
+.btn--solid:hover { box-shadow: 0 16px 34px rgba(var(--c-rgb), .44); }
+
+/* contorno — preenche na cor ao passar o mouse */
+.btn--ghost { background: var(--branco); color: var(--c-ink); box-shadow: inset 0 0 0 2px var(--c); }
+.btn--ghost:hover { background: var(--c); color: var(--c-on); box-shadow: inset 0 0 0 2px var(--c), 0 14px 30px rgba(var(--c-rgb), .34); }
+
+/* botoes sobre faixa colorida (CTA) */
+.btn--white { background: #fff; color: var(--rosa); box-shadow: 0 10px 26px rgba(0,0,0,.14); }
+.btn--white:hover { box-shadow: 0 16px 34px rgba(0,0,0,.2); }
+.btn--ghost-on-color { background: rgba(255,255,255,.16); color: #fff; box-shadow: inset 0 0 0 2px rgba(255,255,255,.6); }
+.btn--ghost-on-color:hover { background: rgba(255,255,255,.26); }
 
 /* Blobs decorativos */
 .blob {

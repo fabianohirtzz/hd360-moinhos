@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>HD360 Moinhos — em breve</title>
+  <meta name="description" content="HD360 Moinhos — clínica de autismo. Especialista em autismo, atendimento humanizado. Site em construção." />
+  <style>
+    @font-face {
+      font-family: "Barnacle Boy";
+      src: url("fonts/Barnacle%20Boy.otf") format("opentype");
+      font-weight: 400 700; font-style: normal; font-display: swap;
+    }
+    @import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap");
+
+    :root {
+      --azul: #00A5EA; --amarelo: #FFC700; --rosa: #FB3C63;
+      --lilas: #8F64C8; --verde: #A8C420;
+      --tinta: #2e2a39; --tinta-muted: #6b6577; --creme: #fbf8f3;
+      --grad-marca: linear-gradient(100deg, #00A5EA 0%, #8F64C8 32%, #FB3C63 58%, #FFC700 100%);
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      min-height: 100vh; display: grid; place-items: center; text-align: center;
+      font-family: "Montserrat", system-ui, sans-serif; color: var(--tinta);
+      background: radial-gradient(circle at 20% 20%, #E4F6FD, transparent 45%),
+                  radial-gradient(circle at 80% 75%, #FFF6D6, transparent 45%),
+                  var(--creme);
+      padding: 32px; overflow: hidden;
+    }
+    .wrap { position: relative; z-index: 2; max-width: 620px; }
+    .eyebrow {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 8px 18px; border-radius: 999px; background: #FEE4EA; color: #c01b40;
+      font-size: 13px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase;
+      margin-bottom: 26px;
+    }
+    .eyebrow span { width: 9px; height: 9px; border-radius: 50%; background: var(--rosa); }
+    h1 {
+      font-family: "Barnacle Boy", "Baloo 2", system-ui, sans-serif; font-weight: 400;
+      font-size: clamp(40px, 8vw, 84px); line-height: 1.02; letter-spacing: .005em;
+    }
+    h1 .hl { color: var(--azul); }
+    p.lede { margin: 18px auto 0; max-width: 480px; font-size: clamp(16px, 2vw, 19px); line-height: 1.6; color: var(--tinta-muted); }
+    .tag {
+      display: inline-block; margin-top: 34px; padding: 14px 30px; border-radius: 999px;
+      background: var(--grad-marca); color: #fff; font-weight: 600; font-size: 15px;
+      box-shadow: 0 12px 30px rgba(251,60,99,.28);
+    }
+    .meta { margin-top: 28px; font-size: 14px; color: var(--tinta-muted); }
+    .meta a { color: var(--azul); text-decoration: none; font-weight: 600; }
+    .blob {
+      position: fixed; border-radius: 45% 55% 60% 40% / 50% 45% 55% 50%;
+      filter: blur(48px); opacity: .45; z-index: 1; animation: bob 9s ease-in-out infinite;
+    }
+    .blob.a { width: 320px; height: 320px; background: var(--azul); top: -80px; left: -60px; }
+    .blob.b { width: 280px; height: 280px; background: var(--lilas); bottom: -70px; right: -50px; animation-delay: -3s; }
+    .blob.c { width: 220px; height: 220px; background: var(--verde); bottom: 40px; left: -40px; animation-delay: -5s; }
+    @keyframes bob { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-16px); } }
+    @media (prefers-reduced-motion: reduce) { .blob { animation: none; } }
+  </style>
+</head>
+<body>
+  <span class="blob a" aria-hidden="true"></span>
+  <span class="blob b" aria-hidden="true"></span>
+  <span class="blob c" aria-hidden="true"></span>
+
+  <main class="wrap">
+    <p class="eyebrow"><span aria-hidden="true"></span> Clínica de autismo · Porto Alegre</p>
+    <h1>Estamos preparando <span class="hl">um lugar especial</span></h1>
+    <p class="lede">Em breve, o novo site da <strong>HD360 Moinhos</strong>. Especialista em autismo, atendimento humanizado.</p>
+    <span class="tag">Site em construção 🧩</span>
+    <p class="meta">Enquanto isso, fale com a gente: <a href="https://wa.me/555121128884">(51) 2112-8884</a> · <a href="https://instagram.com/hd360moinhos">@hd360moinhos</a></p>
+  </main>
+</body>
+</html>

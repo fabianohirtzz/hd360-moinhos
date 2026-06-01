@@ -1,0 +1,19 @@
+# OS / editor junk
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+.DS_Store
+*~
+
+# Dependencies (caso usemos Node mais adiante)
+node_modules/
+npm-debug.log*
+yarn-error.log*
+
+# Build output
+dist/
+.cache/
+
+# Env / segredos
+.env
+.env.local

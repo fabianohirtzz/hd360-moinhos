@@ -169,7 +169,9 @@ h1, h2, h3 { font-family: var(--font-display); font-weight: 400; line-height: 1.
 .section--cream { background: var(--creme); }
 .section__head { max-width: 720px; margin: 0 auto clamp(36px, 5vw, 56px); text-align: center; }
 .section__head--left { margin-inline: 0; text-align: left; }
-.section__title { font-size: clamp(34px, 5.2vw, 64px); margin-top: 12px; }
+.section__title { font-size: clamp(34px, 5.2vw, 64px); margin-top: 12px; text-wrap: balance; }
+.section__head--wide { max-width: 940px; }
+.section__head--wide .section__title { font-size: clamp(30px, 4.3vw, 48px); }
 .section__lede { font: 500 clamp(17px, 1.6vw, 20px)/1.6 var(--font-body); color: var(--tinta-muted); margin-top: 14px; }
 
 /* =====================================================================

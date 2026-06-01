@@ -185,6 +185,9 @@
       const play = () => {
         if (current && current !== video) current.pause();
         current = video;
+        video.muted = false; // ao dar play, habilita o som
+        mute?.classList.remove("is-muted");
+        mute?.setAttribute("aria-label", "Desativar som");
         const p = video.play();
         if (p && p.catch) p.catch(() => {});
       };

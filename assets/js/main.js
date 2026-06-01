@@ -171,6 +171,53 @@
     });
   }
 
+  /* ---------- Reels do Instagram (carrossel) ---------- */
+  const reelsTrack = document.querySelector("[data-reels-track]");
+  if (reelsTrack) {
+    let current = null; // vídeo tocando no momento (um por vez)
+    reelsTrack.querySelectorAll(".reel").forEach((reel) => {
+      const media = reel.querySelector(".reel__media");
+      const video = reel.querySelector("[data-reel]");
+      const playBtn = reel.querySelector("[data-reel-play]");
+      const toggle = reel.querySelector("[data-reel-toggle]");
+      const mute = reel.querySelector("[data-reel-mute]");
+
+      const play = () => {
+        if (current && current !== video) current.pause();
+        current = video;
+        const p = video.play();
+        if (p && p.catch) p.catch(() => {});
+      };
+      const togglePlay = () => { if (video.paused) play(); else video.pause(); };
+
+      playBtn?.addEventListener("click", togglePlay);
+      toggle?.addEventListener("click", togglePlay);
+      video.addEventListener("play", () => media.classList.add("is-playing"));
+      video.addEventListener("pause", () => media.classList.remove("is-playing"));
+      video.addEventListener("ended", () => media.classList.remove("is-playing"));
+      mute?.addEventListener("click", () => {
+        video.muted = !video.muted;
+        mute.classList.toggle("is-muted", video.muted);
+        mute.setAttribute("aria-label", video.muted ? "Ativar som" : "Desativar som");
+      });
+    });
+
+    // setas prev/next + estado desabilitado nas pontas
+    const prev = document.querySelector("[data-reels-prev]");
+    const next = document.querySelector("[data-reels-next]");
+    const updateArrows = () => {
+      const max = reelsTrack.scrollWidth - reelsTrack.clientWidth - 2;
+      if (prev) prev.disabled = reelsTrack.scrollLeft <= 2;
+      if (next) next.disabled = reelsTrack.scrollLeft >= max;
+    };
+    const amount = () => reelsTrack.clientWidth * 0.85;
+    prev?.addEventListener("click", () => reelsTrack.scrollBy({ left: -amount(), behavior: calm() ? "auto" : "smooth" }));
+    next?.addEventListener("click", () => reelsTrack.scrollBy({ left: amount(), behavior: calm() ? "auto" : "smooth" }));
+    reelsTrack.addEventListener("scroll", updateArrows, { passive: true });
+    window.addEventListener("resize", updateArrows);
+    updateArrows();
+  }
+
   /* ---------- Ano dinâmico no rodapé ---------- */
   const y = document.querySelector("[data-year]");
   if (y) y.textContent = new Date().getFullYear();

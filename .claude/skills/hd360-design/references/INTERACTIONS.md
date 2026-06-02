@@ -2,15 +2,21 @@
 
 Read this before wiring any behavior. HD360 interactions are **predictable, forgiving, keyboard-friendly, and calm**. Predictability is care for this audience — no surprise pop-ups, no disappearing controls, clear focus, plain feedback. Every pattern here respects the reduced-motion / `.calm` flag from ANIMATIONS.md § 0.
 
+> **Ground truth:** the patterns marked **(BUILT)** are implemented in `assets/js/main.js` — the snippets here are documented from that file. The rest are designed patterns for pages not yet built; implement them in the same calm, accessible spirit.
+
 ## Index
 1. Shared helpers (calm flag, focus trap)
-2. Mobile drawer (nav)
-3. FAQ accordion
-4. Specialty filter / tabs
-5. Character carousel ("A Turma")
-6. Unit switcher (Unidades)
-7. Appointment form
-8. Smooth-scroll + active nav
+2. Mobile drawer (nav) **(BUILT)**
+3. Hero video **(BUILT)**
+4. Reels carousel **(BUILT)**
+5. FAQ accordion
+6. Specialty filter / tabs
+7. Character carousel ("A Turma")
+8. Unit switcher (Unidades)
+9. Appointment form
+10. Smooth-scroll + active nav
+
+Also built in `main.js`: the **calm toggle** (`[data-calm-toggle]`, persisted + `aria-pressed`), the **scrolled-nav** state (`.is-scrolled` after 20px), **scroll reveal + count-up** (one IntersectionObserver, `.reveal` → `.is-in`, `[data-count]` ticks once), the **cookie banner** (`[data-cookies]`, slides in after 900ms if no stored choice), and the **dynamic footer year** (`[data-year]`). All gate on the `calm()` helper.
 
 ---
 
@@ -73,7 +79,95 @@ Drawer panel: white, `border-radius: var(--r-xl)` on the inner edge, big tappabl
 
 ---
 
-## 3. FAQ accordion
+## 3. Hero video (BUILT)
+
+The institutional video autoplays **only when motion is welcome** (muted, looping), and always exposes pause + mute controls. The play/pause and mute/unmute icons swap via `is-playing` / `is-muted` classes on the button (CSS shows/hides the right `<svg>`).
+
+```js
+const video = document.querySelector("[data-hero-video]");
+const playBtn = document.querySelector("[data-video-play]");
+const muteBtn = document.querySelector("[data-video-mute]");
+if (video) {
+  const tryAutoplay = () => {
+    if (calm()) return;                 // never autoplay under reduced-motion / .calm
+    video.play()?.catch(() => {});      // ignore browser autoplay blocking
+  };
+  if (video.readyState >= 2) tryAutoplay();
+  else video.addEventListener("loadeddata", tryAutoplay, { once: true });
+
+  const syncPlay = () => {
+    const playing = !video.paused && !video.ended;
+    playBtn.classList.toggle("is-playing", playing);
+    playBtn.setAttribute("aria-label", playing ? "Pausar vídeo" : "Reproduzir vídeo");
+  };
+  video.addEventListener("play", syncPlay);
+  video.addEventListener("pause", syncPlay);
+  playBtn.addEventListener("click", () => video.paused ? video.play() : video.pause());
+  muteBtn.addEventListener("click", () => {
+    video.muted = !video.muted;
+    muteBtn.classList.toggle("is-muted", video.muted);
+    muteBtn.setAttribute("aria-label", video.muted ? "Ativar som" : "Desativar som");
+  });
+}
+```
+
+The `<video>` element ships `muted loop playsinline preload="metadata"` with a `poster`. It starts muted (browsers require it for autoplay); the mute button lets a visitor opt into sound. Markup in COMPONENTS § Hero.
+
+---
+
+## 4. Reels carousel (BUILT)
+
+A snap-scrolling row of the clinic's vertical videos. **One plays at a time** — starting a reel pauses whichever was playing. Because the user pressed play, **sound is enabled on play** (this is intentional and fine; it's user-initiated, never autoplay). Prev/next arrows scroll by ~85% of the viewport and disable at the ends.
+
+```js
+const reelsTrack = document.querySelector("[data-reels-track]");
+if (reelsTrack) {
+  let current = null;                                  // the one reel playing now
+  reelsTrack.querySelectorAll(".reel").forEach((reel) => {
+    const media = reel.querySelector(".reel__media");
+    const video = reel.querySelector("[data-reel]");
+    const playBtn = reel.querySelector("[data-reel-play]");
+    const toggle  = reel.querySelector("[data-reel-toggle]");
+    const mute    = reel.querySelector("[data-reel-mute]");
+    const play = () => {
+      if (current && current !== video) current.pause();  // only one at a time
+      current = video;
+      video.muted = false;                                // sound on, since the user pressed play
+      mute?.classList.remove("is-muted");
+      video.play()?.catch(() => {});
+    };
+    const togglePlay = () => video.paused ? play() : video.pause();
+    playBtn?.addEventListener("click", togglePlay);
+    toggle?.addEventListener("click", togglePlay);
+    video.addEventListener("play",  () => media.classList.add("is-playing"));
+    video.addEventListener("pause", () => media.classList.remove("is-playing"));
+    video.addEventListener("ended", () => media.classList.remove("is-playing"));
+    mute?.addEventListener("click", () => {
+      video.muted = !video.muted;
+      mute.classList.toggle("is-muted", video.muted);
+    });
+  });
+
+  const prev = document.querySelector("[data-reels-prev]");
+  const next = document.querySelector("[data-reels-next]");
+  const updateArrows = () => {
+    const max = reelsTrack.scrollWidth - reelsTrack.clientWidth - 2;
+    if (prev) prev.disabled = reelsTrack.scrollLeft <= 2;
+    if (next) next.disabled = reelsTrack.scrollLeft >= max;
+  };
+  const amount = () => reelsTrack.clientWidth * 0.85;
+  prev?.addEventListener("click", () => reelsTrack.scrollBy({ left: -amount(), behavior: calm() ? "auto" : "smooth" }));
+  next?.addEventListener("click", () => reelsTrack.scrollBy({ left:  amount(), behavior: calm() ? "auto" : "smooth" }));
+  reelsTrack.addEventListener("scroll", updateArrows, { passive: true });
+  updateArrows();
+}
+```
+
+Reels `preload="none"` so the page stays light — they only load on interaction. Markup + CSS in COMPONENTS § Reels carousel.
+
+---
+
+## 5. FAQ accordion
 
 Prefer native `<details>`/`<summary>` for built-in accessibility, enhanced with JS for smooth height and optional single-open. The smooth-height enhancement is skipped under calm (native instant toggle remains).
 
@@ -111,7 +205,7 @@ Single-open is optional — for a long FAQ, letting multiple stay open is also f
 
 ---
 
-## 4. Specialty filter / tabs
+## 6. Specialty filter / tabs
 
 Filter the specialties grid by area: **Todas · Comunicação · Comportamento · Corpo & Sentidos · Diagnóstico**. Tab pills (coded), `role="tablist"`. Cards fade/scale out and the matching set staggers back in (instant under calm). Always keep "Todas" as the default and never leave the grid empty.
 
@@ -145,7 +239,7 @@ Map each specialty to one or more areas via `data-area` (e.g. Fonoaudiologia →
 
 ---
 
-## 5. Character carousel ("A Turma")
+## 7. Character carousel ("A Turma")
 
 Introduce Li, Lo, Turminha, Zig & Dom. A gentle, **manually-controlled** carousel — prev/next buttons + dots, swipe on touch, NO autoplay (or very slow + pausable). Each slide is a character block (COMPONENTS § 6). Snap-scroll is the simplest accessible base.
 
@@ -165,7 +259,7 @@ Buttons are real `<button>`s with `aria-label`. Keep characters large and friend
 
 ---
 
-## 6. Unit switcher (Unidades)
+## 8. Unit switcher (Unidades)
 
 Toggle between the two real units (Quintino Bocaiúva / Casa ABA) to show address, map, hours, photos. Tab pills swapping panels — same `role="tab"` pattern as §4, one panel visible at a time, crossfade (instant under calm).
 
@@ -184,9 +278,9 @@ Each unit panel pairs the real address (DESIGN § Content blocks) with an embedd
 
 ---
 
-## 7. Appointment form
+## 9. Appointment form
 
-The "Agende uma avaliação" form. Warm, short, forgiving. Fields: nome do responsável, telefone/WhatsApp, nome e idade da criança, unidade de preferência, e uma mensagem opcional. Inline validation that's kind, not punishing.
+The "Agende uma avaliação" form. Warm, short, forgiving. Fields: nome do responsável, telefone/WhatsApp, nome e idade da pessoa que vai ser atendida (audience is all ages, so don't assume "criança"), unidade de preferência, e uma mensagem opcional. Inline validation that's kind, not punishing.
 
 Principles:
 - Labels always visible (never placeholder-only). Large rounded inputs (`--r-sm`), ≥48px tall.
@@ -211,7 +305,7 @@ A pragmatic option (no backend): submit composes a prefilled WhatsApp message vi
 
 ---
 
-## 8. Smooth-scroll + active nav
+## 10. Smooth-scroll + active nav
 
 Anchor links scroll smoothly (instant under calm); the nav highlights the section in view.
 

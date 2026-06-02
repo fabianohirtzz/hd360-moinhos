@@ -6,7 +6,7 @@ Read this when ideating a new feature or unsure how to approach something. It ma
 1. Name the job ("I need a way to show the therapy rooms", "the hero feels flat").
 2. Find the closest direction below.
 3. Translate it into HD360 tokens & components (light canvas, rounded, coded color, calm motion, a character).
-4. If it would pull the brand dark, cold, or overstimulating — discard it. The brand's north star is *a trustworthy, joyful clinic for autistic children*.
+4. If it would pull the brand dark, cold, or overstimulating — discard it. The brand's north star is *a trustworthy, joyful clinic for autistic people* (children **and** adults — keep copy all-ages).
 
 ---
 
@@ -30,7 +30,8 @@ Read this when ideating a new feature or unsure how to approach something. It ma
 
 | The job | Direction | HD360 translation |
 |---|---|---|
-| Hero feels flat | Friendly split: warm headline + a character greeting, soft floating blobs, a small trust row | COMPONENTS § Hero; Barnacle Boy title with one coded word; Turminha/Li art; blob morph (ANIMATIONS § 5) |
+| Hero feels flat | Friendly split: warm headline + the **institutional video** in a gradient frame (or a character greeting), floating puzzle bits + a peek character, soft blobs, a small trust row | COMPONENTS § Hero (BUILT — video); Barnacle Boy title with one coded word; muted calm-aware autoplay |
+| Show real clinic life / social proof | The clinic's **own Instagram Reels** in a click-to-play carousel — beats stock photos and any testimonial you can't yet source | COMPONENTS § Reels carousel; INTERACTIONS § Reels (BUILT); one video at a time, sound on user play |
 | Show the specialties (11+) without a wall | Coded card grid + filter by area | COMPONENTS § Specialty card; INTERACTIONS § Filter; rotate the 5 colors so neighbors differ |
 | Present the therapy rooms | Themed "worlds" as immersive cards | COMPONENTS § World card; Espaço/Floresta/Fundo do Mar art; **Unidades page only** |
 | Build trust fast | A soft stat band + named responsible professional + real credentials | COMPONENTS § Stat band (count-up); cite Dr. Guilherme B. Sander, CRM/RQE; plain credible copy |
@@ -70,6 +71,6 @@ Read this when ideating a new feature or unsure how to approach something. It ma
 2. Is there exactly **one** coded color leading this section?
 3. Is there a moment of warmth — a character, a soft shape, kind copy?
 4. Does every motion respect reduced-motion, and is nothing overstimulating?
-5. Would a tired, hopeful parent feel *safe* and *welcomed* here — and could their autistic child use it comfortably?
+5. Would a tired, hopeful caregiver feel *safe* and *welcomed* here — and could the autistic person (child or adult) use it comfortably?
 
 If all five are yes, it's HD360. If any is no, fix that before adding anything new.

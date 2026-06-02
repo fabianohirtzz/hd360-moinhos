@@ -17,23 +17,26 @@ Read this before laying out a page or section. HD360 pages are **airy, verticall
 
 ```html
 <body>
-  <header class="nav" data-nav>…</header>          <!-- fixed floating pill -->
-  <div data-drawer-backdrop></div>
-  <aside data-drawer class="drawer">…</aside>       <!-- mobile only -->
+  <svg width="0" height="0" aria-hidden="true"><symbol id="ic-puzzle">…</symbol></svg>  <!-- icon sprite, once -->
+
+  <header class="nav" data-nav>…</header>          <!-- fixed floating pill, logo + puzzle menu -->
+  <div class="drawer-backdrop" data-drawer-backdrop></div>
+  <aside id="drawer" class="drawer" data-drawer>…</aside>   <!-- mobile only -->
 
   <main>
-    <section class="hero">…</section>
+    <section class="hero">…</section>              <!-- institutional video -->
     <section class="section section--white">…</section>
     <section class="section section--cream">…</section>
     <section class="cta">…</section>               <!-- the one full-color band -->
   </main>
 
   <footer class="footer">…</footer>
-  <a class="wpp" href="https://wa.me/555121128884" aria-label="Falar no WhatsApp">…</a>
+  <a class="wpp" href="https://wa.me/555121128884" aria-label="Falar no WhatsApp">…</a>  <!-- gradient float -->
+  <aside class="cookies" data-cookies>…</aside>
 </body>
 ```
 
-The nav floats over content (it's `position: fixed`), so the hero needs top breathing room (`padding-top` clearing the nav). Body background is `--branco`; sections opt into `--cream` for alternation.
+The nav floats over content (it's `position: fixed`), so the hero needs top breathing room (`padding-top` clearing the nav). Body background is `--branco`; sections opt into `--cream` for alternation. The `#ic-puzzle` sprite is declared once at the top and reused via `<use href="#ic-puzzle"/>` everywhere a puzzle accent appears (nav, chips, hero).
 
 ---
 
@@ -71,7 +74,7 @@ Every standard section follows the same warm rhythm:
     <header class="section__head">
       <p class="eyebrow eyebrow--lilas"><span class="eyebrow__dot"></span> Equipe multidisciplinar</p>
       <h2 class="section__title">Nossas <span class="hl hl--lilas">especialidades</span></h2>
-      <p class="section__lede">Mais de onze áreas trabalhando juntas, no ritmo de cada criança.</p>
+      <p class="section__lede">Mais de onze áreas trabalhando juntas, no ritmo de cada pessoa.</p>
     </header>
     <div class="grid grid--specs"><!-- spec cards --></div>
   </div>
@@ -83,19 +86,22 @@ Every standard section follows the same warm rhythm:
 .section { position: relative; overflow: clip; padding-block: clamp(64px, 9vw, 120px); }
 .section--white { background: var(--branco); }
 .section--cream { background: var(--creme); }
-.section__head { max-width: 720px; margin-bottom: clamp(32px, 5vw, 56px); }
-.section__title { font: 400 clamp(34px,5.2vw,68px)/1.02 var(--font-display); color: var(--tinta); margin: 12px 0 0; }
+.section__head { max-width: 720px; margin: 0 auto clamp(36px, 5vw, 56px); text-align: center; }
+.section__head--left { margin-inline: 0; text-align: left; }
+.section__head--wide { max-width: 940px; }                              /* for 2-line titles */
+.section__title { font: 400 clamp(34px,5.2vw,64px)/1.04 var(--font-display); color: var(--tinta); margin-top: 12px; text-wrap: balance; }
+.section__head--wide .section__title { font-size: clamp(30px,4.3vw,48px); }
 .section__lede { font: 500 clamp(17px,1.6vw,20px)/1.6 var(--font-body); color: var(--tinta-muted); margin-top: 14px; }
 ```
 
-Center the head (`text-align:center; margin-inline:auto`) for marketing sections; left-align for content/article sections. Pick one per section and stay consistent down the page.
+The head is **centered by default** (marketing sections); add `--head--left` for content/article sections. Use `--head--wide` (+`text-wrap: balance`) when a title is meant to wrap to two lines, which keeps the line breaks tidy — this is how the "diferenciais" and "como cuidamos" heads are built.
 
 ---
 
 ## 4. Alternation & color rhythm
 
 - **Background:** alternate `white → cream → white → cream`. Never two cream sections adjacent; never a dark section.
-- **Coded color:** each section is assigned ONE brand color (its eyebrow, title highlight, blob, and primary accents all match). Rotate so adjacent sections differ — e.g. Hero(rosa) → Sobre(azul) → Especialidades(lilás) → Unidades(per-world) → Turma(amarelo) → CTA(brand gradient).
+- **Coded color:** each section is assigned ONE brand color (its eyebrow, title highlight, blob, and primary accents all match). Rotate so adjacent sections differ — the live Home runs: Hero(rosa eyebrow/azul highlight) → Boas-vindas(azul/rosa) → Diferenciais(verde) → Especialidades(lilás) → Abordagem(lilás band) → Como começar(amarelo) → Blog(verde) → Reels(rosa) → CTA(brand gradient).
 - **One full-color band per page:** only the appointment CTA (or a single featured world) floods color. Everything else keeps color in cards on a light ground.
 - **Waves** carry the eye between bands; the wave fill = the next section's background color.
 
@@ -130,8 +136,8 @@ On the split layout, the character art goes **above** the copy on mobile (`order
 
 | Page | Coded lead | Key sections | Characters / worlds |
 |---|---|---|---|
-| **Início** (home) | rosa→multi | Hero · selo de confiança/stats · Sobre resumido · Especialidades (prévia) · Como funciona (steps) · Depoimentos · CTA agende · Footer | Hero: Turminha/Li; mascots peeking; CTA: pet |
-| **Sobre** | azul | Quem somos · missão (acolhimento/segurança) · abordagem ABA · equipe/responsável técnico · valores | Li & Lo in the split; Dr. Guilherme credited |
+| **Início** (home, BUILT) | rosa→multi | Hero (vídeo institucional) · stats (+11/2/700m²/+3000) · Boas-vindas (split) · Diferenciais (feature cards) · Especialidades (chips) · Abordagem (banda lilás-soft) · Por onde começar (steps, 100vh) · Blog (prévia) · **Reels do Instagram** · CTA (abraço Li & Lo) · Footer | Hero: peek `hero-turma.png` + puzzle bits; CTA: `cta-abraco.png` |
+| **Sobre / Equipe** | azul | Quem somos · missão (acolhimento/segurança) · abordagem ABA · equipe (+55 especialistas) / responsável técnico · valores | Li & Lo in the split; Dr. Guilherme Sander & Carla Lima credited |
 | **Especialidades** | lilás | Intro · filtro por área · grid completo (11+) · cada uma com cor+ícone · CTA | icon tiles; optional character per area |
 | **Especialidade (detalhe)** | per-spec | O que é · para quem · como ajuda · FAQ curto · CTA | narrow container |
 | **Unidades** | per-world | Switcher Quintino/Casa ABA · endereço+mapa+horário · **salas temáticas** (Espaço/Floresta/Fundo do Mar) | **Themed-world art lives ONLY here** |
@@ -149,15 +155,15 @@ The **Unidades** page is the home of the themed worlds — Espaço, Floresta, Fu
 
 ## 7. Responsive playbook
 
-Breakpoints: **390 (mobile) · 768 (tablet) · 1024 (laptop) · 1180+ (desktop max).** Design mobile-first.
+Design mobile-first. The live `main.css` breaks at **980 · 880 · 760 · 560** (test at 390/768/1024 too). What each does: `980` stacks the hero/split/approach/CTA two-columns (art on top); `880` swaps nav links for the burger drawer and collapses the footer to 2 columns; `760` drops the steps to a single column and hides the dashed connector; `560` is the small-phone pass (tighter nav, single-column footer/steps, full-width cookie banner, smaller WhatsApp float).
 
 | Knob | Desktop | Tablet (≤880) | Mobile (≤560) |
 |---|---|---|---|
 | Section padding-block | 96–120px | 80px | 64px |
 | Container side padding | up to 80px | 32px | 20px |
 | Nav | full pill + links | links → burger drawer | burger drawer |
-| Hero | split (copy + art) | stacked, art on top | stacked, art smaller |
-| Title clamp | up to 92px (hero) | mid clamp | floor (44px hero / 34px H2) |
+| Hero | split (copy + video) | stacked, video on top (≤980px) | stacked, video & peek smaller |
+| Title clamp | hero up to 56px · H2 up to 64px | mid clamp | floor (34px) |
 | Spec grid | 3–4 up | 2 up | 1 up |
 | Worlds grid | 3 up | 2 up | 1 up |
 | Steps | horizontal (4 cols) | 2×2 | vertical |

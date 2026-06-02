@@ -1,6 +1,6 @@
 # ANIMATIONS.md — Motion vocabulary
 
-Read this before adding any motion. HD360's motion is **calm, soft, and accessible** — that is the brand, and for an audience of autistic children and their families it is also *care*. Joy comes from warmth and character, never from speed or saturation.
+Read this before adding any motion. HD360's motion is **calm, soft, and accessible** — that is the brand, and for an audience of autistic people (children and adults) and their families it is also *care*. Joy comes from warmth and character, never from speed or saturation.
 
 **The golden rule:** every animation in this file must degrade gracefully under `prefers-reduced-motion: reduce`. The reduced-motion contract (§ 0) is not optional — wire it in the same pass you write the animation.
 
@@ -12,11 +12,12 @@ Read this before adding any motion. HD360's motion is **calm, soft, and accessib
 4. Floaty bob (characters & blobs)
 5. Blob morph (backdrops)
 6. Soft hover lift & button press
-7. Count-up
-8. Confetti / dot drift
-9. Wave dividers
-10. Calm toggle (brand gesture)
-11. What NOT to do
+7. Puzzle-pop (the nav + chip signature)
+8. Count-up
+9. Confetti / dot drift
+10. Wave dividers
+11. Calm toggle (brand gesture)
+12. What NOT to do
 
 ---
 
@@ -50,7 +51,9 @@ const calm = () =>
 // In any JS animation: if (calm()) { applyEndStateInstantly(); return; }
 ```
 
-**Never** autoplay anything that moves continuously and can't be stopped. **Never** flash, strobe, or animate more than ~3 large elements at once. When in doubt, slower and subtler.
+**Never** flash, strobe, or animate more than ~3 large elements at once. When in doubt, slower and subtler.
+
+**On autoplay (the one nuance):** the brand *does* autoplay the hero institutional video — but only **muted, looping, pausable, and calm-aware** (it does not start when reduced-motion / `.calm` is on, and a visible pause button is always present). That is the acceptable form. The Reels carousel does **not** autoplay — each reel is click-to-play (and sound turns on then, because playback is user-initiated). The rule that stays absolute: never autoplay sound, and never autoplay motion the user can't immediately stop.
 
 ---
 
@@ -156,9 +159,29 @@ Keep blobs **low opacity (0.35–0.55)** and **heavily blurred** so text on top 
 
 The `--ease-bounce` overshoot must stay small (1.4, not 1.7) — playful, not cartoonish. Touch devices: ensure `:active` feedback since there's no hover.
 
+Buttons also carry a **diagonal shine sweep** on hover (a `::before` highlight that travels left→right), documented in COMPONENTS § Button system. It's the one "delight" flourish on the otherwise calm buttons; it collapses to nothing under calm.
+
 ---
 
-## 7. Count-up
+## 7. Puzzle-pop (the nav + chip signature)
+
+When a nav/drawer link is hovered, focused, or marks the current page, its little puzzle-piece icon does a quick, friendly wobble + scale — the brand's signature micro-interaction (it ties every link back to the logo). Keep the overshoot small; it should read as a gentle "click into place", not a cartoon spin.
+
+```css
+.nav__link:hover .nav__puzzle, .nav__link:focus-visible .nav__puzzle { animation: puzzle-pop .55s var(--ease-bounce); }
+@keyframes puzzle-pop {
+  0%   { transform: rotate(0)     scale(1);    }
+  35%  { transform: rotate(-14deg) scale(1.18); }
+  65%  { transform: rotate(10deg)  scale(1.1);  }
+  100% { transform: rotate(0)      scale(1.06); }
+}
+```
+
+The puzzle icon also **fills in** with the link's coded color on the same trigger (`fill: var(--c)`). Disabled under reduced-motion / `.calm`. Use this only on the puzzle pieces — don't sprinkle wobbles elsewhere.
+
+---
+
+## 8. Count-up
 
 Stat numbers tick up once when the stat band reveals. One pass, no loop.
 
@@ -182,7 +205,7 @@ Trigger from the same IntersectionObserver. Never re-run on re-scroll.
 
 ---
 
-## 8. Confetti / dot drift
+## 9. Confetti / dot drift
 
 Decorative colored dots and puzzle bits scattered as texture. Static is fine; if they move, it's an extremely slow, tiny drift. Always `aria-hidden`, never load-bearing.
 
@@ -198,7 +221,7 @@ Generate 6–12 dots in rotating coded colors via JS or hand-place. Keep them sp
 
 ---
 
-## 9. Wave dividers
+## 10. Wave dividers
 
 Sections transition through soft SVG waves instead of straight edges — the brand's "flowing" feel (echoing the room murals). Mostly static shapes; an optional *very* slow horizontal drift on a duplicated wave adds life.
 
@@ -214,7 +237,7 @@ The wave's `fill` is the color of the *next* section, so it reads as that sectio
 
 ---
 
-## 10. Calm toggle (brand gesture)
+## 11. Calm toggle (brand gesture)
 
 A footer button that lets families turn off ambient motion beyond the OS setting — a genuine act of care that fits this brand perfectly.
 
@@ -228,18 +251,19 @@ document.querySelector('[data-calm-toggle]')?.addEventListener('click', () => {
 });
 ```
 
-Mirror the reduced-motion CSS for the `.calm` class:
+Mirror the reduced-motion CSS for the `.calm` class. Remember to add **any new ambient/looping element** to this list when you introduce one — the live `main.css` covers blobs, floats, waves, the nav/hero puzzle pieces, and the pulsing video tag dot:
 
 ```css
-.calm .blob, .calm .float, .calm .dots span, .calm .wave svg { animation: none !important; transform: none !important; }
+.calm .blob, .calm .float, .calm .wave svg { animation: none !important; transform: none !important; }
 .calm .reveal { opacity: 1 !important; transform: none !important; }
+.calm .nav__puzzle, .calm .hero__puzzle, .calm .hero__video-tag::before { animation: none !important; transform: none !important; }
 ```
 
-Persist the choice (localStorage). Label it plainly: "Reduzir animações".
+The hero video also checks the calm flag in JS before autoplaying (INTERACTIONS § Hero video). Persist the choice (localStorage `hd360-calm`); a `?calm=1` URL param also forces it on. Label it plainly: "Reduzir animações", and reflect state with `aria-pressed`.
 
 ---
 
-## 11. What NOT to do
+## 12. What NOT to do
 
 | Don't | Why | Instead |
 |---|---|---|

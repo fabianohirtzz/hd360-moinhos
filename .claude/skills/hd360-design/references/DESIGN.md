@@ -21,7 +21,7 @@ This is the source of truth for every visual decision. Read it end-to-end before
 
 ## 1. Brand DNA
 
-HD360 Moinhos is a **children's autism (TEA) therapy clinic** in **Porto Alegre, RS**, offering **Terapia ABA**, autism **diagnosis**, and a multidisciplinary team. The identity must hold these tensions:
+HD360 Moinhos is an **autism (TEA) therapy clinic** in **Porto Alegre, RS** that cares for **children and adults** on the spectrum, offering **Terapia ABA**, autism **diagnosis**, and a multidisciplinary team. (The brand reads joyful and picture-book warm; that is the *brand voice*, not a claim that the audience is only children — the live copy speaks of "cada **pessoa**".) The identity must hold these tensions:
 
 | Tension | Resolution |
 |---|---|
@@ -43,7 +43,7 @@ All colors live as CSS custom properties on `:root`. **Do not use raw hex in com
 | Token | Hex | RGB | Role in brandbook | Use in UI |
 |---|---|---|---|---|
 | `--azul` | `#00A5EA` | 0,165,234 | Primary — confiança, calma, segurança | Primary structure, links, the "trust" world (Fundo do Mar), default accent |
-| `--amarelo` | `#FFC700` | 255,199,0 | Primary — otimismo, atenção, alegria | Highlights, the primary CTA, sunny accents, the "energy" world (Espaço/sol) |
+| `--amarelo` | `#FFC700` | 255,199,0 | Primary — otimismo, atenção, alegria | Sunny **fills**: buttons, icon tiles, dots, accents. **Not a text color on white** (see the amarelo rule below) |
 | `--rosa` | `#FB3C63` | 251,60,99 | Secondary — acolhimento, delicadeza | Warmth, welcome moments, the character Li, love/care accents |
 | `--lilas` | `#8F64C8` | 143,100,200 | Secondary — criatividade, nobreza | Creativity, sensory/play, the Espaço world, Musicoterapia |
 | `--verde` | `#A8C420` | 168,196,32 | Secondary — saúde, crescimento | Health, growth, the Floresta world, the character Lo |
@@ -61,6 +61,42 @@ Each brand color needs a **soft tint** for card backgrounds and a **wash** for l
 | `--verde-soft` | `#F1F6D9` | Tinted card background, growth blocks |
 
 (If you prefer runtime mixing, `color-mix(in srgb, var(--azul) 12%, white)` produces the same family — but commit the static tokens to `:root` for stability.)
+
+### Ink shades — darkened colors for TEXT on light (the contrast workhorses)
+
+The saturated brand colors mostly **fail contrast as text on white or on a soft tint**. Every place a coded color becomes *text* (eyebrow label, ghost-button label, link hover, icon-tile glyph, `.hl` highlight) it uses the darkened `*-ink` token, not the full-strength hue. These are real tokens in `main.css`:
+
+| Token | Hex | Use |
+|---|---|---|
+| `--azul-ink` | `#0481b6` | Azul as text/links, eyebrow text, ghost-button label |
+| `--rosa-ink` | `#c01b40` | Rosa as text |
+| `--lilas-ink` | `#6b3fa6` | Lilás as text |
+| `--verde-ink` | `#6f841a` | Verde as text (verde is very light — it *must* darken to read) |
+| `--amarelo-ink` | `#a87f00` | Amarelo as text **only** where a flat label is unavoidable; prefer the gradient for display words (see below) |
+
+Rule of thumb: **full-strength color for fills, the `-ink` shade for text.** The eyebrow pill is the canonical example — soft tint background, `-ink` text, full-strength dot.
+
+### The amarelo rule (a real client decision — don't relitigate it)
+
+`#FFC700` is gorgeous as a fill but reads as a weak, illegible wash as text on white, and darkening it to pass contrast turns it into an off-brand **mustard** the client explicitly rejected. So:
+
+- **Never** set heading or body text to `--amarelo` (or `--amarelo-ink`) on a white/cream ground.
+- When a display word needs to read as "the yellow one", clip the **brand gradient** through the text — it contains the yellow at its end and stays vivid and legible. This is what `.hl--amarelo` does:
+
+```css
+.hl--amarelo {
+  background: var(--grad-marca);
+  -webkit-background-clip: text; background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: var(--rosa); /* fallback for print / no background-clip */
+}
+```
+
+```html
+<h2 class="section__title">Por onde <span class="hl hl--amarelo">começar</span></h2>
+```
+
+Amarelo stays free to shine as a **fill**: the amarelo button (`--c-on` is dark `--tinta`, not white), icon tiles, the footer `h4` dot, decorative puzzle bits.
 
 ### Core surfaces & ink
 
@@ -113,20 +149,19 @@ When you add a new specialty or section, assign it the *nearest* existing color 
 
 ### Loading Barnacle Boy (local face)
 
-The file ships in the project at `fonts/Barnacle Boy.otf`. Declare it once. For production, convert to `.woff2` for size/perf and update the `src` — but `.otf` works for dev.
+The file ships in the project at `fonts/Barnacle Boy.otf`. The CSS lives at `assets/css/main.css` (two folders deep), so the path climbs two levels and URL-encodes the space. This is exactly what `main.css` does today:
 
 ```css
 @font-face {
   font-family: "Barnacle Boy";
-  src: url("../fonts/BarnacleBoy.woff2") format("woff2"),
-       url("../fonts/Barnacle Boy.otf") format("opentype");
+  src: url("../../fonts/Barnacle%20Boy.otf") format("opentype");
   font-weight: 400 700;        /* single physical weight; map the range so `bold` doesn't synthesize ugly */
   font-style: normal;
   font-display: swap;
 }
 ```
 
-> Note: the filename has a space (`Barnacle Boy.otf`). It works URL-encoded, but **rename the deliverable to `BarnacleBoy.otf` / `.woff2`** to avoid path bugs. Generate the woff2 with any otf→woff2 converter before launch.
+> Production perf note: convert to `.woff2` (any otf→woff2 converter) and add it as a first `src` entry — the `.otf` works fine for dev. The encoded space (`%20`) works; if you rename the deliverable to `BarnacleBoy.woff2`, update the `src` to match.
 
 ### Loading Montserrat
 
@@ -175,8 +210,9 @@ Barnacle Boy quirks to respect: it is **chunky and round**, so (a) never apply n
 
 | Use | Family | Size | Weight | Letter-spacing |
 |---|---|---|---|---|
-| Hero title | display | `clamp(44px, 7vw, 92px)` | 400 | `0.005em` |
-| Section title (H2) | display | `clamp(34px, 5.2vw, 68px)` | 400 | `0.005em` |
+| Hero title | display | `clamp(34px, 4.7vw, 56px)` | 400 | `0.005em` |
+| Section title (H2) | display | `clamp(34px, 5.2vw, 64px)` | 400 | `0.005em` |
+| Section title (wide head, 2-line) | display | `clamp(30px, 4.3vw, 48px)` | 400 | `0.005em` |
 | Sub-title / card title (display) | display | `clamp(22px, 2.6vw, 32px)` | 400 | `0.01em` |
 | Card title (UI) | body | `19–22px` | 700 | `-0.005em` |
 | Lede / intro paragraph | body | `clamp(17px, 1.6vw, 20px)` | 500 | normal |
@@ -186,7 +222,7 @@ Barnacle Boy quirks to respect: it is **chunky and round**, so (a) never apply n
 | Button / chip label | body | `15px` | 600 | `0.01em` |
 | Small / legal | body | `13px` | 400 | normal |
 
-Body line-height `1.65` for comfortable reading (parents reading carefully). Titles `1.0–1.1`.
+Body line-height `1.65` for comfortable reading (caregivers reading carefully). Titles `1.0–1.1`. Note the **hero title is intentionally restrained** (`max 56px`, not a giant): on Home it shares a two-column row with the institutional video, so an oversized headline would unbalance the layout. The widest section title clamp (`48px`) is for heads that wrap to two lines (use the `--wide` head modifier with `text-wrap: balance`).
 
 ### Eyebrow pattern (the brand's title plate)
 
@@ -213,12 +249,12 @@ A **rounded color pill** with the section's coded color — friendly, not a hair
   text-transform: uppercase;
 }
 .eyebrow__dot { width: 9px; height: 9px; border-radius: 50%; }
-.eyebrow--lilas { background: var(--lilas-soft); color: #6b3fa6; }
+.eyebrow--lilas { background: var(--lilas-soft); color: var(--lilas-ink); }
 .eyebrow--lilas .eyebrow__dot { background: var(--lilas); }
 /* one modifier per brand color: --azul, --amarelo, --rosa, --verde */
 ```
 
-The eyebrow text color is a *darker* shade of the coded color (for contrast on the soft pill); the dot is the full-strength color.
+The eyebrow text color is the `*-ink` shade of the coded color (for contrast on the soft pill); the dot is the full-strength color.
 
 ---
 
@@ -321,22 +357,23 @@ Never exceed 800ms for a *state change*. Ambient loops are the only long animati
 
 ## 7. Voice & copy conventions
 
-Speak to a **tired, hopeful parent** searching for help for their child — and, in the right moments, to the child too.
+Speak to a **tired, hopeful caregiver** searching for help for someone they love — and, in the right moments, to the person in care too. The audience is **all ages** (children and adults on the spectrum), so default to "pessoa" over "criança" unless a section is specifically about kids.
 
 | Property | Rule |
 |---|---|
 | Language | Portuguese (pt-BR), warm and plain |
 | Tone | Acolhedor, claro, esperançoso, específico. Confiante sem ser frio. Carinhoso sem ser infantilizado. |
-| Pronoun | "Nós / nossa casa / nossa equipe" — inclusive and human. Address the parent as "você". |
+| Pronoun | "Nós / nossa casa / nossa equipe" — inclusive and human. Address the caregiver as "você"; speak about "cada **pessoa**" / "de quem você ama". |
 | Real taglines | "Especialista em autismo, atendimento humanizado." · "Desenvolvimento Humano, Terapia ABA e Diagnóstico para Autismo." · "Atendimento com amor e dedicação, em um ambiente acolhedor e seguro." |
 | Specialty names | Use the real names: Fonoaudiologia, Musicoterapia, Psicologia, Psicopedagogia, Terapia Ocupacional, Psicomotricidade, Fisioterapia, Acompanhante Terapêutico, Terapia ABA, Avaliação Neuropsicológica. |
-| Numbers | Friendly: "+11 especialidades", "2 unidades", "atendimento de 0 a … anos". |
+| Numbers | Friendly: "+11 especialidades", "2 unidades", "700 m² de estrutura", "+3000 pacientes atendidos", "+55 especialistas". |
+| "Paciente" | **Allowed and used by the client.** The live site says "no ritmo de cada paciente" and "+3000 pacientes atendidos". (This reverses an earlier draft rule.) Stay person-first regardless: "pessoas autistas / no espectro", never "portador". |
 | Travessões (— em dash) | **NÃO usar travessões em textos.** O cliente os considera um "tell" de conteúdo gerado por IA. Para pausas, use **vírgulas** (ou dois-pontos quando fizer sentido). Em `<title>`/separadores, use `·` (middle dot). Isto vale para toda copy do site. |
 | Ellipsis | Real `…` (U+2026) |
 | CTA verbs | "Agende uma visita", "Conheça a equipe", "Fale no WhatsApp", "Marque uma avaliação" — action + warmth |
 | Emojis | Not in nav, buttons, or headings. Allowed only inside playful editorial/blog content if the user asks. |
-| Forbidden | Cold clinical-marketing speak: "solução", "unidade de negócio", "excelência premium", "líder de mercado". Also avoid medicalizing the child — say "crianças", "famílias", not "pacientes" in marketing copy (reserve "paciente" for clinical/portal contexts). |
-| Inclusive language | Person-first and respectful of neurodiversity. "Crianças autistas / no espectro", "neurodivergente". Never "sofre de autismo", never "portador". |
+| Forbidden | Cold clinical-marketing speak: "solução", "unidade de negócio", "excelência premium", "líder de mercado". |
+| Inclusive language | Person-first and respectful of neurodiversity. "Pessoas/crianças autistas / no espectro", "neurodivergente". Never "sofre de autismo", never "portador", never "vítima". |
 
 ### Title formula
 
@@ -344,8 +381,8 @@ Speak to a **tired, hopeful parent** searching for help for their child — and,
 
 Example:
 > 🟣 EQUIPE MULTIDISCIPLINAR
-> Cuidado que enxerga a criança **inteira**
-> *Reunimos fono, terapia ocupacional, psicologia e mais de onze especialidades sob o mesmo teto — para um plano de desenvolvimento feito sob medida.*
+> Cuidado que enxerga a pessoa **por inteiro**
+> *Reunimos fono, terapia ocupacional, psicologia e mais de onze especialidades sob o mesmo teto, para um plano de desenvolvimento feito sob medida.* (sem travessão)
 
 ---
 
@@ -357,7 +394,7 @@ Reusable atoms that recur across the site.
 
 ```
 Nome:        HD360 Moinhos
-Foco:        Clínica de autismo (TEA) infantil — Terapia ABA e diagnóstico
+Foco:        Clínica de autismo (TEA), crianças e adultos · Terapia ABA e diagnóstico
 Unidades:    Quintino Bocaiúva — Rua Quintino Bocaiúva, 451 · Moinhos de Vento
              Casa ABA — Rua Dr. Freire Alemão, 366 · Mont'Serrat
 Telefone:    (51) 2112-8884
@@ -426,7 +463,7 @@ Use **rounded outline SVGs at 2px stroke**, `stroke-linecap: round; stroke-linej
 
 ## 10. Accessibility (TEA-aware) — not optional
 
-This audience makes accessibility a **brand-defining feature**, not a checkbox. Autistic children and their families benefit specifically from calm, predictable, legible interfaces.
+This audience makes accessibility a **brand-defining feature**, not a checkbox. Autistic people (children and adults) and their families benefit specifically from calm, predictable, legible interfaces.
 
 | Rule | Why |
 |---|---|
@@ -459,7 +496,8 @@ These come up constantly in generic AI-generated clinic/kids sites — flag and 
 | Heavy parallax, autoplay carousels, bouncy spring everything | Overstimulating for the audience | Calm reveals, slow floats, reduced-motion respected |
 | Heading set in Montserrat Black | Skips the brand's display voice | Barnacle Boy for display |
 | Barnacle Boy in body / tiny sizes | Font muddies below ~22px | Montserrat for all small text |
-| "Pacientes" everywhere in marketing | Medicalizes children | "Crianças", "famílias" (reserve "paciente" for clinical/portal) |
+| Amarelo as heading/body text on white | Illegible; darkening it → off-brand mustard the client rejected | Amarelo as *fill*; for a yellow display word use `.hl--amarelo` (clips `--grad-marca`) |
+| "Crianças"-only language | Audience is all ages (children **and** adults) | "Cada pessoa", "pessoas no espectro"; "paciente" is fine |
 | Cold CTA "Saiba mais" | Flat | Warm action: "Agende uma visita", "Fale no WhatsApp" |
 | Emoji in nav/buttons | Cheapens the trust | Reserve emoji for editorial content only |
 

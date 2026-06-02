@@ -2,6 +2,7 @@ import { readFile, writeFile, mkdir } from 'node:fs/promises';
 import { renderBlogIndex } from './lib/render-blog-index.mjs';
 import { renderCarousel } from './lib/render-carousel.mjs';
 import { renderPostPage } from './lib/render-post-page.mjs';
+import { loadPosts } from './lib/load-posts.mjs';
 
 const ROOT = new URL('../../', import.meta.url);
 
@@ -21,7 +22,7 @@ async function injectBetween(path, startMarker, endMarker, inner) {
 }
 
 async function main() {
-  const posts = JSON.parse(await readFile(new URL('assets/blog/posts.json', ROOT), 'utf8'));
+  const posts = await loadPosts({ jsonUrl: new URL('assets/blog/posts.json', ROOT) });
   posts.sort((a, b) => new Date(b.date) - new Date(a.date));
 
   // 1. blog.html: injetar o carrossel.

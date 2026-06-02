@@ -478,7 +478,7 @@ h1, h2, h3 { font-family: var(--font-display); font-weight: 400; line-height: 1.
 /* =====================================================================
    WhatsApp float
    ===================================================================== */
-.wpp { position: fixed; right: 18px; bottom: 18px; z-index: 90; width: 60px; height: 60px; border-radius: 50%; display: grid; place-items: center; background: #25D366; color: #fff; box-shadow: 0 10px 26px rgba(37,211,102,.42); transition: transform .25s var(--ease-bounce); }
+.wpp { position: fixed; right: 18px; bottom: 18px; z-index: 90; width: 60px; height: 60px; border-radius: 50%; display: grid; place-items: center; background: var(--grad-marca); color: #fff; box-shadow: 0 10px 26px rgba(251,60,99,.32); transition: transform .25s var(--ease-bounce); }
 .wpp:hover { transform: scale(1.08); }
 .wpp svg { width: 32px; height: 32px; }
 

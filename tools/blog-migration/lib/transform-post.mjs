@@ -63,7 +63,7 @@ export function transformPost(raw) {
     date: raw.date,
     modified: raw.modified || raw.date,
     dateLabel: formatDatePtBr(raw.date),
-    category: mapCategory(terms),
+    category: mapCategory(terms, raw.slug),
     coverImage: localPath(coverUrl),
     excerpt: stripTags(raw.excerpt && raw.excerpt.rendered || ''),
     content,

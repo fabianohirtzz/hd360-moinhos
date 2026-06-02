@@ -12,6 +12,16 @@ function rel(html) {
 
 const PLACEHOLDER_SVG = '<svg viewBox="0 0 24 24" width="54" height="54" fill="none" stroke="rgba(46,42,57,.35)" stroke-width="1.5" aria-hidden="true"><path d="M19.4 7.9c0 .3.1.6.3.9l1.6 1.5c.9.9.9 2.4 0 3.4l-1.6 1.6c-.2.2-.5.3-.8.3-.5-.1-.8-.5-1-.9a2.5 2.5 0 1 0-3.2 3.2c.4.2.8.5.9 1 .1.3 0 .6-.3.8l-1.6 1.6c-.9.9-2.5.9-3.4 0l-1.6-1.6a1 1 0 0 0-.9-.3c-.5.1-.8.5-1 1a2.5 2.5 0 1 1-3.2-3.2c.5-.2.9-.5 1-1a1 1 0 0 0-.3-.9l-1.6-1.5c-.9-1-.9-2.5 0-3.4L4.2 8.8c.2-.2.6-.4.9-.3.5.1.9.5 1.1 1a2.5 2.5 0 1 0 3.3-3.3c-.5-.2-.9-.6-1-1.1-.1-.3 0-.7.3-.9l1.5-1.5c1-.9 2.5-.9 3.4 0l1.6 1.6c.2.2.5.3.9.3.5-.1.8-.5 1-1a2.5 2.5 0 1 1 3.2 3.2c-.4.2-.9.5-1 1Z"/></svg>';
 
+const PLACEHOLDER_THUMB = '<svg viewBox="0 0 24 24" width="32" height="32" fill="none" stroke="rgba(46,42,57,.35)" stroke-width="1.5" aria-hidden="true"><path d="M19.4 7.9c0 .3.1.6.3.9l1.6 1.5c.9.9.9 2.4 0 3.4l-1.6 1.6c-.2.2-.5.3-.8.3-.5-.1-.8-.5-1-.9a2.5 2.5 0 1 0-3.2 3.2c.4.2.8.5.9 1 .1.3 0 .6-.3.8l-1.6 1.6c-.9.9-2.5.9-3.4 0l-1.6-1.6a1 1 0 0 0-.9-.3c-.5.1-.8.5-1 1a2.5 2.5 0 1 1-3.2-3.2c.5-.2.9-.5 1-1a1 1 0 0 0-.3-.9l-1.6-1.5c-.9-1-.9-2.5 0-3.4L4.2 8.8c.2-.2.6-.4.9-.3.5.1.9.5 1.1 1a2.5 2.5 0 1 0 3.3-3.3c-.5-.2-.9-.6-1-1.1-.1-.3 0-.7.3-.9l1.5-1.5c1-.9 2.5-.9 3.4 0l1.6 1.6c.2.2.5.3.9.3.5-.1.8-.5 1-1a2.5 2.5 0 1 1 3.2 3.2c-.4.2-.9.5-1 1Z"/></svg>';
+
+const CATEGORIES = [
+  { name: 'Entendendo o Autismo', color: 'verde' },
+  { name: 'Terapias e Abordagens', color: 'azul' },
+  { name: 'Dia a Dia da Família', color: 'rosa' },
+  { name: 'Dicas dos Especialistas', color: 'lilas' },
+  { name: 'Histórias HD360', color: 'amarelo' },
+];
+
 /**
  * Returns cover markup for a card (related post card, prefix = '../').
  * If coverImage is empty, returns the branded puzzle SVG placeholder.
@@ -22,6 +32,69 @@ function coverMarkup(coverImage, color, alt, prefix) {
     return `<img src="${prefix}${coverImage}" alt="${esc(alt)}" loading="lazy">`;
   }
   return PLACEHOLDER_SVG;
+}
+
+function recentThumb(p) {
+  if (p.coverImage && String(p.coverImage).length > 0) {
+    return `<img src="../${p.coverImage}" alt="${esc(p.title)}" loading="lazy">`;
+  }
+  return PLACEHOLDER_THUMB;
+}
+
+function widgetCategories(post) {
+  const currentName = (post.category && post.category.name) || '';
+  const items = CATEGORIES.map(cat => {
+    const isCurrent = cat.name === currentName;
+    const encoded = encodeURIComponent(cat.name);
+    return `<li${isCurrent ? ' class="is-current"' : ''}><a href="../blog-todos.html?cat=${encoded}"><span class="side-dot side-dot--${cat.color}" aria-hidden="true"></span>${esc(cat.name)}</a></li>`;
+  }).join('\n        ');
+  return `<section class="side-card">
+      <h4 class="side-card__title">Categorias</h4>
+      <ul class="side-cats">
+        ${items}
+      </ul>
+    </section>`;
+}
+
+function widgetTags(post) {
+  const tags = post.tags || [];
+  if (!tags.length) return '';
+  const tagSpans = tags.map(t => `<span class="side-tag">#${esc(t)}</span>`).join('\n        ');
+  return `<section class="side-card">
+      <h4 class="side-card__title">Tags</h4>
+      <div class="side-tags">
+        ${tagSpans}
+      </div>
+    </section>`;
+}
+
+function widgetRecent(recentPosts) {
+  if (!recentPosts || recentPosts.length === 0) return '';
+  const items = recentPosts.slice(0, 5).map(p => {
+    return `<li><a href="../${p.slug}/"><span class="side-recent__thumb">${recentThumb(p)}</span><span class="side-recent__t">${esc(p.title)}</span></a></li>`;
+  }).join('\n        ');
+  return `<section class="side-card">
+      <h4 class="side-card__title">Posts recentes</h4>
+      <ul class="side-recent">
+        ${items}
+      </ul>
+    </section>`;
+}
+
+function widgetSoon() {
+  return `<section class="side-card side-card--soon">
+      <h4 class="side-card__title">Curtidas e comentários</h4>
+      <p class="side-soon">Em breve você vai poder curtir e comentar este conteúdo.</p>
+    </section>`;
+}
+
+function sidebar(post, recentPosts) {
+  return [
+    widgetCategories(post),
+    widgetTags(post),
+    widgetRecent(recentPosts),
+    widgetSoon(),
+  ].filter(Boolean).join('\n    ');
 }
 
 function relatedCard(p) {
@@ -55,7 +128,7 @@ function relatedSection(related) {
     </section>`;
 }
 
-export function renderPostPage(post, related = []) {
+export function renderPostPage(post, related = [], recentPosts = []) {
   const title = post.seoTitle || `${post.title} · Blog HD360 Moinhos`;
   const desc = post.metaDescription || post.excerpt || '';
   const url = `${SITE}/${post.slug}/`;
@@ -150,12 +223,19 @@ export function renderPostPage(post, related = []) {
 
     <section class="section section--white" style="padding-top:clamp(20px,3vw,36px);">
       <div class="container">
-        ${post.coverImage ? `<img class="post-hero-img reveal" src="../${post.coverImage}" alt="${esc(post.title)}" />` : ''}
-        <article class="prose reveal">
-          ${rel(post.content)}
-        </article>
-        <div class="post-cta reveal">
-          <a class="btn btn--solid btn--azul" href="https://wa.me/555121128884?text=Ol%C3%A1!%20Vim%20pelo%20blog%20da%20HD360%20Moinhos." target="_blank" rel="noopener">Fale com a gente no WhatsApp</a>
+        <div class="post-layout">
+          <div class="post-main">
+            ${post.coverImage ? `<img class="post-hero-img reveal" src="../${post.coverImage}" alt="${esc(post.title)}" />` : ''}
+            <article class="prose reveal">
+              ${rel(post.content)}
+            </article>
+            <div class="post-cta reveal">
+              <a class="btn btn--solid btn--azul" href="https://wa.me/555121128884?text=Ol%C3%A1!%20Vim%20pelo%20blog%20da%20HD360%20Moinhos." target="_blank" rel="noopener">Fale com a gente no WhatsApp</a>
+            </div>
+          </div>
+          <aside class="post-side">
+            ${sidebar(post, recentPosts)}
+          </aside>
         </div>
       </div>
     </section>

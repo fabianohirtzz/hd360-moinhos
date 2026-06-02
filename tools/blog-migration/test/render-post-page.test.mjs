@@ -77,3 +77,22 @@ test('post relacionado sem capa usa SVG placeholder, sem src="../" vazio', () =>
   // Nao deve haver um img com src="../" (prefixo com caminho vazio = src="../")
   assert.doesNotMatch(html, /src="\.\.\/"/);
 });
+
+test('renderiza sidebar com categorias, tags e recentes', () => {
+  const withTags = { ...post, tags: ['TEA', 'ABA'] };
+  const recent = [
+    { slug: 'r1', title: 'Recente 1', coverImage: 'images/blog/r1.png', category: { color: 'azul', name: 'Terapias e Abordagens' } },
+  ];
+  const html = renderPostPage(withTags, related, recent);
+  assert.match(html, /class="post-layout"/);
+  assert.match(html, /class="post-side"/);
+  assert.match(html, /blog-todos\.html\?cat=/);
+  assert.match(html, /side-tag">#TEA/);
+  assert.match(html, /href="\.\.\/r1\/"/);
+  assert.match(html, /Recente 1/);
+});
+
+test('omite widget de tags quando nao ha tags', () => {
+  const html = renderPostPage({ ...post, tags: [] }, related, []);
+  assert.doesNotMatch(html, /side-tags/);
+});

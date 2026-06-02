@@ -787,15 +787,14 @@ h1, h2, h3 { font-family: var(--font-display); font-weight: 400; line-height: 1.
 
 /* ---------- Mundos temáticos (Unidades) ---------- */
 .worlds { display: grid; gap: 26px; grid-template-columns: repeat(auto-fit, minmax(290px, 1fr)); }
-.world { position: relative; overflow: hidden; border-radius: var(--r-xl); min-height: clamp(440px, 30vw, 500px); padding: 26px; display: flex; align-items: flex-end; }
+.world { position: relative; overflow: hidden; border-radius: var(--r-xl); min-height: clamp(470px, 32vw, 520px); padding: 26px; display: flex; align-items: flex-end; }
 .world--mar { background: linear-gradient(160deg, #E4F6FD, #b6e6fb); }
 .world--floresta { background: linear-gradient(160deg, #F1F6D9, #d3e79e); }
 .world--espaco { background: linear-gradient(160deg, #EFE7F8, #cdb6ec); }
 .world__char { position: absolute; pointer-events: none; filter: drop-shadow(0 14px 22px rgba(46,42,57,.2)); }
 .world__char--1 { width: 44%; max-width: 178px; top: 5%; right: 6%; }
 .world__char--2 { width: 30%; max-width: 116px; top: 12%; left: 7%; }
-.world__label { margin-top: auto; }
-.world__label { position: relative; z-index: 2; background: rgba(255,255,255,.74); backdrop-filter: blur(6px); border-radius: var(--r-lg); padding: 20px 24px; max-width: 360px; box-shadow: 0 12px 30px rgba(46,42,57,.08); }
+.world__label { position: relative; z-index: 2; margin-top: auto; width: 100%; max-width: 360px; min-height: 234px; display: flex; flex-direction: column; justify-content: center; background: rgba(255,255,255,.78); backdrop-filter: blur(6px); border-radius: var(--r-lg); padding: 22px 24px; box-shadow: 0 12px 30px rgba(46,42,57,.08); }
 .world__title { font: 400 clamp(26px, 3vw, 38px)/1 var(--font-display); color: var(--tinta); margin-top: 8px; }
 .world__text { font: 400 14.5px/1.55 var(--font-body); color: var(--tinta-muted); margin-top: 8px; }
 

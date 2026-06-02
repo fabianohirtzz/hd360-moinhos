@@ -552,15 +552,19 @@ Light cream footer, rounded top corners, organized in friendly columns: brand + 
 
 ## 15. WhatsApp float (gradient) + contact (BUILT)
 
-A persistent rounded WhatsApp button bottom-right (the clinic's primary contact channel). **It uses the brand gradient `--grad-marca`, not WhatsApp green** — a deliberate client choice so the float reads as *HD360*, not as a generic WhatsApp badge. Rosa-tinted soft glow, a gentle scale on hover. Respects reduced-motion.
+A persistent rounded WhatsApp button bottom-right (the clinic's primary contact channel). **It uses the brand gradient `--grad-marca`, not WhatsApp green** — a deliberate client choice so the float reads as *HD360*, not as a generic WhatsApp badge. It carries a **pulse glow**: the rosa-tinted shadow "breathes" while a soft gradient ring expands and fades out behind it — slow (`3s`), gentle, never strobing (TEA-aware). On hover it scales up and the ring pauses. The glow is disabled under `.calm` / `prefers-reduced-motion`.
 
 ```css
-.wpp { position: fixed; right: 18px; bottom: 18px; z-index: 90; width: 60px; height: 60px; border-radius: 50%; display: grid; place-items: center; background: var(--grad-marca); color: #fff; box-shadow: 0 10px 26px rgba(251,60,99,.32); transition: transform .25s var(--ease-bounce); }
+.wpp { position: fixed; right: 18px; bottom: 18px; z-index: 90; width: 60px; height: 60px; border-radius: 50%; display: grid; place-items: center; background: var(--grad-marca); color: #fff; box-shadow: 0 10px 26px rgba(251,60,99,.32); transition: transform .25s var(--ease-bounce); animation: wpp-glow 3s var(--ease-soft) infinite; }
+.wpp svg { width: 32px; height: 32px; position: relative; z-index: 1; }
+.wpp::before { content: ""; position: absolute; inset: 0; border-radius: 50%; background: var(--grad-marca); z-index: 0; animation: wpp-ring 3s var(--ease-soft) infinite; }
+@keyframes wpp-glow { 0%,100% { box-shadow: 0 10px 26px rgba(251,60,99,.32); } 50% { box-shadow: 0 14px 34px rgba(251,60,99,.5); } }
+@keyframes wpp-ring { 0% { transform: scale(1); opacity: .55; } 70%,100% { transform: scale(1.75); opacity: 0; } }
 .wpp:hover { transform: scale(1.08); }
-.wpp svg { width: 32px; height: 32px; }
+.wpp:hover::before { animation-play-state: paused; opacity: 0; }
 ```
 
-Always reachable; on mobile it shrinks to `54px` so it never covers footer links.
+Disable the glow for sensory-sensitive users: `.calm .wpp, .calm .wpp::before { animation: none !important; }` (plus the global reduced-motion contract). Always reachable; on mobile it shrinks to `54px` so it never covers footer links.
 
 ---
 

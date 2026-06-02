@@ -478,9 +478,22 @@ h1, h2, h3 { font-family: var(--font-display); font-weight: 400; line-height: 1.
 /* =====================================================================
    WhatsApp float
    ===================================================================== */
-.wpp { position: fixed; right: 18px; bottom: 18px; z-index: 90; width: 60px; height: 60px; border-radius: 50%; display: grid; place-items: center; background: var(--grad-marca); color: #fff; box-shadow: 0 10px 26px rgba(251,60,99,.32); transition: transform .25s var(--ease-bounce); }
+.wpp { position: fixed; right: 18px; bottom: 18px; z-index: 90; width: 60px; height: 60px; border-radius: 50%; display: grid; place-items: center; background: var(--grad-marca); color: #fff; box-shadow: 0 10px 26px rgba(251,60,99,.32); transition: transform .25s var(--ease-bounce); animation: wpp-glow 3s var(--ease-soft) infinite; }
+.wpp svg { width: 32px; height: 32px; position: relative; z-index: 1; }
+/* anel de glow que expande e some atras do botao */
+.wpp::before { content: ""; position: absolute; inset: 0; border-radius: 50%; background: var(--grad-marca); z-index: 0; animation: wpp-ring 3s var(--ease-soft) infinite; }
+/* a sombra "respira" devagar (lento, sem strobe — publico TEA) */
+@keyframes wpp-glow {
+  0%, 100% { box-shadow: 0 10px 26px rgba(251,60,99,.32); }
+  50%      { box-shadow: 0 14px 34px rgba(251,60,99,.5); }
+}
+@keyframes wpp-ring {
+  0%   { transform: scale(1);    opacity: .55; }
+  70%  { transform: scale(1.75); opacity: 0; }
+  100% { transform: scale(1.75); opacity: 0; }
+}
 .wpp:hover { transform: scale(1.08); }
-.wpp svg { width: 32px; height: 32px; }
+.wpp:hover::before { animation-play-state: paused; opacity: 0; }
 
 /* =====================================================================
    Cookie banner
@@ -642,3 +655,5 @@ h1, h2, h3 { font-family: var(--font-display); font-weight: 400; line-height: 1.
 
 /* calma: para peças e legenda */
 .calm .nav__puzzle, .calm .hero__puzzle, .calm .hero__video-tag::before { animation: none !important; transform: none !important; }
+.calm .wpp, .calm .wpp::before { animation: none !important; }
+.calm .wpp::before { opacity: 0 !important; }

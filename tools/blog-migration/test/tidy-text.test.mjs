@@ -60,12 +60,22 @@ test('tidyTitle collapses double spaces', () => {
   assert.ok(result.includes('Individual'), 'Individual is capitalized');
 });
 
-test('shouty: PERGUNTAS FREQUENTES — punctuation at end preserved', () => {
+test('shouty: PERGUNTAS FREQUENTES — trailing period stripped', () => {
   const input = 'PERGUNTAS FREQUENTES SOBRE AUTISMO, DÚVIDAS MAIS BUSCADAS PELAS FAMÍLIAS.';
   const result = tidyTitle(input);
-  assert.ok(result.startsWith('Perguntas'), 'starts with Perguntas');
-  assert.ok(result.endsWith('.') || result.endsWith('Famílias.'), 'ends with period');
-  assert.ok(!result.includes('–') && !result.includes('—'), 'no dashes');
+  assert.equal(result, 'Perguntas Frequentes Sobre Autismo, Dúvidas Mais Buscadas Pelas Famílias');
+});
+
+test('shouty: palavra após dois-pontos é capitalizada', () => {
+  const input = 'CADA CRIANÇA É ÚNICA: O PODER DA ABORDAGEM INDIVIDUAL NO AUTISMO EM PORTO ALEGRE';
+  const result = tidyTitle(input);
+  assert.equal(result, 'Cada Criança É Única: O Poder da Abordagem Individual no Autismo em Porto Alegre');
+});
+
+test('shouty: minor word após dois-pontos vira maiúscula (o que)', () => {
+  const input = 'TERAPIA ABA: O QUE REALMENTE TRANSFORMA';
+  const result = tidyTitle(input);
+  assert.equal(result, 'Terapia ABA: O que Realmente Transforma');
 });
 
 // ── tidyContent ───────────────────────────────────────────────────────────────

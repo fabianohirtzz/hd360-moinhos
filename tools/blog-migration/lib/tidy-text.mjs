@@ -60,8 +60,11 @@ function toTitleCase(lower) {
   const words = lower.split(' ');
   return words.map((word, idx) => {
     if (!word) return word;
-    // Always capitalize the first word
-    if (idx === 0) return capitalizeFirst(word);
+    // Force-capitalize the first word, and any word that follows
+    // sentence-ending punctuation or a colon on the previous word.
+    const prev = idx > 0 ? words[idx - 1] : '';
+    const forceCap = idx === 0 || /[:.!?]$/.test(prev);
+    if (forceCap) return capitalizeFirst(word);
     // Keep minor words lowercase (but only pure word matches — ignore punctuation attachment)
     // Strip trailing punctuation to test, then reattach
     const match = word.match(/^([\wÀ-ɏ]+)([\W]*)$/u);
@@ -101,9 +104,9 @@ export function tidyTitle(str) {
   // Step 1: Replace dashes
   let s = replaceDashes(str);
 
-  // Step 2: If not shouty, return cleaned string
+  // Step 2: If not shouty, return cleaned string (still strip a stray trailing period)
   if (!isShouty(s)) {
-    return s.replace(/  +/g, ' ').trim();
+    return stripTrailingPeriod(s.replace(/  +/g, ' ').trim());
   }
 
   // Step 3: Convert to title case
@@ -113,8 +116,16 @@ export function tidyTitle(str) {
   // Step 4: Restore acronyms and proper nouns
   titled = restoreAcronyms(titled);
 
-  // Step 5: Collapse double spaces and trim
-  return titled.replace(/  +/g, ' ').trim();
+  // Step 5: Collapse double spaces, strip trailing period, trim
+  return stripTrailingPeriod(titled.replace(/  +/g, ' ').trim());
+}
+
+/**
+ * Remove a single trailing period from a title (keep ellipsis, ? and !).
+ */
+function stripTrailingPeriod(str) {
+  if (str.endsWith('.') && !str.endsWith('..')) return str.slice(0, -1);
+  return str;
 }
 
 /**

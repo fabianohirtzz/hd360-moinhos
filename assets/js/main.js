@@ -85,14 +85,17 @@
     } else {
       const io = new IntersectionObserver((entries) => {
         for (const e of entries) {
-          if (e.intersectionRatio > 0.12) {
+          // Revela assim que o elemento entra na viewport. Não exigimos uma
+          // fração mínima do elemento, senão blocos mais altos que a tela
+          // (ex.: o corpo de um artigo longo) nunca alcançariam o limiar.
+          if (e.isIntersecting) {
             e.target.classList.add("is-in");
             io.unobserve(e.target);
             if (e.target.hasAttribute("data-count")) countUp(e.target);
             e.target.querySelectorAll?.("[data-count]").forEach(countUp);
           }
         }
-      }, { threshold: [0, 0.12] });
+      }, { threshold: 0, rootMargin: "0px 0px -8% 0px" });
       revealEls.forEach((el) => io.observe(el));
     }
   }

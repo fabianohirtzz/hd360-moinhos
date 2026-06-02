@@ -226,7 +226,7 @@ export function renderPostPage(post, related = [], recentPosts = []) {
         <div class="post-layout">
           <div class="post-main">
             ${post.coverImage ? `<img class="post-hero-img reveal" src="../${post.coverImage}" alt="${esc(post.title)}" />` : ''}
-            <article class="prose reveal">
+            <article class="prose">
               ${rel(post.content)}
             </article>
             <div class="post-cta reveal">

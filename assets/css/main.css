@@ -307,6 +307,24 @@ h1, h2, h3 { font-family: var(--font-display); font-weight: 400; line-height: 1.
 .is-amarelo:hover { box-shadow: 0 24px 50px rgba(255,199,0,.22); }
 
 /* =====================================================================
+   CONVÊNIOS (planos parceiros)
+   ===================================================================== */
+.convenios { display: grid; gap: 22px; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); max-width: 940px; margin-inline: auto; }
+.convenio {
+  background: var(--branco); border-radius: var(--r-lg); padding: 28px 24px;
+  display: flex; flex-direction: column; align-items: center; gap: 16px; text-align: center;
+  border: 1px solid var(--creme-deep);
+  box-shadow: 0 12px 30px rgba(46,42,57,.06), 0 4px 10px rgba(46,42,57,.04);
+  transition: transform .25s var(--ease-gentle), box-shadow .25s var(--ease-soft);
+}
+.convenio:hover { transform: translateY(-6px); box-shadow: 0 24px 50px rgba(0,165,234,.16); }
+.convenio__logo { width: 100%; max-width: 180px; height: 56px; object-fit: contain; }
+.convenio__name { font: 600 14.5px/1.3 var(--font-body); color: var(--tinta-muted); }
+.convenios__note { text-align: center; margin-top: 28px; font: 500 15.5px/1.65 var(--font-body); color: var(--tinta-muted); }
+.convenios__note a { color: var(--azul-ink); font-weight: 700; text-decoration: none; box-shadow: inset 0 -2px 0 var(--azul-soft); }
+.convenios__note a:hover { box-shadow: inset 0 -2px 0 var(--azul); }
+
+/* =====================================================================
    SOBRE / split (boas-vindas)
    ===================================================================== */
 .split { display: grid; grid-template-columns: .95fr 1.05fr; gap: clamp(32px, 5vw, 72px); align-items: center; }

@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Atendimento e Especialidades · HD360 Moinhos</title>
+  <meta name="description" content="Atendimento neuropediátrico especializado em autismo: terapia ABA, modelo Denver e mais de 11 especialidades integradas, com avaliação, diagnóstico e tratamento em Porto Alegre." />
+  <link rel="icon" type="image/png" href="images/icon.png" />
+  <link rel="apple-touch-icon" href="images/icon.png" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/css/main.css" />
+</head>
+<body>
+
+  <!-- Sprite SVG (peça de quebra-cabeça reutilizável) -->
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+    <symbol id="ic-puzzle" viewBox="0 0 24 24"><path d="M19.439 7.85c-.049.322.059.648.289.878l1.568 1.568c.47.47.706 1.087.706 1.704s-.235 1.233-.706 1.704l-1.611 1.611a.98.98 0 0 1-.837.276c-.47-.07-.802-.48-.968-.925a2.501 2.501 0 1 0-3.214 3.214c.446.166.855.497.925.968a.979.979 0 0 1-.276.837l-1.61 1.61a2.404 2.404 0 0 1-1.705.707 2.402 2.402 0 0 1-1.704-.706l-1.568-1.568a1.026 1.026 0 0 0-.877-.29c-.493.074-.84.504-1.02.968a2.5 2.5 0 1 1-3.237-3.237c.464-.18.894-.527.967-1.02a1.026 1.026 0 0 0-.289-.877l-1.568-1.568A2.402 2.402 0 0 1 1.998 12c0-.617.236-1.234.706-1.704L4.23 8.77c.24-.24.581-.353.917-.303.515.077.877.528 1.073 1.01a2.5 2.5 0 1 0 3.259-3.259c-.482-.196-.933-.558-1.01-1.073-.05-.336.062-.676.303-.917l1.525-1.525A2.402 2.402 0 0 1 12 1.998c.617 0 1.234.236 1.704.706l1.568 1.568c.23.23.556.338.877.29.493-.074.84-.504 1.02-.968a2.5 2.5 0 1 1 3.237 3.237c-.464.18-.894.527-.967 1.02Z"/></symbol>
+  </svg>
+
+  <!-- ============================ NAV ============================ -->
+  <header class="nav" data-nav>
+    <a class="nav__brand" href="index.html" aria-label="HD360 Moinhos, início">
+      <img class="nav__logo" src="images/logo-3.png" alt="HD360 Moinhos" width="170" height="48" />
+    </a>
+    <nav class="nav__links" aria-label="Navegação principal">
+      <a class="nav__link" href="index.html" data-color="azul"><span class="nav__puzzle" aria-hidden="true"><svg viewBox="0 0 24 24"><use href="#ic-puzzle"/></svg></span>Início</a>
+      <a class="nav__link" href="atendimento.html" data-color="rosa" aria-current="page"><span class="nav__puzzle" aria-hidden="true"><svg viewBox="0 0 24 24"><use href="#ic-puzzle"/></svg></span>Atendimento</a>
+      <a class="nav__link" href="equipe.html" data-color="amarelo"><span class="nav__puzzle" aria-hidden="true"><svg viewBox="0 0 24 24"><use href="#ic-puzzle"/></svg></span>Equipe</a>
+      <a class="nav__link" href="unidades.html" data-color="verde"><span class="nav__puzzle" aria-hidden="true"><svg viewBox="0 0 24 24"><use href="#ic-puzzle"/></svg></span>Unidades</a>
+      <a class="nav__link" href="ouvidoria.html" data-color="lilas"><span class="nav__puzzle" aria-hidden="true"><svg viewBox="0 0 24 24"><use href="#ic-puzzle"/></svg></span>Ouvidoria</a>
+      <a class="nav__link" href="blog.html" data-color="azul"><span class="nav__puzzle" aria-hidden="true"><svg viewBox="0 0 24 24"><use href="#ic-puzzle"/></svg></span>Blog</a>
+    </nav>
+    <a class="btn btn--solid btn--lilas nav__cta" href="https://wa.me/555121128884?text=Ol%C3%A1!%20Vim%20pelo%20site%20da%20HD360%20Moinhos%20e%20gostaria%20de%20agendar%20uma%20visita." target="_blank" rel="noopener">Agende uma visita</a>
+    <button class="nav__burger" data-burger aria-label="Abrir menu" aria-expanded="false" aria-controls="drawer">
+      <span></span><span></span><span></span>
+    </button>
+  </header>
+
+  <!-- Drawer mobile -->
+  <div class="drawer-backdrop" data-drawer-backdrop></div>
+  <aside class="drawer" id="drawer" data-drawer aria-label="Menu">
+    <div class="drawer__head">
+      <img class="drawer__logo" src="images/logo-3.png" alt="HD360 Moinhos" width="150" height="42" />
+      <button class="drawer__close" data-drawer-close aria-label="Fechar menu">&times;</button>
+    </div>
+    <a class="drawer__link" href="index.html" data-color="azul"><span class="drawer__puzzle" aria-hidden="true"><svg viewBox="0 0 24 24"><use href="#ic-puzzle"/></svg></span>Início</a>
+    <a class="drawer__link" href="atendimento.html" data-color="rosa"><span class="drawer__puzzle" aria-hidden="true"><svg viewBox="0 0 24 24"><use href="#ic-puzzle"/></svg></span>Atendimento</a>
+    <a class="drawer__link" href="equipe.html" data-color="amarelo"><span class="drawer__puzzle" aria-hidden="true"><svg viewBox="0 0 24 24"><use href="#ic-puzzle"/></svg></span>Equipe</a>
+    <a class="drawer__link" href="unidades.html" data-color="verde"><span class="drawer__puzzle" aria-hidden="true"><svg viewBox="0 0 24 24"><use href="#ic-puzzle"/></svg></span>Unidades</a>
+    <a class="drawer__link" href="ouvidoria.html" data-color="lilas"><span class="drawer__puzzle" aria-hidden="true"><svg viewBox="0 0 24 24"><use href="#ic-puzzle"/></svg></span>Ouvidoria</a>
+    <a class="drawer__link" href="blog.html" data-color="azul"><span class="drawer__puzzle" aria-hidden="true"><svg viewBox="0 0 24 24"><use href="#ic-puzzle"/></svg></span>Blog</a>
+    <a class="btn btn--solid btn--lilas drawer__cta" href="https://wa.me/555121128884" target="_blank" rel="noopener">Agende uma visita</a>
+  </aside>
+
+  <main>
+
+    <!-- ============================ HERO ============================ -->
+    <section class="page-hero page-hero--split">
+      <div class="page-hero__bg" aria-hidden="true">
+        <span class="blob blob--rosa blob--a"></span>
+        <span class="blob blob--azul blob--b"></span>
+        <span class="blob blob--amarelo blob--c"></span>
+      </div>
+      <div class="container page-hero__inner">
+        <div class="page-hero__copy">
+          <p class="eyebrow eyebrow--rosa reveal"><span class="eyebrow__dot" aria-hidden="true"></span> Atendimentos especializados</p>
+          <h1 class="page-hero__title reveal" style="--i:1">Cuidado completo para <span class="hl hl--rosa">cada etapa</span> do desenvolvimento</h1>
+          <p class="page-hero__lede reveal" style="--i:2">Avaliação, diagnóstico e tratamento para pessoas autistas e com desenvolvimento atípico, com abordagem baseada em evidências e uma equipe que trabalha em conjunto.</p>
+          <div class="page-hero__actions reveal" style="--i:3">
+            <a class="btn btn--solid btn--rosa" href="https://wa.me/555121128884" target="_blank" rel="noopener">Marque uma avaliação</a>
+            <a class="btn btn--ghost btn--rosa" href="#especialidades">Ver especialidades</a>
+          </div>
+        </div>
+        <figure class="page-hero__art reveal" style="--i:2">
+          <img src="assets/img/li-desenho.png" alt="Li, personagem da HD360, mostrando um desenho" class="float float--slow" width="380" height="470" />
+        </figure>
+      </div>
+      <div class="wave wave--bottom" aria-hidden="true">
+        <svg viewBox="0 0 1440 90" preserveAspectRatio="none"><path d="M0,40 C360,100 1080,0 1440,55 L1440,90 L0,90 Z" fill="#ffffff"/></svg>
+      </div>
+    </section>
+
+    <!-- ============================ NOSSA FORMA DE CUIDAR ============================ -->
+    <section class="section section--white">
+      <div class="container">
+        <header class="section__head section__head--wide reveal">
+          <p class="eyebrow eyebrow--azul" style="margin-inline:auto;"><span class="eyebrow__dot" aria-hidden="true"></span> Nossa forma de cuidar</p>
+          <h2 class="section__title">Especialistas em desenvolvimento <span class="hl hl--azul">neuropediátrico</span></h2>
+          <p class="section__lede">Somos referência no cuidado de pessoas com Transtorno do Espectro Autista (TEA) e atrasos no desenvolvimento. Cada plano terapêutico nasce de uma avaliação cuidadosa e é construído a várias mãos, porque desenvolvimento de verdade acontece quando as áreas conversam entre si.</p>
+        </header>
+      </div>
+    </section>
+
+    <!-- ============================ NOSSO ATENDIMENTO ABRANGE ============================ -->
+    <section class="section section--cream">
+      <div class="container">
+        <header class="section__head reveal">
+          <p class="eyebrow eyebrow--verde" style="margin-inline:auto;"><span class="eyebrow__dot" aria-hidden="true"></span> O que oferecemos</p>
+          <h2 class="section__title">Nosso atendimento <span class="hl hl--verde">abrange</span></h2>
+        </header>
+        <div class="carelist">
+          <article class="careitem reveal" style="--i:0">
+            <span class="careitem__icon icon--azul" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></span>
+            <div><h3 class="careitem__title">Atendimento individualizado</h3><p class="careitem__text">Plano terapêutico personalizado, no ritmo e nas necessidades de cada pessoa.</p></div>
+          </article>
+          <article class="careitem reveal" style="--i:1">
+            <span class="careitem__icon icon--rosa" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78L12 21.23l8.84-8.84a5.5 5.5 0 0 0 0-7.78z"/></svg></span>
+            <div><h3 class="careitem__title">Orientação para pais e cuidadores</h3><p class="careitem__text">Estratégias práticas para levar o cuidado para dentro de casa.</p></div>
+          </article>
+          <article class="careitem reveal" style="--i:2">
+            <span class="careitem__icon icon--lilas" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg></span>
+            <div><h3 class="careitem__title">Supervisão especializada</h3><p class="careitem__text">Apoio técnico para profissionais de saúde que atuam com a pessoa em cuidado.</p></div>
+          </article>
+          <article class="careitem reveal" style="--i:0">
+            <span class="careitem__icon icon--verde" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg></span>
+            <div><h3 class="careitem__title">Cursos e palestras</h3><p class="careitem__text">Conhecimento que forma e transforma a comunidade.</p></div>
+          </article>
+          <article class="careitem reveal" style="--i:1">
+            <span class="careitem__icon icon--amarelo" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l1.9 4.6 5 .4-3.8 3.3 1.2 4.9L12 13.9 7.7 16.2l1.2-4.9L5 8l5-.4z"/></svg></span>
+            <div><h3 class="careitem__title">Terapia ABA e modelo Denver</h3><p class="careitem__text">Aplicados em ambientes naturais, onde o aprendizado vira vida.</p></div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================ ESPECIALIDADES (grid filtrável) ============================ -->
+    <section class="section section--white" id="especialidades" style="scroll-margin-top:100px">
+      <div class="container">
+        <header class="section__head reveal">
+          <p class="eyebrow eyebrow--lilas" style="margin-inline:auto;"><span class="eyebrow__dot" aria-hidden="true"></span> Equipe multidisciplinar</p>
+          <h2 class="section__title">Nossas <span class="hl hl--lilas">especialidades</span></h2>
+          <p class="section__lede">Mais de onze áreas integradas, cada uma com profissionais dedicados ao desenvolvimento de cada pessoa. Filtre por área para encontrar o que procura.</p>
+        </header>
+
+        <div class="filters reveal" data-filter-bar role="group" aria-label="Filtrar especialidades por área">
+          <button class="filter is-active" data-filter="todos">Todas</button>
+          <button class="filter" data-filter="comunicacao">Comunicação</button>
+          <button class="filter" data-filter="comportamento">Comportamento</button>
+          <button class="filter" data-filter="corpo">Corpo &amp; Sentidos</button>
+          <button class="filter" data-filter="saude">Saúde</button>
+          <button class="filter" data-filter="diagnostico">Diagnóstico</button>
+        </div>
+
+        <div class="specs">
+          <article class="spec spec--azul reveal" data-cat="comunicacao" style="--i:0">
+            <span class="spec__media" aria-hidden="true"><img src="images/Profissionais/fonoaudiologia2.png" alt="" loading="lazy" /></span>
+            <h3 class="spec__title">Fonoaudiologia</h3>
+            <p class="spec__text">Comunicação, linguagem e alimentação, desenvolvendo a fala, a interação e a relação com o alimento.</p>
+            <span class="spec__tagline">Comunicação</span>
+          </article>
+          <article class="spec spec--verde reveal" data-cat="corpo" style="--i:1">
+            <span class="spec__media" aria-hidden="true"><img src="images/Profissionais/terapia.png" alt="" loading="lazy" /></span>
+            <h3 class="spec__title">Terapia Ocupacional</h3>
+            <p class="spec__text">Autonomia no dia a dia e integração sensorial, para uma pessoa mais segura no próprio corpo e no mundo.</p>
+            <span class="spec__tagline">Corpo &amp; Sentidos</span>
+          </article>
+          <article class="spec spec--lilas reveal" data-cat="comportamento" style="--i:2">
+            <span class="spec__media" aria-hidden="true"><img src="images/Profissionais/psicologia.png" alt="" loading="lazy" /></span>
+            <h3 class="spec__title">Psicologia</h3>
+            <p class="spec__text">Acolhimento emocional e desenvolvimento comportamental com base na Análise do Comportamento Aplicada.</p>
+            <span class="spec__tagline">Comportamento</span>
+          </article>
+          <article class="spec spec--rosa reveal" data-cat="comunicacao" style="--i:0">
+            <span class="spec__media" aria-hidden="true"><img src="images/Profissionais/musicoterapia.png" alt="" loading="lazy" /></span>
+            <h3 class="spec__title">Musicoterapia</h3>
+            <p class="spec__text">A música como ponte para a expressão, a comunicação e o vínculo.</p>
+            <span class="spec__tagline">Comunicação</span>
+          </article>
+          <article class="spec spec--amarelo reveal" data-cat="comportamento" style="--i:1">
+            <span class="spec__media" aria-hidden="true"><img src="images/Profissionais/psicopedagogia.png" alt="" loading="lazy" /></span>
+            <h3 class="spec__title">Psicopedagogia</h3>
+            <p class="spec__text">Aprendizagem que respeita o jeito único de cada pessoa aprender.</p>
+            <span class="spec__tagline">Comportamento</span>
+          </article>
+          <article class="spec spec--azul reveal" data-cat="corpo" style="--i:2">
+            <span class="spec__media" aria-hidden="true"><img src="images/Profissionais/fisioterapia.png" alt="" loading="lazy" /></span>
+            <h3 class="spec__title">Fisioterapia</h3>
+            <p class="spec__text">Movimento, postura e função, no cuidado neurofuncional, motor e respiratório.</p>
+            <span class="spec__tagline">Corpo &amp; Sentidos</span>
+          </article>
+          <article class="spec spec--verde reveal" data-cat="corpo" style="--i:0">
+            <span class="spec__media" aria-hidden="true"><img src="images/Profissionais/psicomotricidade.png" alt="" loading="lazy" /></span>
+            <h3 class="spec__title">Psicomotricidade</h3>
+            <p class="spec__text">Corpo, emoção e cognição trabalhando juntos no desenvolvimento global.</p>
+            <span class="spec__tagline">Corpo &amp; Sentidos</span>
+          </article>
+          <article class="spec spec--lilas reveal" data-cat="saude" style="--i:1">
+            <span class="spec__media" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20s-7-4.5-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.5-7 10-7 10z"/><path d="M12 8v6"/></svg></span>
+            <h3 class="spec__title">Nutrição</h3>
+            <p class="spec__text">Cuidado com a seletividade alimentar e a saúde que sustenta o crescimento.</p>
+            <span class="spec__tagline">Saúde</span>
+          </article>
+          <article class="spec spec--rosa reveal" data-cat="comunicacao" style="--i:2">
+            <span class="spec__media" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="13.5" cy="6.5" r="2.5"/><circle cx="17.5" cy="12" r="2.5"/><circle cx="8.5" cy="7.5" r="2.5"/><circle cx="6.5" cy="12.5" r="2.5"/><path d="M12 22a10 10 0 1 1 0-20c2 0 2 1.5 1 2.5S12.5 7 14 7a8 8 0 0 1 0 15z"/></svg></span>
+            <h3 class="spec__title">Arteterapia</h3>
+            <p class="spec__text">A arte como caminho para sentir, criar e se expressar.</p>
+            <span class="spec__tagline">Comunicação</span>
+          </article>
+          <article class="spec spec--amarelo reveal" data-cat="comportamento" style="--i:0">
+            <span class="spec__media" aria-hidden="true"><img src="images/Profissionais/acompanhante.png" alt="" loading="lazy" /></span>
+            <h3 class="spec__title">Acompanhante Terapêutico</h3>
+            <p class="spec__text">Suporte que acompanha a pessoa nos contextos reais da vida: escola, casa e comunidade.</p>
+            <span class="spec__tagline">Comportamento</span>
+          </article>
+          <article class="spec spec--azul reveal" data-cat="diagnostico" style="--i:1">
+            <span class="spec__media" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a4 4 0 0 0-4 4v1a3 3 0 0 0-3 3 3 3 0 0 0 1 5 3 3 0 0 0 6 1 3 3 0 0 0 6-1 3 3 0 0 0 1-5 3 3 0 0 0-3-3V6a4 4 0 0 0-4-4z"/><path d="M12 2v18"/></svg></span>
+            <h3 class="spec__title">Avaliação Neuropsicológica</h3>
+            <p class="spec__text">Diagnóstico cuidadoso que orienta o melhor caminho terapêutico.</p>
+            <span class="spec__tagline">Diagnóstico</span>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================ PROGRAMAS ESPECIALIZADOS ============================ -->
+    <section class="section section--cream">
+      <div class="container">
+        <header class="section__head reveal">
+          <p class="eyebrow eyebrow--amarelo" style="margin-inline:auto;"><span class="eyebrow__dot" aria-hidden="true"></span> Cuidado que vai além</p>
+          <h2 class="section__title">Programas que vão <span class="hl hl--amarelo">além</span></h2>
+          <p class="section__lede">Frentes específicas que se somam ao plano terapêutico de cada pessoa, conforme o objetivo de desenvolvimento.</p>
+        </header>
+        <div class="taglist reveal">
+          <span class="tag"><span class="tag__dot" aria-hidden="true"></span>Integração sensorial (Método Ayres)</span>
+          <span class="tag"><span class="tag__dot" aria-hidden="true"></span>Manejo de seletividade alimentar</span>
+          <span class="tag"><span class="tag__dot" aria-hidden="true"></span>Manejo comportamental</span>
+          <span class="tag"><span class="tag__dot" aria-hidden="true"></span>Estimulação precoce</span>
+          <span class="tag"><span class="tag__dot" aria-hidden="true"></span>Grupos de habilidades sociais</span>
+          <span class="tag"><span class="tag__dot" aria-hidden="true"></span>Inclusão educacional</span>
+          <span class="tag"><span class="tag__dot" aria-hidden="true"></span>Alfabetização tardia</span>
+          <span class="tag"><span class="tag__dot" aria-hidden="true"></span>Orientação parental</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================ FAQ ============================ -->
+    <section class="section section--white">
+      <div class="container">
+        <header class="section__head reveal">
+          <p class="eyebrow eyebrow--azul" style="margin-inline:auto;"><span class="eyebrow__dot" aria-hidden="true"></span> Dúvidas frequentes</p>
+          <h2 class="section__title">Antes de <span class="hl hl--azul">começar</span></h2>
+        </header>
+        <div class="faq reveal" data-accordion>
+          <details class="faq__item" open>
+            <summary class="faq__q">A partir de que idade vocês atendem?<span class="faq__chevron" aria-hidden="true"></span></summary>
+            <div class="faq__a"><p>Cuidamos de pessoas em diferentes fases da vida, da primeira infância à vida adulta. Quanto antes a estimulação começa, melhores os resultados, então fale com a gente para avaliarmos o melhor caminho para quem você ama.</p></div>
+          </details>
+          <details class="faq__item">
+            <summary class="faq__q">Preciso de um diagnóstico para começar?<span class="faq__chevron" aria-hidden="true"></span></summary>
+            <div class="faq__a"><p>Não é obrigatório. Realizamos a avaliação e o diagnóstico aqui mesmo, com a Avaliação Neuropsicológica, e também acolhemos quem já chega com laudo em mãos. O importante é dar o primeiro passo.</p></div>
+          </details>
+          <details class="faq__item">
+            <summary class="faq__q">Como funciona a terapia ABA?<span class="faq__chevron" aria-hidden="true"></span></summary>
+            <div class="faq__a"><p>A Análise do Comportamento Aplicada (ABA) ensina e fortalece habilidades em situações reais do dia a dia, sempre com objetivos individualizados e acompanhamento contínuo. Aplicamos também o modelo Denver, em ambientes naturais.</p></div>
+          </details>
+          <details class="faq__item">
+            <summary class="faq__q">Vocês atendem convênios?<span class="faq__chevron" aria-hidden="true"></span></summary>
+            <div class="faq__a"><p>As condições de atendimento e reembolso variam. Fale com a nossa equipe pelo WhatsApp e teremos o maior prazer em explicar as possibilidades para o seu caso.</p></div>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================ CTA ============================ -->
+    <section class="section section--white cta">
+      <div class="container">
+        <div class="cta__card reveal">
+          <span class="cta__overlay" aria-hidden="true"></span>
+          <figure class="cta__art" aria-hidden="true">
+            <img src="assets/img/cta-abraco.png" alt="" class="float float--slow" width="330" height="430" />
+          </figure>
+          <div class="cta__copy">
+            <h2 class="cta__title">Não sabe por onde começar?</h2>
+            <p class="cta__text">A gente te ajuda a encontrar o melhor caminho. Fale com a nossa equipe e agende uma avaliação, será um prazer receber vocês.</p>
+            <div class="cta__actions">
+              <a class="btn btn--white" href="https://wa.me/555121128884" target="_blank" rel="noopener"><svg class="btn__ic" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15l-1.4 5 5.1-1.3A10 10 0 1 0 12 2zm0 18a8 8 0 0 1-4.1-1.1l-.3-.2-3 .8.8-2.9-.2-.3A8 8 0 1 1 12 20zm4.6-6c-.2-.1-1.5-.7-1.7-.8s-.4-.1-.6.1-.6.8-.8 1-.3.2-.5.1a6.5 6.5 0 0 1-3.2-2.8c-.2-.4.2-.4.6-1.2a.4.4 0 0 0 0-.4l-.8-1.9c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.9 11.9 0 0 0 4.6 4c2 .8 2 .5 2.4.5a2.7 2.7 0 0 0 1.8-1.3 2.2 2.2 0 0 0 .2-1.3c-.1-.1-.3-.2-.5-.3z"/></svg>Falar no WhatsApp</a>
+              <a class="btn btn--ghost-on-color" href="unidades.html">Conheça as unidades</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ============================ FOOTER ============================ -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__top">
+        <div class="footer__brand">
+          <img class="footer__logo" src="images/logo-3.png" alt="HD360 Moinhos" width="190" height="54" />
+          <p class="footer__tagline">Especialista em autismo, atendimento humanizado. Clínica de desenvolvimento e terapia ABA em Porto Alegre.</p>
+          <div class="footer__social">
+            <a href="https://instagram.com/hd360moinhos" target="_blank" rel="noopener" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><line x1="17.5" y1="6.5" x2="17.5" y2="6.5"/></svg></a>
+            <a href="https://facebook.com/hd360moinhos" target="_blank" rel="noopener" aria-label="Facebook"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></a>
+            <a href="https://wa.me/555121128884" target="_blank" rel="noopener" aria-label="WhatsApp"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15l-1.4 5 5.1-1.3A10 10 0 1 0 12 2zm0 18a8 8 0 0 1-4.1-1.1l-.3-.2-3 .8.8-2.9-.2-.3A8 8 0 1 1 12 20zm4.6-6c-.2-.1-1.5-.7-1.7-.8s-.4-.1-.6.1-.6.8-.8 1-.3.2-.5.1a6.5 6.5 0 0 1-3.2-2.8c-.2-.4.2-.4.6-1.2a.4.4 0 0 0 0-.4l-.8-1.9c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.9 11.9 0 0 0 4.6 4c2 .8 2 .5 2.4.5a2.7 2.7 0 0 0 1.8-1.3 2.2 2.2 0 0 0 .2-1.3c-.1-.1-.3-.2-.5-.3z"/></svg></a>
+            <a href="https://linkedin.com" target="_blank" rel="noopener" aria-label="LinkedIn"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5zM3 9h4v12H3zM9 9h3.8v1.7h.1a4.2 4.2 0 0 1 3.8-2.1c4 0 4.8 2.6 4.8 6V21h-4v-5.3c0-1.3 0-3-1.8-3s-2.1 1.4-2.1 2.9V21H9z"/></svg></a>
+          </div>
+        </div>
+        <div class="footer__col">
+          <h4>Unidades</h4>
+          <p><strong>Quintino Bocaiúva</strong><br>R. Quintino Bocaiúva, 451<br>Moinhos de Vento · POA/RS</p>
+          <p><strong>Casa ABA</strong><br>R. Dr. Freire Alemão, 366<br>Mont'Serrat · POA/RS</p>
+        </div>
+        <div class="footer__col">
+          <h4>Atendimento</h4>
+          <a href="tel:+555121128884">(51) 2112-8884</a>
+          <a href="mailto:contato@hd360.com.br">contato@hd360.com.br</a>
+          <p>Seg a sex · 08h às 19h<br>Sáb, dom e feriados · fechado</p>
+        </div>
+        <nav class="footer__col" aria-label="Navegação do rodapé">
+          <h4>Navegue</h4>
+          <a href="index.html">Início</a>
+          <a href="atendimento.html">Atendimento</a>
+          <a href="equipe.html">Equipe</a>
+          <a href="unidades.html">Unidades</a>
+          <a href="ouvidoria.html">Ouvidoria</a>
+          <a href="blog.html">Blog</a>
+        </nav>
+      </div>
+      <div class="footer__bottom">
+        <p class="footer__legal">
+          © <span data-year>2026</span> HD360 Moinhos · CNPJ 36.152.938/0001-74 · Resp. técnico Dr. Guilherme B. Sander (CRM 23.587 · RQE 16104)<br>
+          <a href="politica-de-privacidade.html">Política de Privacidade</a> · <a href="politica-de-cookies.html">Política de Cookies</a> · <a href="termos-de-uso.html">Termos de Uso</a>
+        </p>
+        <button class="footer__calm" data-calm-toggle aria-pressed="false">Reduzir animações</button>
+      </div>
+    </div>
+  </footer>
+
+  <!-- WhatsApp flutuante -->
+  <a class="wpp" href="https://wa.me/555121128884?text=Ol%C3%A1!%20Vim%20pelo%20site%20da%20HD360%20Moinhos." target="_blank" rel="noopener" aria-label="Falar no WhatsApp">
+    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15l-1.4 5 5.1-1.3A10 10 0 1 0 12 2zm0 18a8 8 0 0 1-4.1-1.1l-.3-.2-3 .8.8-2.9-.2-.3A8 8 0 1 1 12 20zm4.6-6c-.2-.1-1.5-.7-1.7-.8s-.4-.1-.6.1-.6.8-.8 1-.3.2-.5.1a6.5 6.5 0 0 1-3.2-2.8c-.2-.4.2-.4.6-1.2a.4.4 0 0 0 0-.4l-.8-1.9c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.9 11.9 0 0 0 4.6 4c2 .8 2 .5 2.4.5a2.7 2.7 0 0 0 1.8-1.3 2.2 2.2 0 0 0 .2-1.3c-.1-.1-.3-.2-.5-.3z"/></svg>
+  </a>
+
+  <!-- Banner de cookies -->
+  <div class="cookies" data-cookies role="dialog" aria-label="Aviso de cookies">
+    <p class="cookies__title">Usamos cookies para cuidar bem da sua visita 🍪</p>
+    <p class="cookies__text">Eles nos ajudam a entender como o site é usado e a melhorar sua experiência. Saiba mais na <a href="politica-de-cookies.html">Política de Cookies</a>.</p>
+    <div class="cookies__actions">
+      <button class="btn btn--solid btn--azul" data-cookie-accept="all">Aceitar</button>
+      <button class="btn cookies__mini" data-cookie-accept="essential">Só os essenciais</button>
+    </div>
+  </div>
+
+  <script src="assets/js/main.js"></script>
+</body>
+</html>

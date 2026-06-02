@@ -221,6 +221,124 @@
     updateArrows();
   }
 
+  /* ---------- Filtro de especialidades (Atendimento) ---------- */
+  const filterBar = document.querySelector("[data-filter-bar]");
+  if (filterBar) {
+    const cards = document.querySelectorAll("[data-cat]");
+    filterBar.querySelectorAll("[data-filter]").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const cat = btn.dataset.filter;
+        filterBar.querySelectorAll("[data-filter]").forEach((b) =>
+          b.classList.toggle("is-active", b === btn));
+        cards.forEach((c) => {
+          const show = cat === "todos" || (c.dataset.cat || "").split(" ").includes(cat);
+          c.hidden = !show;
+        });
+      });
+    });
+  }
+
+  /* ---------- Switcher de unidades (Unidades) ---------- */
+  const unitTabs = document.querySelector("[data-unit-tabs]");
+  if (unitTabs) {
+    const panels = document.querySelectorAll("[data-unit]");
+    unitTabs.querySelectorAll("[data-unit-go]").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const id = btn.dataset.unitGo;
+        unitTabs.querySelectorAll("[data-unit-go]").forEach((b) => {
+          const on = b === btn;
+          b.classList.toggle("is-active", on);
+          b.setAttribute("aria-selected", on ? "true" : "false");
+        });
+        panels.forEach((p) => { p.hidden = p.dataset.unit !== id; });
+      });
+    });
+  }
+
+  /* ---------- Galeria de fotos + lightbox ---------- */
+  const galleries = document.querySelectorAll("[data-gallery]");
+  if (galleries.length) {
+    const lb = document.createElement("div");
+    lb.className = "lightbox";
+    lb.setAttribute("role", "dialog");
+    lb.setAttribute("aria-modal", "true");
+    lb.setAttribute("aria-label", "Galeria de fotos");
+    lb.innerHTML =
+      '<img class="lightbox__img" alt="" />' +
+      '<button class="lightbox__btn lightbox__close" data-lb-close aria-label="Fechar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button>' +
+      '<button class="lightbox__btn lightbox__prev" data-lb-prev aria-label="Foto anterior"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></button>' +
+      '<button class="lightbox__btn lightbox__next" data-lb-next aria-label="Próxima foto"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg></button>' +
+      '<span class="lightbox__count" data-lb-count></span>';
+    document.body.appendChild(lb);
+    const lbImg = lb.querySelector(".lightbox__img");
+    const lbCount = lb.querySelector("[data-lb-count]");
+    let items = [], idx = 0, lastFocus = null;
+
+    const render = () => {
+      const it = items[idx];
+      lbImg.src = it.src; lbImg.alt = it.alt || "";
+      lbCount.textContent = (idx + 1) + " / " + items.length;
+    };
+    const openLb = (list, i) => {
+      items = list; idx = i; lastFocus = document.activeElement;
+      render(); lb.classList.add("is-open");
+      document.body.style.overflow = "hidden";
+      lb.querySelector("[data-lb-close]").focus();
+    };
+    const closeLb = () => {
+      lb.classList.remove("is-open");
+      document.body.style.overflow = "";
+      lastFocus && lastFocus.focus && lastFocus.focus();
+    };
+    const go = (d) => { idx = (idx + d + items.length) % items.length; render(); };
+
+    galleries.forEach((g) => {
+      const triggers = Array.from(g.querySelectorAll("[data-gallery-item]"));
+      const list = triggers.map((t) => {
+        const img = t.querySelector("img");
+        return { src: t.dataset.full || (img && img.src) || "", alt: img ? img.alt : "" };
+      });
+      triggers.forEach((t, i) => t.addEventListener("click", () => openLb(list, i)));
+    });
+
+    lb.querySelector("[data-lb-close]").addEventListener("click", closeLb);
+    lb.querySelector("[data-lb-prev]").addEventListener("click", () => go(-1));
+    lb.querySelector("[data-lb-next]").addEventListener("click", () => go(1));
+    lb.addEventListener("click", (e) => { if (e.target === lb) closeLb(); });
+    document.addEventListener("keydown", (e) => {
+      if (!lb.classList.contains("is-open")) return;
+      if (e.key === "Escape") closeLb();
+      else if (e.key === "ArrowLeft") go(-1);
+      else if (e.key === "ArrowRight") go(1);
+    });
+  }
+
+  /* ---------- Formulários (ouvidoria, newsletter) — sucesso local ---------- */
+  document.querySelectorAll("[data-form]").forEach((form) => {
+    form.addEventListener("submit", (e) => {
+      e.preventDefault();
+      if (typeof form.checkValidity === "function" && !form.checkValidity()) {
+        form.reportValidity();
+        return;
+      }
+      form.classList.add("is-sent");
+      const ok = form.querySelector("[data-form-success]");
+      if (ok) {
+        ok.setAttribute("tabindex", "-1");
+        try { ok.focus({ preventScroll: true }); } catch (_) {}
+        ok.scrollIntoView({ behavior: calm() ? "auto" : "smooth", block: "center" });
+      }
+    });
+  });
+
+  /* ---------- FAQ: abre um por vez dentro do mesmo grupo ---------- */
+  document.querySelectorAll("[data-accordion]").forEach((group) => {
+    const items = group.querySelectorAll("details");
+    items.forEach((d) => d.addEventListener("toggle", () => {
+      if (d.open) items.forEach((o) => { if (o !== d) o.open = false; });
+    }));
+  });
+
   /* ---------- Ano dinâmico no rodapé ---------- */
   const y = document.querySelector("[data-year]");
   if (y) y.textContent = new Date().getFullYear();

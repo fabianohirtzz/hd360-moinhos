@@ -19,13 +19,13 @@ O site hoje mora no GitHub Pages só para o cliente aprovar; depois sobe pra Er�
 5. **Comentários fora de escopo** nesta fase. Só curtidas anônimas agora.
 6. **Tags curadas** no painel substituem a derivação automática da Fase 1.1. O seed roda a derivação uma vez para pré-preencher; o admin ajusta.
 7. **Rascunho vs publicado + botão "Atualizar site".** Edições salvam no Supabase sem mexer no site; o rebuild só dispara quando o admin clica "Atualizar site". Permite juntar várias edições num rebuild só e evita página meio-pronta no ar.
-8. **Painel vanilla + Supabase JS** (Abordagem A). SPA em HTML/CSS/JS puro em `/admin/`, `@supabase/supabase-js` via CDN, sem bundler — fiel à pegada zero-dependência do projeto. Editor rico via lib leve por CDN.
+8. **Painel vanilla + Supabase JS** (Abordagem A). SPA em HTML/CSS/JS puro em `/painel/` (caminho discreto, não `/admin/`, para reduzir varredura automatizada), `@supabase/supabase-js` via CDN, sem bundler — fiel à pegada zero-dependência do projeto. Editor rico via lib leve por CDN.
 9. **1 admin**, login via Supabase Auth (e-mail/senha), usuário criado manualmente.
 
 ## Arquitetura e fluxo de dados
 
 ```
-Painel /admin/ (SPA vanilla)  --Supabase JS-->  Supabase (Postgres + Auth + Storage)
+Painel /painel/ (SPA vanilla)  --Supabase JS-->  Supabase (Postgres + Auth + Storage)
    login + CRUD  <--rascunhos--                        ^
    |  clica "Atualizar site"                           | build lê posts publicados (REST)
    v                                                   |
@@ -55,7 +55,7 @@ Visitante no post -> curtir -> JS chama increment_likes() no Supabase; página s
 
 **Auth:** Supabase Auth e-mail/senha, 1 usuário, criado manualmente.
 
-## O painel admin (`/admin/`)
+## O painel admin (`/painel/`)
 
 SPA vanilla com identidade HD360 (cores/tipografia da marca via skill `hd360-design`).
 
@@ -116,7 +116,7 @@ Tudo que é código (Supabase schema, painel, build, curtidas) é independente d
 
 ## Verificação
 
-1. Login no `/admin/` funciona; sem sessão, não acessa o CRUD.
+1. Login no `/painel/` funciona; sem sessão, não acessa o CRUD.
 2. Criar post no editor WYSIWYG, subir capa + imagem inline, salvar como rascunho: aparece na lista como rascunho e **não** sai no site.
 3. Marcar como publicado + "Atualizar site": a Action roda, regenera `/<slug>/`, `blog.html` e `blog-todos.html`, e o post aparece no ar com SEO (meta tags, URL preservada).
 4. Editar tags/SEO de um post e republicar reflete no HTML estático.

@@ -1,6 +1,7 @@
 import { formatDatePtBr } from './format-date.mjs';
 import { mapCategory } from './map-category.mjs';
 import { sanitizeContent } from './sanitize-html.mjs';
+import { tidyTitle, tidyContent } from './tidy-text.mjs';
 
 function decodeEntities(str) {
   return String(str)
@@ -39,7 +40,7 @@ export function transformPost(raw) {
   const ogUrl = ((yoast.og_image || [])[0] || {}).url || media.source_url || '';
   const coverUrl = media.source_url || ogUrl || '';
 
-  const content = sanitizeContent(raw.content && raw.content.rendered || '');
+  const content = tidyContent(sanitizeContent(raw.content && raw.content.rendered || ''));
 
   // Coletar imagens a baixar: capa + todas as imagens do corpo.
   const downloads = [];
@@ -59,16 +60,16 @@ export function transformPost(raw) {
   return {
     id: raw.id,
     slug: raw.slug,
-    title: decodeEntities(raw.title && raw.title.rendered || ''),
+    title: tidyTitle(decodeEntities(raw.title && raw.title.rendered || '')),
     date: raw.date,
     modified: raw.modified || raw.date,
     dateLabel: formatDatePtBr(raw.date),
     category: mapCategory(terms, raw.slug),
     coverImage: localPath(coverUrl),
-    excerpt: stripTags(raw.excerpt && raw.excerpt.rendered || ''),
+    excerpt: tidyContent(stripTags(raw.excerpt && raw.excerpt.rendered || '')),
     content,
-    metaDescription: decodeEntities(yoast.description || ''),
-    seoTitle: decodeEntities(yoast.title || ''),
+    metaDescription: tidyContent(decodeEntities(yoast.description || '')),
+    seoTitle: tidyTitle(decodeEntities(yoast.title || '')),
     ogImage: localPath(ogUrl),
     focusKeyword: '',
     tags: [],

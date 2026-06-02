@@ -300,6 +300,7 @@
       });
 
       const accordion = g.classList.contains("gallery--accordion");
+      const smooth = () => (calm() ? "auto" : "smooth");
       const setActive = (t) => triggers.forEach((o) => o.classList.toggle("is-active", o === t));
       if (accordion) {
         if (!triggers.some((t) => t.classList.contains("is-active")) && triggers[0]) {
@@ -309,12 +310,35 @@
           t.addEventListener("mouseenter", () => setActive(t)); // desktop hover
           t.addEventListener("focusin", () => setActive(t));    // keyboard focus
         });
+
+        // Setas do filmstrip (correr lateralmente para ver mais fotos)
+        const nav = g.nextElementSibling && g.nextElementSibling.classList.contains("gallery__nav") ? g.nextElementSibling : null;
+        const prev = nav && nav.querySelector("[data-gallery-prev]");
+        const next = nav && nav.querySelector("[data-gallery-next]");
+        if (prev && next) {
+          const step = () => Math.max(220, g.clientWidth * 0.62);
+          const sync = () => {
+            const max = g.scrollWidth - g.clientWidth - 2;
+            prev.disabled = g.scrollLeft <= 2;
+            next.disabled = g.scrollLeft >= max;
+          };
+          prev.addEventListener("click", () => g.scrollBy({ left: -step(), behavior: smooth() }));
+          next.addEventListener("click", () => g.scrollBy({ left: step(), behavior: smooth() }));
+          g.addEventListener("scroll", sync, { passive: true });
+          window.addEventListener("resize", sync);
+          sync();
+        }
       }
 
       triggers.forEach((t, i) => t.addEventListener("click", () => {
-        // On the accordion, the first tap/click just expands the panel; only the
-        // already-active panel opens the lightbox (so touch users get an expand step).
-        if (accordion && !t.classList.contains("is-active")) { setActive(t); return; }
+        // On the accordion, the first tap/click just expands the panel and brings it
+        // into view; only the already-active panel opens the lightbox (so touch users
+        // get an expand step before the zoom).
+        if (accordion && !t.classList.contains("is-active")) {
+          setActive(t);
+          t.scrollIntoView({ behavior: smooth(), inline: "center", block: "nearest" });
+          return;
+        }
         openLb(list, i);
       }));
     });

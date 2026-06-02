@@ -787,13 +787,14 @@ h1, h2, h3 { font-family: var(--font-display); font-weight: 400; line-height: 1.
 
 /* ---------- Mundos temáticos (Unidades) ---------- */
 .worlds { display: grid; gap: 26px; grid-template-columns: repeat(auto-fit, minmax(290px, 1fr)); }
-.world { position: relative; overflow: hidden; border-radius: var(--r-xl); min-height: 360px; padding: 28px; display: flex; align-items: flex-end; }
+.world { position: relative; overflow: hidden; border-radius: var(--r-xl); min-height: clamp(440px, 30vw, 500px); padding: 26px; display: flex; align-items: flex-end; }
 .world--mar { background: linear-gradient(160deg, #E4F6FD, #b6e6fb); }
 .world--floresta { background: linear-gradient(160deg, #F1F6D9, #d3e79e); }
 .world--espaco { background: linear-gradient(160deg, #EFE7F8, #cdb6ec); }
 .world__char { position: absolute; pointer-events: none; filter: drop-shadow(0 14px 22px rgba(46,42,57,.2)); }
-.world__char--1 { width: 46%; max-width: 190px; top: 8%; right: 6%; }
-.world__char--2 { width: 30%; max-width: 120px; top: 18%; left: 8%; }
+.world__char--1 { width: 44%; max-width: 178px; top: 5%; right: 6%; }
+.world__char--2 { width: 30%; max-width: 116px; top: 12%; left: 7%; }
+.world__label { margin-top: auto; }
 .world__label { position: relative; z-index: 2; background: rgba(255,255,255,.74); backdrop-filter: blur(6px); border-radius: var(--r-lg); padding: 20px 24px; max-width: 360px; box-shadow: 0 12px 30px rgba(46,42,57,.08); }
 .world__title { font: 400 clamp(26px, 3vw, 38px)/1 var(--font-display); color: var(--tinta); margin-top: 8px; }
 .world__text { font: 400 14.5px/1.55 var(--font-body); color: var(--tinta-muted); margin-top: 8px; }
@@ -817,23 +818,28 @@ h1, h2, h3 { font-family: var(--font-display); font-weight: 400; line-height: 1.
 .gallery__item--span2 { grid-column: span 2; aspect-ratio: 8/3; }
 @media (max-width: 560px) { .gallery__item--span2 { grid-column: span 1; aspect-ratio: 4/3; } }
 
-/* ---------- Galeria acordeão expansível (Unidades · "Conheça por dentro") ---------- */
+/* ---------- Galeria acordeão expansível / filmstrip (Unidades · "Conheça por dentro") ---------- */
 .gallery__hint { margin: 0 0 14px; font: 600 13.5px/1.4 var(--font-body); color: var(--tinta-muted); display: inline-flex; align-items: center; gap: 8px; }
 .gallery__hint::before { content: ""; width: 9px; height: 9px; border-radius: 50%; background: var(--c, var(--verde)); flex: none; }
 
-.gallery--accordion { display: flex; gap: 12px; }
+.gallery--accordion {
+  display: flex; gap: 12px;
+  overflow-x: auto; scroll-behavior: smooth; scrollbar-width: none;
+  padding: 4px 2px 10px; scroll-snap-type: x proximity; overscroll-behavior-x: contain;
+}
+.gallery--accordion::-webkit-scrollbar { display: none; }
 .gallery--accordion .gallery__item {
-  flex: 1 1 0; min-width: 0;
+  flex: 0 0 96px; min-width: 0;            /* collapsed sliver */
   height: clamp(320px, 44vw, 460px);
-  aspect-ratio: auto; cursor: pointer;
-  transition: flex-grow .55s var(--ease-gentle), height .55s var(--ease-gentle), box-shadow .35s var(--ease-soft);
+  aspect-ratio: auto; cursor: pointer; scroll-snap-align: start;
+  transition: flex-basis .55s var(--ease-gentle), box-shadow .35s var(--ease-soft);
 }
 .gallery--accordion .gallery__item::after { opacity: 0; }                  /* gradient shows only when active */
 .gallery--accordion .gallery__item:hover img,
 .gallery--accordion .gallery__item:focus-visible img { transform: none; } /* zoom is driven by .is-active, not raw hover */
 
 .gallery--accordion .gallery__item.is-active {
-  flex-grow: 6; cursor: zoom-in;
+  flex-basis: clamp(280px, 40vw, 440px); cursor: zoom-in;
   box-shadow: inset 0 0 0 3px var(--c, var(--verde)), 0 18px 40px rgba(46,42,57,.16);
 }
 .gallery--accordion .gallery__item.is-active::after { opacity: 1; }
@@ -853,15 +859,26 @@ h1, h2, h3 { font-family: var(--font-display); font-weight: 400; line-height: 1.
 .gallery__cap-dot { width: 9px; height: 9px; border-radius: 50%; background: var(--c, var(--verde)); flex: none; }
 .gallery--accordion .gallery__item.is-active .gallery__cap { opacity: 1; transform: none; }
 
-/* Mobile: switch to a vertical accordion (active panel grows in height) */
+/* Setas para correr o filmstrip lateralmente */
+.gallery__nav { display: flex; gap: 10px; justify-content: flex-end; margin-top: 16px; }
+.gallery__arrow {
+  width: 46px; height: 46px; border-radius: 50%; border: 0; cursor: pointer;
+  display: grid; place-items: center; background: var(--branco); color: var(--tinta);
+  box-shadow: 0 8px 20px rgba(46,42,57,.12);
+  transition: transform .2s var(--ease-bounce), background .2s var(--ease-soft), color .2s, opacity .2s;
+}
+.gallery__arrow svg { width: 22px; height: 22px; }
+.gallery__arrow:hover:not(:disabled) { transform: scale(1.1); background: var(--c, var(--verde)); color: #fff; }
+.gallery__arrow:disabled { opacity: .35; cursor: default; }
+
 @media (max-width: 700px) {
-  .gallery--accordion { flex-direction: column; gap: 10px; }
-  .gallery--accordion .gallery__item { height: 84px; }
-  .gallery--accordion .gallery__item.is-active { height: clamp(240px, 56vw, 340px); }
+  .gallery--accordion .gallery__item { flex-basis: 70px; height: clamp(280px, 62vw, 360px); }
+  .gallery--accordion .gallery__item.is-active { flex-basis: min(76vw, 320px); }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .gallery--accordion .gallery__item { transition: flex-grow .001s, height .001s; }
+  .gallery--accordion { scroll-behavior: auto; }
+  .gallery--accordion .gallery__item { transition: flex-basis .001s, box-shadow .2s; }
   .gallery__cap { transition: none; }
 }
 

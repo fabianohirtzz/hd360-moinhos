@@ -15,6 +15,8 @@ export function cleanExcerpt(raw) {
   s = s.replace(/\[\s*(?:\.\.\.|…)\s*\]/g, ' ');
   // Remover blocos de CTA em caixa alta (3+ palavras maiúsculas seguidas, incluindo de 1 char como "E")
   s = s.replace(/\b([A-ZÀ-Ú]{1,}\s+){2,}[A-ZÀ-Ú]{1,}\b/g, ' ');
+  // Remover travessões (em dash e en dash) — substituir por vírgula ou espaço contextual
+  s = s.replace(/\s*[–—]\s*/g, ', ').replace(/,\s*,/g, ',');
   // Colapsar espaços e aparar
   s = s.replace(/\s+/g, ' ').trim();
   // Cortar em ~200 sem quebrar palavra

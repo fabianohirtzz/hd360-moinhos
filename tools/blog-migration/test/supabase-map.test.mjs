@@ -85,3 +85,18 @@ test('roundtrip toSupabaseRow -> mapSupabaseRow preserva os campos do renderizad
   assert.equal(p.content, internalPost.content);
   assert.deepEqual(p.tags, internalPost.tags);
 });
+
+test('mapSupabaseRow normaliza timestamptz do Supabase (com offset) para o formato naive', () => {
+  // O Postgres devolve timestamptz com offset; o site usa o formato naive (sem offset)
+  // no JSON-LD (datePublished/dateModified). Sem normalizar, as paginas mudariam.
+  const p = mapSupabaseRow({ ...dbRow, date: '2023-09-26T19:08:42+00:00', modified: '2023-09-26T19:16:16+00:00' });
+  assert.equal(p.date, '2023-09-26T19:08:42');
+  assert.equal(p.modified, '2023-09-26T19:16:16');
+  assert.equal(p.dateLabel, '26 de setembro de 2023');
+});
+
+test('mapSupabaseRow tolera valor de data nao-ISO sem quebrar', () => {
+  const p = mapSupabaseRow({ ...dbRow, date: 'sem-data', modified: undefined });
+  assert.equal(p.date, 'sem-data');
+  assert.equal(p.modified, 'sem-data'); // cai no fallback date
+});

@@ -298,7 +298,25 @@
         const img = t.querySelector("img");
         return { src: t.dataset.full || (img && img.src) || "", alt: img ? img.alt : "" };
       });
-      triggers.forEach((t, i) => t.addEventListener("click", () => openLb(list, i)));
+
+      const accordion = g.classList.contains("gallery--accordion");
+      const setActive = (t) => triggers.forEach((o) => o.classList.toggle("is-active", o === t));
+      if (accordion) {
+        if (!triggers.some((t) => t.classList.contains("is-active")) && triggers[0]) {
+          triggers[0].classList.add("is-active");
+        }
+        triggers.forEach((t) => {
+          t.addEventListener("mouseenter", () => setActive(t)); // desktop hover
+          t.addEventListener("focusin", () => setActive(t));    // keyboard focus
+        });
+      }
+
+      triggers.forEach((t, i) => t.addEventListener("click", () => {
+        // On the accordion, the first tap/click just expands the panel; only the
+        // already-active panel opens the lightbox (so touch users get an expand step).
+        if (accordion && !t.classList.contains("is-active")) { setActive(t); return; }
+        openLb(list, i);
+      }));
     });
 
     lb.querySelector("[data-lb-close]").addEventListener("click", closeLb);

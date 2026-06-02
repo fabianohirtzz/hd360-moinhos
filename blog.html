@@ -78,12 +78,13 @@
           <p class="eyebrow eyebrow--verde" style="margin-inline:auto;"><span class="eyebrow__dot" aria-hidden="true"></span> Explore por tema</p>
           <h2 class="section__title">Nossas <span class="hl hl--verde">categorias</span></h2>
         </header>
-        <div class="taglist reveal">
-          <span class="tag"><span class="tag__dot" aria-hidden="true"></span>Entendendo o Autismo</span>
-          <span class="tag"><span class="tag__dot" aria-hidden="true"></span>Terapias e Abordagens</span>
-          <span class="tag"><span class="tag__dot" aria-hidden="true"></span>Dia a Dia da Família</span>
-          <span class="tag"><span class="tag__dot" aria-hidden="true"></span>Dicas dos Especialistas</span>
-          <span class="tag"><span class="tag__dot" aria-hidden="true"></span>Histórias HD360</span>
+        <div class="taglist reveal" data-blog-filters>
+          <button class="tag tag--filter is-active" data-filter="all"><span class="tag__dot" aria-hidden="true"></span>Todos</button>
+          <button class="tag tag--filter" data-filter="Entendendo o Autismo"><span class="tag__dot" aria-hidden="true"></span>Entendendo o Autismo</button>
+          <button class="tag tag--filter" data-filter="Terapias e Abordagens"><span class="tag__dot" aria-hidden="true"></span>Terapias e Abordagens</button>
+          <button class="tag tag--filter" data-filter="Dia a Dia da Família"><span class="tag__dot" aria-hidden="true"></span>Dia a Dia da Família</button>
+          <button class="tag tag--filter" data-filter="Dicas dos Especialistas"><span class="tag__dot" aria-hidden="true"></span>Dicas dos Especialistas</button>
+          <button class="tag tag--filter" data-filter="Histórias HD360"><span class="tag__dot" aria-hidden="true"></span>Histórias HD360</button>
         </div>
       </div>
     </section>
@@ -91,42 +92,9 @@
     <!-- ============================ ARTIGOS (prévia / em breve) ============================ -->
     <section class="section section--white" style="padding-top:clamp(24px,3vw,40px);">
       <div class="container">
-        <div class="posts">
-          <article class="post reveal" style="--i:0">
-            <div class="post__cover post__cover--azul" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="#0481b6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></div>
-            <div class="post__body"><span class="post__tag">Entendendo o autismo</span><h3 class="post__title">Sinais precoces do autismo: o que observar nos primeiros anos</h3><span class="post__soon">Em breve</span></div>
-          </article>
-          <article class="post reveal" style="--i:1">
-            <div class="post__cover post__cover--rosa" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="#c01b40" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg></div>
-            <div class="post__body"><span class="post__tag">Terapias e abordagens</span><h3 class="post__title">O que é a terapia ABA (e o que ela não é)</h3><span class="post__soon">Em breve</span></div>
-          </article>
-          <article class="post reveal" style="--i:2">
-            <div class="post__cover post__cover--verde" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="#6f841a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2"/><path d="M7 2v20"/><path d="M21 15V2a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3zm0 0v7"/></svg></div>
-            <div class="post__body"><span class="post__tag">Dia a dia da família</span><h3 class="post__title">Seletividade alimentar: como ajudar sem brigas à mesa</h3><span class="post__soon">Em breve</span></div>
-          </article>
-          <article class="post reveal" style="--i:0">
-            <div class="post__cover post__cover--azul" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="#0481b6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a3 3 0 0 0-3 3v1a3 3 0 0 0-2 5 3 3 0 0 0 2 5v1a3 3 0 0 0 6 0v-1a3 3 0 0 0 2-5 3 3 0 0 0-2-5V5a3 3 0 0 0-3-3z"/></svg></div>
-            <div class="post__body"><span class="post__tag">Terapias e abordagens</span><h3 class="post__title">Integração sensorial: por que sons, texturas e luzes incomodam tanto</h3><span class="post__soon">Em breve</span></div>
-          </article>
-          <article class="post reveal" style="--i:1">
-            <div class="post__cover post__cover--rosa" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="#c01b40" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m22 10-10-5L2 10l10 5 10-5z"/><path d="M6 12v5c0 1 3 3 6 3s6-2 6-3v-5"/></svg></div>
-            <div class="post__body"><span class="post__tag">Dia a dia da família</span><h3 class="post__title">Inclusão escolar: como preparar a escola e a criança</h3><span class="post__soon">Em breve</span></div>
-          </article>
-          <article class="post reveal" style="--i:2">
-            <div class="post__cover post__cover--verde" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="#6f841a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78L12 21.23l8.84-8.84a5.5 5.5 0 0 0 0-7.78z"/></svg></div>
-            <div class="post__body"><span class="post__tag">Dia a dia da família</span><h3 class="post__title">Regulação emocional: estratégias para os dias difíceis</h3><span class="post__soon">Em breve</span></div>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <!-- ============================ EM BREVE / NEWSLETTER ============================ -->
-    <section class="section section--cream">
-      <div class="container">
-        <div class="empty reveal">
-          <img src="assets/img/lo-astronauta.png" alt="" />
-          <h3 class="empty__title">Estamos preparando tudo com carinho</h3>
-          <p class="empty__text">Os primeiros conteúdos vêm aí. Enquanto isso, siga a gente no Instagram <strong>@hd360moinhos</strong> para dicas e novidades, ou deixe seu e-mail abaixo.</p>
+        <div class="posts" data-blog-grid>
+          <!-- POSTS:START -->
+          <!-- POSTS:END -->
         </div>
       </div>
     </section>

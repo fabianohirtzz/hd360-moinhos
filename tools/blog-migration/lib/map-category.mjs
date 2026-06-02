@@ -22,6 +22,7 @@ const WP_TO_SITE = {
 // mas têm categoria clara pelo conteúdo.
 const SLUG_TO_SITE = {
   // Terapias e Abordagens
+  'fonoaudiologia-no-autismo-em-porto-alegre': 'Terapias e Abordagens',
   'terapia-ocupacional-em-porto-alegre': 'Terapias e Abordagens',
   'ciencia-aba-em-porto-alegre': 'Terapias e Abordagens',
   'terapia-aba-mitos-e-verdades': 'Terapias e Abordagens',

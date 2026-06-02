@@ -196,7 +196,7 @@ h1, h2, h3 { font-family: var(--font-display); font-weight: 400; line-height: 1.
 .wave svg { width: 100%; height: clamp(40px, 6vw, 90px); display: block; }
 
 /* ---------- Seções ---------- */
-.section { position: relative; padding-block: clamp(64px, 9vw, 120px); overflow: clip; }
+.section { position: relative; padding-block: clamp(64px, 9vw, 120px); overflow: clip; min-height: 100vh; min-height: 100svh; display: flex; flex-direction: column; justify-content: center; }
 .section--white { background: var(--branco); }
 .section--cream { background: var(--creme); }
 .section__head { max-width: 720px; margin: 0 auto clamp(36px, 5vw, 56px); text-align: center; }
@@ -683,7 +683,7 @@ h1, h2, h3 { font-family: var(--font-display); font-weight: 400; line-height: 1.
    ===================================================================== */
 
 /* ---------- Hero interno (mais leve que o hero da home) ---------- */
-.page-hero { position: relative; overflow: clip; background: var(--grad-ceu); padding-top: calc(var(--nav-h) + 46px); padding-bottom: clamp(60px, 9vw, 120px); }
+.page-hero { position: relative; overflow: clip; background: var(--grad-ceu); padding-top: calc(var(--nav-h) + 46px); padding-bottom: clamp(60px, 9vw, 120px); min-height: 100vh; min-height: 100svh; display: flex; flex-direction: column; justify-content: center; }
 .page-hero__bg { position: absolute; inset: 0; z-index: 0; }
 .page-hero__bg .blob { width: 320px; height: 320px; }
 .page-hero__bg .blob--a { top: -70px; left: -60px; }
@@ -765,6 +765,7 @@ h1, h2, h3 { font-family: var(--font-display); font-weight: 400; line-height: 1.
 .leader { background: var(--branco); border-radius: var(--r-lg); padding: 34px 28px; text-align: center; box-shadow: 0 12px 30px rgba(46,42,57,.06), 0 4px 10px rgba(46,42,57,.04); transition: transform .25s var(--ease-gentle), box-shadow .25s; }
 .leader:hover { transform: translateY(-6px); }
 .leader__avatar { width: 104px; height: 104px; border-radius: 50%; margin: 0 auto 18px; display: grid; place-items: center; font: 400 44px/1 var(--font-display); }
+.leader__photo { display: block; width: clamp(150px, 58%, 188px); height: auto; margin: 0 auto 16px; filter: drop-shadow(0 14px 26px rgba(46,42,57,.16)); }
 .leader--azul .leader__avatar { background: var(--azul-soft); color: var(--azul-ink); } .leader--azul:hover { box-shadow: 0 24px 50px rgba(0,165,234,.18); }
 .leader--rosa .leader__avatar { background: var(--rosa-soft); color: var(--rosa-ink); } .leader--rosa:hover { box-shadow: 0 24px 50px rgba(251,60,99,.18); }
 .leader--verde .leader__avatar { background: var(--verde-soft); color: var(--verde-ink); } .leader--verde:hover { box-shadow: 0 24px 50px rgba(168,196,32,.2); }

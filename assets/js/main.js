@@ -385,3 +385,25 @@
   const y = document.querySelector("[data-year]");
   if (y) y.textContent = new Date().getFullYear();
 })();
+
+
+/* ===== Blog: filtro por categoria ===== */
+(function () {
+  const filters = document.querySelector('[data-blog-filters]');
+  const grid = document.querySelector('[data-blog-grid]');
+  if (!filters || !grid) return;
+
+  filters.addEventListener('click', (e) => {
+    const btn = e.target.closest('[data-filter]');
+    if (!btn) return;
+    const cat = btn.getAttribute('data-filter');
+
+    filters.querySelectorAll('[data-filter]').forEach(b =>
+      b.classList.toggle('is-active', b === btn));
+
+    grid.querySelectorAll('.post').forEach(card => {
+      const match = cat === 'all' || card.getAttribute('data-category') === cat;
+      card.hidden = !match;
+    });
+  });
+})();

@@ -441,21 +441,6 @@ h1, h2, h3 { font-family: var(--font-display); font-weight: 400; line-height: 1.
    ===================================================================== */
 .reels__viewport { position: relative; margin-top: 8px; border-radius: var(--r-xl); isolation: isolate; overflow: hidden; }
 
-/* --- glow colorido com as cores da marca, numa sequencia calma --- */
-.reels__ambient { position: absolute; inset: 0; z-index: 0; pointer-events: none; }
-.reels__glow { position: absolute; width: 46%; aspect-ratio: 1; border-radius: 50%; filter: blur(80px); opacity: .34; background: var(--azul); animation: reels-glow 32s var(--ease-soft) infinite; }
-.reels__glow:nth-child(1) { left: -6%;  top: 4%;   animation-delay: 0s; }
-.reels__glow:nth-child(2) { left: 33%;  top: -16%; animation-delay: -10.6s; }
-.reels__glow:nth-child(3) { right: -6%; top: 12%;  animation-delay: -21.3s; }
-@keyframes reels-glow {
-  0%   { background: var(--azul); }
-  20%  { background: var(--amarelo); }
-  40%  { background: var(--rosa); }
-  60%  { background: var(--lilas); }
-  80%  { background: var(--verde); }
-  100% { background: var(--azul); }
-}
-
 /* palco coverflow 3D: card central nitido, laterais desfocados (gaussiano) */
 .reels__stage { position: relative; z-index: 1; height: calc(clamp(188px, 54vw, 258px) * 16 / 9 + 28px); display: flex; align-items: center; justify-content: center; perspective: 1100px; }
 .reel { position: absolute; top: 50%; left: 50%; width: clamp(188px, 54vw, 258px); opacity: 0; visibility: hidden; transition: transform .55s var(--ease-gentle), opacity .55s var(--ease-gentle), filter .55s var(--ease-gentle); will-change: transform, opacity, filter; }

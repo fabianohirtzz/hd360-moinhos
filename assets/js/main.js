@@ -174,91 +174,111 @@
     });
   }
 
-  /* ---------- Reels do Instagram (carrossel) ---------- */
-  const reelsTrack = document.querySelector("[data-reels-track]");
-  if (reelsTrack) {
-    let current = null; // vídeo tocando no momento (um por vez)
+  /* ---------- Reels do Instagram (coverflow 3D) ---------- */
+  const reelsStage = document.querySelector("[data-reels-stage]");
+  if (reelsStage) {
+    const captionEl = document.querySelector("[data-reels-caption]");
+    const slides = [...reelsStage.querySelectorAll(".reel")].map((reel) => ({
+      reel,
+      media: reel.querySelector(".reel__media"),
+      video: reel.querySelector("[data-reel]"),
+      cap: (reel.querySelector(".reel__cap")?.textContent || "").trim(),
+      playBtn: reel.querySelector("[data-reel-play]"),
+      toggle: reel.querySelector("[data-reel-toggle]"),
+      mute: reel.querySelector("[data-reel-mute]"),
+    }));
+    const total = slides.length;
+    const half = Math.floor(total / 2);
+    let index = half;       // começa no card central (igual ao componente)
+    let current = null;     // vídeo tocando (um por vez)
+    let autoTimer = null;
+    let paused = false;     // pausa o giro automático (hover/foco/assistindo)
 
-    // fundo desfocado: acompanha o reel central (crossfade entre 2 camadas)
-    const backdrop = document.querySelector("[data-reels-backdrop]");
-    const layers = backdrop ? [...backdrop.querySelectorAll(".reels__backdrop-img")] : [];
-    let activeLayer = 0, currentBg = "";
-    const setBackdrop = (src) => {
-      if (!backdrop || !src || src === currentBg) return;
-      currentBg = src;
-      const next = 1 - activeLayer;
-      layers[next].src = src;
-      layers[next].classList.add("is-active");
-      layers[activeLayer].classList.remove("is-active");
-      activeLayer = next;
-    };
-    const reelEls = [...reelsTrack.querySelectorAll(".reel")];
-    const syncBackdrop = () => {
-      const r = reelsTrack.getBoundingClientRect();
-      const mid = r.left + r.width / 2;
-      let best = null, bestDist = Infinity;
-      reelEls.forEach((el) => {
-        const rr = el.getBoundingClientRect();
-        const d = Math.abs(rr.left + rr.width / 2 - mid);
-        if (d < bestDist) { bestDist = d; best = el; }
+    // posiciona cada card: central nítido, laterais girados + desfoque gaussiano
+    const render = () => {
+      slides.forEach((s, i) => {
+        let pos = (i - index + total) % total;
+        if (pos > half) pos -= total;
+        const isCenter = pos === 0;
+        const isAdjacent = Math.abs(pos) === 1;
+        const visible = Math.abs(pos) <= 1;
+        s.reel.style.transform =
+          "translate(-50%, -50%) translateX(" + pos * 45 + "%) " +
+          "scale(" + (isCenter ? 1 : isAdjacent ? 0.85 : 0.7) + ") " +
+          "rotateY(" + pos * -10 + "deg)";
+        s.reel.style.zIndex = isCenter ? 10 : isAdjacent ? 5 : 1;
+        s.reel.style.opacity = isCenter ? 1 : isAdjacent ? 0.4 : 0;
+        s.reel.style.filter = isCenter ? "blur(0px)" : "blur(6px)";
+        s.reel.style.visibility = visible ? "visible" : "hidden";
+        s.reel.classList.toggle("is-center", isCenter);
+        s.reel.classList.toggle("is-side", !isCenter && visible);
+        s.reel.setAttribute("aria-hidden", isCenter ? "false" : "true");
+        // botões fora do centro não recebem foco (não focável dentro de aria-hidden)
+        [s.playBtn, s.toggle, s.mute].forEach((b) => { if (b) b.tabIndex = isCenter ? 0 : -1; });
       });
-      const v = best && best.querySelector("[data-reel]");
-      if (v) setBackdrop(v.getAttribute("poster"));
+      if (captionEl) captionEl.textContent = slides[index].cap;
     };
 
-    reelsTrack.querySelectorAll(".reel").forEach((reel) => {
-      const media = reel.querySelector(".reel__media");
-      const video = reel.querySelector("[data-reel]");
-      const playBtn = reel.querySelector("[data-reel-play]");
-      const toggle = reel.querySelector("[data-reel-toggle]");
-      const mute = reel.querySelector("[data-reel-mute]");
+    const stopAuto = () => { if (autoTimer) { clearInterval(autoTimer); autoTimer = null; } };
+    const startAuto = () => {
+      stopAuto();
+      if (calm()) return; // sem giro automático em modo calmo / reduced-motion (público TEA)
+      autoTimer = setInterval(() => { if (!paused && !current) go(1); }, 6000);
+    };
 
-      const play = () => {
-        if (current && current !== video) current.pause();
-        current = video;
-        setBackdrop(video.getAttribute("poster")); // fundo segue o reel tocando
-        video.muted = false; // ao dar play, habilita o som
-        mute?.classList.remove("is-muted");
-        mute?.setAttribute("aria-label", "Desativar som");
-        const p = video.play();
-        if (p && p.catch) p.catch(() => {});
-      };
-      const togglePlay = () => { if (video.paused) play(); else video.pause(); };
+    const goTo = (i) => {
+      if (current) { current.pause(); current = null; } // troca de card encerra o vídeo
+      index = (i + total) % total;
+      render();
+    };
+    const go = (dir) => goTo(index + dir);
 
-      playBtn?.addEventListener("click", togglePlay);
-      toggle?.addEventListener("click", togglePlay);
-      video.addEventListener("play", () => media.classList.add("is-playing"));
-      video.addEventListener("pause", () => media.classList.remove("is-playing"));
-      video.addEventListener("ended", () => media.classList.remove("is-playing"));
-      mute?.addEventListener("click", () => {
-        video.muted = !video.muted;
-        mute.classList.toggle("is-muted", video.muted);
-        mute.setAttribute("aria-label", video.muted ? "Ativar som" : "Desativar som");
+    const playCenter = () => {
+      const s = slides[index];
+      if (!s.video) return;
+      if (current && current !== s.video) current.pause();
+      current = s.video;
+      s.video.muted = false; // ao dar play, habilita o som
+      s.mute?.classList.remove("is-muted");
+      s.mute?.setAttribute("aria-label", "Desativar som");
+      const p = s.video.play();
+      if (p && p.catch) p.catch(() => {});
+      stopAuto(); // enquanto assiste, não gira sozinho
+    };
+
+    slides.forEach((s, i) => {
+      const togglePlay = () => { if (s.video.paused) playCenter(); else s.video.pause(); };
+      s.playBtn?.addEventListener("click", (e) => { e.stopPropagation(); togglePlay(); });
+      s.toggle?.addEventListener("click", (e) => { e.stopPropagation(); togglePlay(); });
+      s.mute?.addEventListener("click", (e) => {
+        e.stopPropagation();
+        s.video.muted = !s.video.muted;
+        s.mute.classList.toggle("is-muted", s.video.muted);
+        s.mute.setAttribute("aria-label", s.video.muted ? "Ativar som" : "Desativar som");
       });
+      s.video?.addEventListener("play", () => s.media.classList.add("is-playing"));
+      s.video?.addEventListener("pause", () => {
+        s.media.classList.remove("is-playing");
+        if (current === s.video) { current = null; startAuto(); } // ao pausar, retoma o giro
+      });
+      // clicar num card lateral traz ele ao centro
+      s.reel.addEventListener("click", () => { if (i !== index) go(i - index); });
     });
 
-    // setas prev/next + estado desabilitado nas pontas
-    const prev = document.querySelector("[data-reels-prev]");
-    const next = document.querySelector("[data-reels-next]");
-    const updateArrows = () => {
-      const max = reelsTrack.scrollWidth - reelsTrack.clientWidth - 2;
-      if (prev) prev.disabled = reelsTrack.scrollLeft <= 2;
-      if (next) next.disabled = reelsTrack.scrollLeft >= max;
-    };
-    const amount = () => reelsTrack.clientWidth * 0.85;
-    prev?.addEventListener("click", () => reelsTrack.scrollBy({ left: -amount(), behavior: calm() ? "auto" : "smooth" }));
-    next?.addEventListener("click", () => reelsTrack.scrollBy({ left: amount(), behavior: calm() ? "auto" : "smooth" }));
+    document.querySelector("[data-reels-prev]")?.addEventListener("click", () => go(-1));
+    document.querySelector("[data-reels-next]")?.addEventListener("click", () => go(1));
 
-    let raf = 0;
-    const onScroll = () => {
-      updateArrows();
-      if (raf) return;
-      raf = requestAnimationFrame(() => { raf = 0; syncBackdrop(); });
-    };
-    reelsTrack.addEventListener("scroll", onScroll, { passive: true });
-    window.addEventListener("resize", () => { updateArrows(); syncBackdrop(); });
-    updateArrows();
-    syncBackdrop(); // pinta o fundo inicial com o primeiro reel
+    // pausa o giro com o ponteiro/foco em cima
+    const hold = () => { paused = true; };
+    const release = () => { paused = false; };
+    reelsStage.addEventListener("pointerenter", hold);
+    reelsStage.addEventListener("pointerleave", release);
+    reelsStage.addEventListener("focusin", hold);
+    reelsStage.addEventListener("focusout", release);
+
+    render();
+    startAuto();
+    window.addEventListener("resize", render);
   }
 
   /* ---------- Filtro de especialidades (Atendimento) ---------- */

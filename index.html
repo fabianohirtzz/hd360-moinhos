@@ -277,18 +277,13 @@
         </header>
 
         <div class="reels__viewport reveal">
-          <!-- fundo: poster do reel central, com desfoque gaussiano (crossfade) -->
-          <div class="reels__backdrop" aria-hidden="true" data-reels-backdrop>
-            <img class="reels__backdrop-img" alt="" decoding="async" />
-            <img class="reels__backdrop-img" alt="" decoding="async" />
-          </div>
-          <!-- glow colorido com as cores da marca, numa sequencia lenta -->
+          <!-- glow colorido com as cores da marca, numa sequencia calma -->
           <div class="reels__ambient" aria-hidden="true">
             <span class="reels__glow"></span>
             <span class="reels__glow"></span>
             <span class="reels__glow"></span>
           </div>
-          <div class="reels__track" data-reels-track>
+          <div class="reels__stage" data-reels-stage>
 
             <article class="reel">
               <div class="reel__media">
@@ -382,11 +377,14 @@
             </article>
 
           </div>
+
+          <button class="reels__arrow reels__arrow--prev" data-reels-prev aria-label="Reel anterior"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></button>
+          <button class="reels__arrow reels__arrow--next" data-reels-next aria-label="Próximo reel"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg></button>
         </div>
 
+        <p class="reels__caption" data-reels-caption aria-live="polite">Diagnóstico</p>
+
         <div class="reels__nav">
-          <button class="reels__arrow" data-reels-prev aria-label="Reels anteriores"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></button>
-          <button class="reels__arrow" data-reels-next aria-label="Próximos reels"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg></button>
           <a class="btn btn--solid btn--rosa reels__cta" href="https://instagram.com/hd360moinhos" target="_blank" rel="noopener"><svg class="btn__ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><line x1="17.5" y1="6.5" x2="17.5" y2="6.5"/></svg>Abrir no Instagram</a>
         </div>
       </div>

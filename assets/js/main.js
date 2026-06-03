@@ -457,31 +457,34 @@
   const puzzleFields = document.querySelectorAll(".hero__bg, .page-hero__bg, [data-puzzles]");
   if (puzzleFields.length) {
     const cols = ["var(--azul)", "var(--amarelo)", "var(--rosa)", "var(--lilas)", "var(--verde)"];
-    // posições perto das bordas (longe do texto central), tamanhos/cores/giros variados
+    // posições espalhadas, tamanhos/cores/giros variados; px = velocidade do parallax
     const presets = [
-      { t: "12%", l: "5%",  s: 46, c: 0, o: .14, pf: 8,   px: .12, r0: -8,  r1: 6 },
-      { t: "20%", l: "90%", s: 34, c: 2, o: .12, pf: 9,   px: .18, r0: 6,   r1: -8 },
-      { t: "72%", l: "9%",  s: 30, c: 3, o: .12, pf: 7,   px: .22, r0: -4,  r1: 10 },
-      { t: "78%", l: "84%", s: 52, c: 4, o: .11, pf: 10,  px: .10, r0: 8,   r1: -6 },
-      { t: "44%", l: "48%", s: 26, c: 1, o: .10, pf: 8.5, px: .16, r0: -10, r1: 8 },
+      { t: "10%", l: "4%",  s: 50, c: 0, pf: 8,   px: .22, r0: -8,  r1: 6 },
+      { t: "16%", l: "92%", s: 38, c: 2, pf: 9,   px: .34, r0: 6,   r1: -8 },
+      { t: "66%", l: "7%",  s: 34, c: 3, pf: 7,   px: .42, r0: -4,  r1: 10 },
+      { t: "76%", l: "87%", s: 58, c: 4, pf: 10,  px: .18, r0: 8,   r1: -6 },
+      { t: "40%", l: "95%", s: 28, c: 1, pf: 8.5, px: .30, r0: -10, r1: 8 },
+      { t: "30%", l: "2%",  s: 32, c: 4, pf: 9.5, px: .38, r0: 5,   r1: -10 },
+      { t: "86%", l: "38%", s: 34, c: 1, pf: 7.5, px: .26, r0: -6,  r1: 9 },
+      { t: "6%",  l: "58%", s: 26, c: 3, pf: 8.2, px: .32, r0: 9,   r1: -5 },
     ];
     puzzleFields.forEach((field, fi) => {
-      const n = field.hasAttribute("data-puzzles") ? (parseInt(field.dataset.puzzles, 10) || 4) : 4;
+      const n = field.hasAttribute("data-puzzles") ? (parseInt(field.dataset.puzzles, 10) || 6) : 6;
       for (let k = 0; k < n; k++) {
-        const p = presets[(k + fi) % presets.length];
+        const p = presets[(k + fi * 3) % presets.length];
         const bit = document.createElement("span");
         bit.className = "puzzles__bit";
         bit.setAttribute("aria-hidden", "true");
         bit.dataset.px = p.px;
         bit.style.cssText =
           "top:" + p.t + ";left:" + p.l + ";--s:" + p.s + "px;--pc:" + cols[(p.c + fi) % cols.length] +
-          ";--po:" + p.o + ";--pf:" + p.pf + "s;--r0:" + p.r0 + "deg;--r1:" + p.r1 + "deg";
+          ";--pf:" + p.pf + "s;--r0:" + p.r0 + "deg;--r1:" + p.r1 + "deg";
         bit.innerHTML = '<span><svg viewBox="0 0 24 24"><use href="#ic-puzzle"/></svg></span>';
         field.appendChild(bit);
       }
     });
 
-    // parallax leve no scroll (desligado em modo calmo / reduced-motion)
+    // parallax: ao rolar a página, as peças sobem (desligado em modo calmo / reduced-motion)
     const bits = Array.from(document.querySelectorAll(".puzzles__bit"));
     if (bits.length && !calm()) {
       let ticking = false;
@@ -492,9 +495,9 @@
           const f = b.parentElement;
           if (!f) return;
           const center = f.getBoundingClientRect().top + b.offsetTop + b.offsetHeight / 2;
-          const rel = (center - vh / 2) / vh;            // -1..1 ao redor do centro da tela
-          const sp = parseFloat(b.dataset.px) || .12;
-          b.style.transform = "translateY(" + (rel * sp * -120).toFixed(1) + "px)";
+          const progress = (vh - center) / vh;   // sobe conforme a peça cruza a tela de baixo p/ cima
+          const sp = parseFloat(b.dataset.px) || .2;
+          b.style.transform = "translateY(" + (-progress * sp * 240).toFixed(1) + "px)";
         });
       };
       const onScroll = () => { if (!ticking) { ticking = true; requestAnimationFrame(update); } };

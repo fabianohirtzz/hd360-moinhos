@@ -359,46 +359,66 @@
         return { src: t.dataset.full || (img && img.src) || "", alt: img ? img.alt : "" };
       });
 
-      const accordion = g.classList.contains("gallery--accordion");
-      const smooth = () => (calm() ? "auto" : "smooth");
-      const setActive = (t) => triggers.forEach((o) => o.classList.toggle("is-active", o === t));
-      if (accordion) {
-        if (!triggers.some((t) => t.classList.contains("is-active")) && triggers[0]) {
-          triggers[0].classList.add("is-active");
-        }
-        triggers.forEach((t) => {
-          t.addEventListener("mouseenter", () => setActive(t)); // desktop hover
-          t.addEventListener("focusin", () => setActive(t));    // keyboard focus
-        });
+      // Pilha espalhada (modelo designali): cartões inclinados, arrastáveis, glow da marca
+      const stack = g.classList.contains("gallery--stack");
+      if (stack) {
+        const glows = ["rgba(0,165,234,.55)", "rgba(255,199,0,.55)", "rgba(251,60,99,.5)", "rgba(143,100,200,.55)", "rgba(168,196,32,.55)"];
+        const N = triggers.length;
+        const layout = () => {
+          if (!triggers.length) return;
+          const W = g.clientWidth || 1;
+          const card = parseFloat(getComputedStyle(triggers[0]).width) || 200;
+          const span = Math.min((N - 1) * 64, Math.max(0, W - card - 20));
+          const step = N > 1 ? span / (N - 1) : 0;
+          triggers.forEach((t, i) => {
+            const x = -span / 2 + i * step;
+            const tilt = (i % 2 ? 1 : -1) * (2 + (i % 3));  // -2..+4 graus, alternando
+            const y = (i % 2 ? 10 : -6) + (i % 3) * 4;      // leve onda vertical
+            t._bx = x; t._by = y; t._rot = tilt;  // base numérica p/ o arrasto (sem calc)
+            t.style.setProperty("--x", x.toFixed(1) + "px");
+            t.style.setProperty("--y", y.toFixed(1) + "px");
+            t.style.setProperty("--rot", tilt + "deg");
+            t.style.setProperty("--z", String(i + 1));
+            t.style.setProperty("--glow", glows[i % glows.length]);
+          });
+        };
+        layout();
+        // ResizeObserver recalcula quando a galeria ganha largura (troca de unidade / resize)
+        if ("ResizeObserver" in window) new ResizeObserver(layout).observe(g);
+        else window.addEventListener("resize", layout);
+        // stagger só na entrada; depois zera p/ hover/arrasto não terem lag
+        triggers.forEach((t, i) => t.style.setProperty("--d", (i * 0.05).toFixed(2) + "s"));
+        setTimeout(() => triggers.forEach((t) => t.style.setProperty("--d", "0s")), 1300);
 
-        // Setas do filmstrip (correr lateralmente para ver mais fotos)
-        const nav = g.nextElementSibling && g.nextElementSibling.classList.contains("gallery__nav") ? g.nextElementSibling : null;
-        const prev = nav && nav.querySelector("[data-gallery-prev]");
-        const next = nav && nav.querySelector("[data-gallery-next]");
-        if (prev && next) {
-          const step = () => Math.max(220, g.clientWidth * 0.62);
-          const sync = () => {
-            const max = g.scrollWidth - g.clientWidth - 2;
-            prev.disabled = g.scrollLeft <= 2;
-            next.disabled = g.scrollLeft >= max;
+        triggers.forEach((t) => {
+          let sx = 0, sy = 0, moved = false, pid = null;
+          const onMove = (e) => {
+            const dx = e.clientX - sx, dy = e.clientY - sy;
+            if (!moved && Math.hypot(dx, dy) > 6) moved = true;
+            if (moved) t.style.transform =
+              "translate(-50%, -50%) translate(" + (t._bx + dx).toFixed(0) + "px, " + (t._by + dy).toFixed(0) + "px) rotate(" + t._rot + "deg)";
           };
-          prev.addEventListener("click", () => g.scrollBy({ left: -step(), behavior: smooth() }));
-          next.addEventListener("click", () => g.scrollBy({ left: step(), behavior: smooth() }));
-          g.addEventListener("scroll", sync, { passive: true });
-          window.addEventListener("resize", sync);
-          sync();
-        }
+          const onUp = () => {
+            t.removeEventListener("pointermove", onMove);
+            t.classList.remove("is-grabbing");
+            if (pid !== null) { try { t.releasePointerCapture(pid); } catch (_) {} pid = null; }
+            t.style.transform = "";        // volta para a posição do CSS, com transição
+            if (moved) t._dragged = true;  // o clique seguinte é ignorado (foi arrasto)
+          };
+          t.addEventListener("pointerdown", (e) => {
+            if (e.button != null && e.button !== 0) return;
+            sx = e.clientX; sy = e.clientY; moved = false; t._dragged = false; pid = e.pointerId;
+            t.classList.add("is-grabbing");
+            try { t.setPointerCapture(e.pointerId); } catch (_) {}
+            t.addEventListener("pointermove", onMove);
+            t.addEventListener("pointerup", onUp, { once: true });
+            t.addEventListener("pointercancel", onUp, { once: true });
+          });
+        });
       }
 
       triggers.forEach((t, i) => t.addEventListener("click", () => {
-        // On the accordion, the first tap/click just expands the panel and brings it
-        // into view; only the already-active panel opens the lightbox (so touch users
-        // get an expand step before the zoom).
-        if (accordion && !t.classList.contains("is-active")) {
-          setActive(t);
-          t.scrollIntoView({ behavior: smooth(), inline: "center", block: "nearest" });
-          return;
-        }
+        if (t._dragged) { t._dragged = false; return; } // foi arrasto, não abre o lightbox
         openLb(list, i);
       }));
     });

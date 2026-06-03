@@ -36,4 +36,5 @@ A leitura pública já vem do bucket ser público; não precisa de policy de sel
 ## Publicação (Plano 3)
 - `publish.sql` cria `site_meta` (estado de publicação) e o trigger que marca o site como "sujo" a cada escrita em `posts`.
 - A Edge Function `publish` (em `supabase/functions/publish/`) dispara o rebuild; secret necessário: `GITHUB_PAT` (fine-grained, repo `hd360-moinhos`, Contents: Read and write).
+- **A função `publish` precisa ser deployada com "Verify JWT" DESLIGADO** (`supabase functions deploy publish --no-verify-jwt`, ou o toggle "Verify JWT" off no Dashboard). Sem isso, o preflight CORS (OPTIONS, sem token) é barrado pelo gateway e o painel recebe erro de CORS. A autenticação não é perdida: a própria função valida o JWT do admin via `auth.getUser()` e responde 401 se não houver sessão.
 - O workflow `.github/workflows/publish-blog.yml` roda o build e atualiza `site_meta` ao terminar. Secrets do GitHub Actions: `SUPABASE_URL`, `SUPABASE_SERVICE_KEY`.

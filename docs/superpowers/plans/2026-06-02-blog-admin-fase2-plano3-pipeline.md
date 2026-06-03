@@ -388,7 +388,9 @@ Com a Supabase CLI logada:
 supabase functions deploy publish --project-ref euzmbswywwhmicjlszqw
 supabase secrets set GITHUB_PAT=<o-fine-grained-PAT> --project-ref euzmbswywwhmicjlszqw
 ```
-(Alternativa sem CLI: Dashboard → Edge Functions → criar `publish`, colar o `index.ts`, e em Secrets adicionar `GITHUB_PAT`.) As variáveis `SUPABASE_URL`, `SUPABASE_ANON_KEY` e `SUPABASE_SERVICE_ROLE_KEY` são injetadas automaticamente pelo Supabase nas funções, não precisa setar. O `verify_jwt` fica **ligado** (padrão), o que já barra chamadas sem sessão.
+(Alternativa sem CLI: Dashboard → Edge Functions → criar `publish`, colar o `index.ts`, e em Secrets adicionar `GITHUB_PAT`.) As variáveis `SUPABASE_URL`, `SUPABASE_ANON_KEY` e `SUPABASE_SERVICE_ROLE_KEY` são injetadas automaticamente pelo Supabase nas funções, não precisa setar.
+
+> **IMPORTANTE — Verify JWT DESLIGADO.** A função tem que ser deployada com `--no-verify-jwt` (CLI) ou com o toggle "Verify JWT" off (Dashboard). Com o verify_jwt ligado, o gateway barra o **preflight CORS** (OPTIONS, que vem sem token) antes de chegar no código, e o painel recebe erro de CORS. A segurança não cai: a própria função valida o JWT do admin via `auth.getUser()` e devolve 401 sem sessão.
 
 - [ ] **Step 3: Commit**
 

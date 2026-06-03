@@ -3,6 +3,8 @@ import { SUPABASE_URL, SUPABASE_ANON_KEY } from './config.js';
 import { renderLogin } from './screens/login.js';
 import { renderList } from './screens/list.js';
 import { renderEditor } from './screens/editor.js';
+import { publishUiState, fetchSiteMeta, requestPublish } from './lib/publish.js';
+import { toast } from './lib/ui.js';
 
 export const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
@@ -26,8 +28,8 @@ function shell(innerTitle) {
         <header class="topbar">
           <h1 class="topbar__title" id="page-title">${innerTitle}</h1>
           <div class="topbar__actions">
-            <!-- "Atualizar site" entra no Plano 3; placeholder desabilitado por ora -->
-            <button class="btn btn--primary" disabled title="Disponível na próxima etapa">Atualizar site</button>
+            <span class="publish__flag" id="publish-flag" hidden><span class="publish__dot"></span>Alterações não publicadas</span>
+            <button class="btn btn--primary" id="publish-btn">Atualizar site</button>
           </div>
         </header>
         <main class="work" id="work"></main>
@@ -36,7 +38,55 @@ function shell(innerTitle) {
   appRoot.querySelector('#logout').addEventListener('click', async () => {
     await supabase.auth.signOut();
   });
+  initPublishControl();
   return appRoot.querySelector('#work');
+}
+
+let publishTimer = null;
+
+async function refreshPublishControl() {
+  const flag = appRoot.querySelector('#publish-flag');
+  const btn = appRoot.querySelector('#publish-btn');
+  if (!flag || !btn) return null;
+  const meta = await fetchSiteMeta(supabase);
+  const ui = publishUiState(meta);
+  flag.hidden = !ui.flagVisible;
+  btn.textContent = ui.btnLabel;
+  btn.disabled = ui.btnDisabled;
+  return meta;
+}
+
+function initPublishControl() {
+  const btn = appRoot.querySelector('#publish-btn');
+  btn.addEventListener('click', onPublishClick);
+  refreshPublishControl();
+}
+
+async function onPublishClick() {
+  try {
+    await requestPublish(supabase);          // marca publishing=true e dispara
+    await refreshPublishControl();           // botão vira "Publicando…"
+    toast('Publicando o site…', 'info');
+    pollPublish(Date.now());
+  } catch {
+    toast('Não deu para iniciar a publicação.', 'err');
+  }
+}
+
+function pollPublish(startedAt) {
+  clearTimeout(publishTimer);
+  publishTimer = setTimeout(async () => {
+    const meta = await refreshPublishControl();
+    if (meta && !meta.publishing) {
+      toast('Site atualizado.', 'ok');
+      return;
+    }
+    if (Date.now() - startedAt > 180000) {   // 3 min de teto
+      toast('A publicação está demorando. Confira o GitHub Actions.', 'err');
+      return;
+    }
+    pollPublish(startedAt);
+  }, 4000);
 }
 
 async function route() {

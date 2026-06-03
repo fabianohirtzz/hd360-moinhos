@@ -96,3 +96,11 @@ test('omite widget de tags quando nao ha tags', () => {
   const html = renderPostPage({ ...post, tags: [] }, related, []);
   assert.doesNotMatch(html, /side-tags/);
 });
+
+test('injeta o widget de curtidas com slug e total inicial', () => {
+  const out = renderPostPage({ ...post, likes: 7 }, related, []);
+  assert.match(out, /data-like="meu-post"/);
+  assert.match(out, /class="like__count">7</);
+  assert.match(out, /assets\/js\/likes\.js/);
+  assert.doesNotMatch(out, /Em breve você vai poder curtir/);
+});

@@ -81,10 +81,18 @@ function widgetRecent(recentPosts) {
     </section>`;
 }
 
-function widgetSoon() {
-  return `<section class="side-card side-card--soon">
-      <h4 class="side-card__title">Curtidas e comentários</h4>
-      <p class="side-soon">Em breve você vai poder curtir e comentar este conteúdo.</p>
+function widgetLikes(post) {
+  const slug = esc(post.slug);
+  const likes = Number(post.likes) || 0;
+  return `<section class="side-card">
+      <h4 class="side-card__title">Curtidas</h4>
+      <div class="like" data-like="${slug}">
+        <button class="like__btn" type="button" aria-pressed="false" aria-label="Curtir este post">
+          <svg class="like__heart" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-7.5-4.6-10-9.3C.4 8.4 2 5 5.2 5c2 0 3.3 1.1 4.1 2.3.4.6.7.6 1.4.6h2.6c.7 0 1-.0 1.4-.6C16.5 6.1 17.8 5 19.8 5 23 5 24.6 8.4 22 11.7 19.5 16.4 12 21 12 21z" stroke-linejoin="round"/></svg>
+          <span class="like__count">${likes}</span>
+        </button>
+        <span class="like__hint">Gostou? Deixe seu coração.</span>
+      </div>
     </section>`;
 }
 
@@ -93,7 +101,7 @@ function sidebar(post, recentPosts) {
     widgetCategories(post),
     widgetTags(post),
     widgetRecent(recentPosts),
-    widgetSoon(),
+    widgetLikes(post),
   ].filter(Boolean).join('\n    ');
 }
 
@@ -274,6 +282,7 @@ export function renderPostPage(post, related = [], recentPosts = []) {
   </a>
 
   <script src="../assets/js/main.js"></script>
+  <script type="module" src="../assets/js/likes.js"></script>
 </body>
 </html>
 `;

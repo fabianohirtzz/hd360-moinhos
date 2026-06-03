@@ -32,3 +32,8 @@ A leitura pública já vem do bucket ser público; não precisa de policy de sel
 ## Env vars (build/seed local e CI)
 - `SUPABASE_URL`   = https://<ref>.supabase.co
 - `SUPABASE_SERVICE_KEY` = <service role key>
+
+## Publicação (Plano 3)
+- `publish.sql` cria `site_meta` (estado de publicação) e o trigger que marca o site como "sujo" a cada escrita em `posts`.
+- A Edge Function `publish` (em `supabase/functions/publish/`) dispara o rebuild; secret necessário: `GITHUB_PAT` (fine-grained, repo `hd360-moinhos`, Contents: Read and write).
+- O workflow `.github/workflows/publish-blog.yml` roda o build e atualiza `site_meta` ao terminar. Secrets do GitHub Actions: `SUPABASE_URL`, `SUPABASE_SERVICE_KEY`.

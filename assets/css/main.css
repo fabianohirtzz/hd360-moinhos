@@ -199,6 +199,8 @@ h1, h2, h3 { font-family: var(--font-display); font-weight: 400; line-height: 1.
 .section { position: relative; padding-block: clamp(64px, 9vw, 120px); overflow: clip; min-height: 100vh; min-height: 100svh; display: flex; flex-direction: column; justify-content: center; }
 .section--white { background: var(--branco); }
 .section--cream { background: var(--creme); }
+/* Faixa proporcional: sem 100vh, altura pelo conteúdo (combina com as ondas divisórias) */
+.section--band { min-height: 0; padding-block: clamp(48px, 7vw, 92px); }
 .section__head { max-width: 720px; margin: 0 auto clamp(36px, 5vw, 56px); text-align: center; }
 .section__head--left { margin-inline: 0; text-align: left; }
 .section__title { font-size: clamp(34px, 5.2vw, 64px); margin-top: 12px; text-wrap: balance; }
@@ -397,9 +399,9 @@ h1, h2, h3 { font-family: var(--font-display); font-weight: 400; line-height: 1.
 .step:nth-child(4):hover .step__num { box-shadow: 0 14px 28px rgba(251,60,99,.45); }
 .step__title { font: 700 18px/1.3 var(--font-body); color: var(--tinta); }
 .step__text { font: 400 15px/1.6 var(--font-body); color: var(--tinta-muted); margin-top: 8px; }
+.steps__cta { display: flex; justify-content: center; margin-top: clamp(32px, 4.5vw, 52px); }
 .step:not(:last-child)::after { content: ""; position: absolute; top: 32px; left: calc(50% + 42px); right: calc(-50% + 42px); height: 3px; background: repeating-linear-gradient(90deg, var(--linha) 0 8px, transparent 8px 16px); }
-/* seção "Por onde começar" em tela cheia, conteúdo centralizado */
-#como-comecar { min-height: 100vh; min-height: 100svh; display: grid; align-items: center; }
+/* seção "Por onde começar": faixa proporcional (sem 100vh) — ver .section--band */
 
 /* =====================================================================
    STATS
@@ -798,15 +800,15 @@ h1, h2, h3 { font-family: var(--font-display); font-weight: 400; line-height: 1.
 .leader__bio { font: 400 14.5px/1.62 var(--font-body); color: var(--tinta-muted); margin-top: 14px; }
 
 /* ---------- Mosaico de avatares da equipe (+55) ---------- */
-.mosaic { display: flex; flex-wrap: wrap; gap: 14px; justify-content: center; align-items: center; max-width: 760px; margin: 0 auto; }
-.mosaic__face { width: 76px; height: 76px; border-radius: 50%; overflow: hidden; display: grid; place-items: center; box-shadow: 0 8px 20px rgba(46,42,57,.08); }
+/* Fileira única de avatares sobrepostos (stack de time) */
+.mosaic { display: flex; flex-wrap: nowrap; justify-content: center; align-items: center; max-width: 100%; margin: 0 auto; --av: clamp(38px, 6.4vw, 78px); }
+.mosaic__face { width: var(--av); height: var(--av); border-radius: 50%; overflow: hidden; display: grid; place-items: center; box-shadow: 0 6px 16px rgba(46,42,57,.12); border: 3px solid var(--branco); margin-left: calc(var(--av) * -0.34); position: relative; transition: transform .25s var(--ease-bounce); }
+.mosaic__face:first-child { margin-left: 0; }
+.mosaic__face:hover { transform: translateY(-6px) scale(1.08); z-index: 3; }
 .mosaic__face img { width: 100%; height: 100%; object-fit: contain; }
 .mosaic__face:nth-child(5n+1) { background: var(--azul-soft); } .mosaic__face:nth-child(5n+2) { background: var(--rosa-soft); }
 .mosaic__face:nth-child(5n+3) { background: var(--lilas-soft); } .mosaic__face:nth-child(5n+4) { background: var(--verde-soft); }
 .mosaic__face:nth-child(5n+5) { background: var(--amarelo-soft); }
-.mosaic__more { width: 96px; height: 96px; border-radius: 50%; display: grid; place-items: center; flex-direction: column; background: var(--grad-marca); color: #fff; box-shadow: 0 12px 28px rgba(143,100,200,.3); }
-.mosaic__more b { font: 400 30px/1 var(--font-display); }
-.mosaic__more span { font: 600 10px/1.2 var(--font-body); text-transform: uppercase; letter-spacing: .08em; }
 
 /* ---------- Mundos temáticos (Unidades) ---------- */
 .worlds { display: grid; gap: 26px; grid-template-columns: repeat(auto-fit, minmax(290px, 1fr)); }
@@ -818,7 +820,7 @@ h1, h2, h3 { font-family: var(--font-display); font-weight: 400; line-height: 1.
 .world__char--1 { width: 44%; max-width: 178px; top: 5%; right: 6%; }
 .world__char--2 { width: 30%; max-width: 116px; top: 12%; left: 7%; }
 .world__label { position: relative; z-index: 2; margin-top: auto; width: 100%; max-width: 360px; min-height: 234px; display: flex; flex-direction: column; justify-content: center; background: rgba(255,255,255,.78); backdrop-filter: blur(6px); border-radius: var(--r-lg); padding: 22px 24px; box-shadow: 0 12px 30px rgba(46,42,57,.08); }
-.world__title { font: 400 clamp(26px, 3vw, 38px)/1 var(--font-display); color: var(--tinta); margin-top: 8px; }
+.world__title { font: 400 clamp(22px, 2.5vw, 28px)/1.05 var(--font-display); color: var(--tinta); margin-top: 8px; white-space: nowrap; }
 .world__text { font: 400 14.5px/1.55 var(--font-body); color: var(--tinta-muted); margin-top: 8px; }
 
 /* ---------- Switcher de unidade ---------- */

@@ -827,35 +827,29 @@ h1, h2, h3 { font-family: var(--font-display); font-weight: 400; line-height: 1.
 .gallery__hint { margin: 0 0 14px; font: 600 13.5px/1.4 var(--font-body); color: var(--tinta-muted); display: inline-flex; align-items: center; gap: 8px; }
 .gallery__hint::before { content: ""; width: 9px; height: 9px; border-radius: 50%; background: var(--c, var(--verde)); flex: none; }
 
-/* Pilha espalhada de fotos (modelo designali): cartões inclinados, arrastáveis,
-   moldura branca + leve glow alternando as cores da marca. */
+/* Carrossel de fotos em leque (modelo designali): 5 visíveis, as duas laterais
+   recortadas pelo contêiner, moldura branca + leve glow alternando as cores da marca. */
 .gallery--stack {
-  position: relative; height: clamp(360px, 50vw, 480px); margin: 6px 0 4px; touch-action: pan-y;
+  position: relative; height: clamp(330px, 46vw, 460px); margin: 6px 0 4px; overflow: hidden;
 }
 .gallery--stack .gallery__item {
   position: absolute; left: 50%; top: 50%; flex: none; min-width: 0;
-  width: clamp(148px, 30vw, 216px); height: auto; aspect-ratio: 4 / 5;
-  border-radius: var(--r-lg); cursor: grab; z-index: var(--z, 1); opacity: 0; touch-action: pan-y;
-  transform: translate(-50%, -50%) scale(.94);
-  box-shadow: 0 0 0 5px var(--branco), 0 10px 26px rgba(46,42,57,.18), 0 0 18px 1px var(--glow, rgba(0,165,234,.5));
-  transition: transform .55s var(--ease-gentle), box-shadow .35s var(--ease-soft), opacity .5s var(--ease-gentle);
-  will-change: transform;
+  width: clamp(170px, 34vw, 256px); height: auto; aspect-ratio: 4 / 5;
+  border-radius: var(--r-lg); cursor: pointer; opacity: 0; visibility: hidden; z-index: var(--z, 1);
+  transform: translate(-50%, -50%) translate(var(--x, 0px), var(--y, 0px)) rotate(var(--rot, 0deg)) scale(var(--sc, 1));
+  box-shadow: 0 0 0 5px var(--branco), 0 12px 28px rgba(46,42,57,.2), 0 0 18px 1px var(--glow, rgba(0,165,234,.5));
+  transition: transform .5s var(--ease-gentle), box-shadow .35s var(--ease-soft), opacity .45s var(--ease-gentle), visibility .45s;
+  will-change: transform, opacity;
 }
+.gallery--stack .gallery__item.is-shown { opacity: 1; visibility: visible; }
 .gallery--stack .gallery__item:hover img,
 .gallery--stack .gallery__item:focus-visible img { transform: none; } /* o cartão inteiro escala, não a imagem */
-.gallery--stack.is-in .gallery__item {
-  opacity: 1;
-  transform: translate(-50%, -50%) translate(var(--x, 0px), var(--y, 0px)) rotate(var(--rot, 0deg));
-  transition-delay: var(--d, 0s);
-}
-.gallery--stack .gallery__item:hover,
-.gallery--stack .gallery__item:focus-visible {
-  transform: translate(-50%, -50%) translate(var(--x, 0px), calc(var(--y, 0px) - 16px)) rotate(0deg) scale(1.08);
+.gallery--stack .gallery__item.is-center { cursor: zoom-in; }
+.gallery--stack .gallery__item.is-center:hover,
+.gallery--stack .gallery__item.is-center:focus-visible {
+  transform: translate(-50%, -50%) translate(var(--x, 0px), calc(var(--y, 0px) - 12px)) rotate(0deg) scale(calc(var(--sc, 1) + .05));
   box-shadow: 0 0 0 5px var(--branco), 0 22px 46px rgba(46,42,57,.28), 0 0 30px 5px var(--glow, rgba(0,165,234,.6));
-  z-index: 100; outline: none; transition-delay: 0s;
-}
-.gallery--stack .gallery__item.is-grabbing {
-  transition: box-shadow .2s var(--ease-soft); cursor: grabbing; z-index: 130; transition-delay: 0s;
+  z-index: 120; outline: none;
 }
 
 .gallery__cap {
@@ -870,11 +864,10 @@ h1, h2, h3 { font-family: var(--font-display); font-weight: 400; line-height: 1.
   transition: opacity .4s var(--ease-gentle), transform .4s var(--ease-gentle);
 }
 .gallery__cap-dot { width: 9px; height: 9px; border-radius: 50%; background: var(--c, var(--verde)); flex: none; }
-.gallery--stack .gallery__item:hover .gallery__cap,
-.gallery--stack .gallery__item:focus-visible .gallery__cap { opacity: 1; transform: none; }
+.gallery--stack .gallery__item.is-center .gallery__cap { opacity: 1; transform: none; }
 
 /* Setas para correr o filmstrip lateralmente */
-.gallery__nav { display: flex; gap: 10px; justify-content: flex-end; margin-top: 16px; }
+.gallery__nav { display: flex; gap: 12px; justify-content: center; margin-top: 18px; }
 .gallery__arrow {
   width: 46px; height: 46px; border-radius: 50%; border: 0; cursor: pointer;
   display: grid; place-items: center; background: var(--branco); color: var(--tinta);
@@ -886,8 +879,8 @@ h1, h2, h3 { font-family: var(--font-display); font-weight: 400; line-height: 1.
 .gallery__arrow:disabled { opacity: .35; cursor: default; }
 
 @media (max-width: 700px) {
-  .gallery--stack { height: clamp(320px, 78vw, 430px); }
-  .gallery--stack .gallery__item { width: clamp(132px, 42vw, 184px); }
+  .gallery--stack { height: clamp(300px, 80vw, 400px); }
+  .gallery--stack .gallery__item { width: clamp(156px, 50vw, 210px); }
 }
 
 @media (prefers-reduced-motion: reduce) {

@@ -40,9 +40,9 @@ body{ font-family:var(--font-body); color:var(--tinta); background:var(--app-bg)
 /* ============================================================= 1. App shell */
 .app{ display:grid; grid-template-columns:248px 1fr; min-height:100vh; background:var(--app-bg); color:var(--tinta); font-family:var(--font-body); }
 .sidebar{ position:sticky; top:0; align-self:start; height:100vh; display:flex; flex-direction:column; gap:6px; padding:20px 14px; background:var(--sidebar); border-right:1px solid var(--linha); }
-.sidebar__brand{ display:flex; align-items:center; gap:10px; padding:6px 8px 16px; text-decoration:none; color:var(--tinta); }
-.sidebar__mark{ width:34px; height:34px; object-fit:contain; }
-.sidebar__word{ font-family:var(--font-display); font-size:24px; line-height:1; color:var(--lilas-ink); }
+.sidebar__brand{ display:flex; flex-direction:column; align-items:center; gap:10px; padding:14px 8px 20px; text-align:center; text-decoration:none; color:var(--tinta); }
+.sidebar__mark{ width:62%; max-width:128px; height:auto; object-fit:contain; }
+.sidebar__word{ font-family:var(--font-display); font-size:28px; line-height:1; color:var(--lilas-ink); }
 .sidebar__nav{ display:flex; flex-direction:column; gap:4px; }
 .navitem{ display:flex; align-items:center; gap:10px; padding:10px 12px; border-radius:var(--r-sm); font-size:14px; font-weight:600; color:var(--tinta-muted); text-decoration:none; background:none; border:0; cursor:pointer; text-align:left; transition:background .15s var(--ease-soft), color .15s var(--ease-soft); }
 .navitem:hover{ background:var(--creme); color:var(--tinta); }

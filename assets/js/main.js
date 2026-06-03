@@ -178,6 +178,34 @@
   const reelsTrack = document.querySelector("[data-reels-track]");
   if (reelsTrack) {
     let current = null; // vídeo tocando no momento (um por vez)
+
+    // fundo desfocado: acompanha o reel central (crossfade entre 2 camadas)
+    const backdrop = document.querySelector("[data-reels-backdrop]");
+    const layers = backdrop ? [...backdrop.querySelectorAll(".reels__backdrop-img")] : [];
+    let activeLayer = 0, currentBg = "";
+    const setBackdrop = (src) => {
+      if (!backdrop || !src || src === currentBg) return;
+      currentBg = src;
+      const next = 1 - activeLayer;
+      layers[next].src = src;
+      layers[next].classList.add("is-active");
+      layers[activeLayer].classList.remove("is-active");
+      activeLayer = next;
+    };
+    const reelEls = [...reelsTrack.querySelectorAll(".reel")];
+    const syncBackdrop = () => {
+      const r = reelsTrack.getBoundingClientRect();
+      const mid = r.left + r.width / 2;
+      let best = null, bestDist = Infinity;
+      reelEls.forEach((el) => {
+        const rr = el.getBoundingClientRect();
+        const d = Math.abs(rr.left + rr.width / 2 - mid);
+        if (d < bestDist) { bestDist = d; best = el; }
+      });
+      const v = best && best.querySelector("[data-reel]");
+      if (v) setBackdrop(v.getAttribute("poster"));
+    };
+
     reelsTrack.querySelectorAll(".reel").forEach((reel) => {
       const media = reel.querySelector(".reel__media");
       const video = reel.querySelector("[data-reel]");
@@ -188,6 +216,7 @@
       const play = () => {
         if (current && current !== video) current.pause();
         current = video;
+        setBackdrop(video.getAttribute("poster")); // fundo segue o reel tocando
         video.muted = false; // ao dar play, habilita o som
         mute?.classList.remove("is-muted");
         mute?.setAttribute("aria-label", "Desativar som");
@@ -219,9 +248,17 @@
     const amount = () => reelsTrack.clientWidth * 0.85;
     prev?.addEventListener("click", () => reelsTrack.scrollBy({ left: -amount(), behavior: calm() ? "auto" : "smooth" }));
     next?.addEventListener("click", () => reelsTrack.scrollBy({ left: amount(), behavior: calm() ? "auto" : "smooth" }));
-    reelsTrack.addEventListener("scroll", updateArrows, { passive: true });
-    window.addEventListener("resize", updateArrows);
+
+    let raf = 0;
+    const onScroll = () => {
+      updateArrows();
+      if (raf) return;
+      raf = requestAnimationFrame(() => { raf = 0; syncBackdrop(); });
+    };
+    reelsTrack.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", () => { updateArrows(); syncBackdrop(); });
     updateArrows();
+    syncBackdrop(); // pinta o fundo inicial com o primeiro reel
   }
 
   /* ---------- Filtro de especialidades (Atendimento) ---------- */

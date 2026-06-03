@@ -1,8 +1,9 @@
-import { readFile, writeFile, mkdir } from 'node:fs/promises';
+import { readFile, writeFile, mkdir, rm } from 'node:fs/promises';
 import { renderBlogIndex } from './lib/render-blog-index.mjs';
 import { renderCarousel } from './lib/render-carousel.mjs';
 import { renderPostPage } from './lib/render-post-page.mjs';
 import { loadPosts } from './lib/load-posts.mjs';
+import { slugsToPrune } from './lib/prune-slugs.mjs';
 
 const ROOT = new URL('../../', import.meta.url);
 
@@ -40,6 +41,18 @@ async function main() {
     await writeFile(new URL(`${post.slug}/index.html`, ROOT), html);
     console.log('  ok', `${post.slug}/index.html`);
   }
+
+  // Manifesto dos slugs gerados, para apagar diretórios de posts excluídos no próximo build.
+  const manifestUrl = new URL('assets/blog/generated-slugs.json', ROOT);
+  const newSlugs = posts.map(p => p.slug);
+  let oldSlugs = [];
+  try { oldSlugs = JSON.parse(await readFile(manifestUrl, 'utf8')); } catch { /* primeiro build */ }
+  for (const slug of slugsToPrune(oldSlugs, newSlugs)) {
+    await rm(new URL(`${slug}/`, ROOT), { recursive: true, force: true });
+    console.log('  removido', `${slug}/`);
+  }
+  await writeFile(manifestUrl, JSON.stringify(newSlugs, null, 2) + '\n');
+
   console.log('Pronto.');
 }
 

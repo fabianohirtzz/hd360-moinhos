@@ -16,6 +16,8 @@ package-lock.json
 # Exceção: o painel admin precisa do seu package.json versionado (define "type":"module"
 # para os testes ESM do painel e o CI da Fase 2).
 !painel/package.json
+# Exceção: os scripts do site (curtidas) usam ESM testável; package.json define "type":"module".
+!assets/js/package.json
 
 # Previews / rascunhos temporários
 _*.png

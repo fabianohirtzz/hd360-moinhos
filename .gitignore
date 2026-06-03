@@ -31,3 +31,6 @@ dist/
 # Env / segredos
 .env
 .env.local
+
+# Cache local da Supabase CLI
+supabase/.temp/

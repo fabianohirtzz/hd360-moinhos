@@ -706,6 +706,7 @@ h1, h2, h3 { font-family: var(--font-display); font-weight: 400; line-height: 1.
 
 /* Hero interno em duas colunas (com personagem ao lado) */
 .page-hero--split .page-hero__inner { max-width: var(--container); text-align: left; display: grid; grid-template-columns: 1.08fr .92fr; gap: clamp(32px, 5vw, 64px); align-items: center; }
+.page-hero--split .page-hero__title { font-size: clamp(34px, 4.2vw, 54px); }
 .page-hero--split .page-hero__lede { margin-inline: 0; }
 .page-hero--split .page-hero__actions { justify-content: flex-start; }
 .page-hero__art { position: relative; display: grid; place-items: center; }

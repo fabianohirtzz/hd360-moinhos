@@ -117,6 +117,9 @@ h1, h2, h3 { font-family: var(--font-display); font-weight: 400; line-height: 1.
   font: 600 13px/1 var(--font-body); letter-spacing: .06em; text-transform: uppercase;
 }
 .eyebrow__dot { width: 9px; height: 9px; border-radius: 50%; }
+/* versão maior, para dizer logo de cara o que a clínica é (hero da home) */
+.eyebrow--lg { padding: 10px 20px 10px 14px; font-size: clamp(13px, 1.25vw, 15.5px); letter-spacing: .04em; }
+.eyebrow--lg .eyebrow__dot { width: 11px; height: 11px; }
 .eyebrow--azul { background: var(--azul-soft); color: var(--azul-ink); }
 .eyebrow--azul .eyebrow__dot { background: var(--azul); }
 .eyebrow--rosa { background: var(--rosa-soft); color: var(--rosa-ink); }
@@ -248,16 +251,22 @@ h1, h2, h3 { font-family: var(--font-display); font-weight: 400; line-height: 1.
   position: fixed; top: 0; right: 0; bottom: 0; z-index: 120;
   width: min(86vw, 360px); padding: 28px 24px;
   background: var(--branco); border-radius: var(--r-xl) 0 0 var(--r-xl);
-  display: flex; flex-direction: column; gap: 8px;
+  display: flex; flex-direction: column; gap: 4px; overflow-y: auto; overscroll-behavior: contain;
   transform: translateX(105%); transition: transform .4s var(--ease-gentle);
   box-shadow: -20px 0 50px rgba(46,42,57,.16);
 }
 .drawer.is-open { transform: translateX(0); }
 .drawer__head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
 .drawer__close { width: 44px; height: 44px; border-radius: 50%; background: var(--creme); font-size: 22px; color: var(--tinta); line-height: 1; }
-.drawer__link { padding: 14px 16px; border-radius: var(--r-md); font: 600 18px/1 var(--font-body); color: var(--tinta); }
+.drawer__link { padding: 12px 16px; border-radius: var(--r-md); font: 600 17px/1 var(--font-body); color: var(--tinta); }
 .drawer__link:hover { background: var(--azul-soft); color: var(--azul-ink); }
-.drawer__cta { margin-top: auto; }
+.drawer__cta { margin-top: 14px; flex-shrink: 0; }
+/* contatos dentro do menu mobile */
+.drawer__contacts { margin-top: auto; padding: 16px; border-radius: var(--r-md); background: var(--creme); display: flex; flex-direction: column; gap: 2px; }
+.drawer__label { font: 700 12px/1 var(--font-body); text-transform: uppercase; letter-spacing: .1em; color: var(--tinta-muted); margin-bottom: 8px; }
+.drawer__contact { display: flex; align-items: center; gap: 10px; min-height: 36px; font: 500 14.5px/1.3 var(--font-body); color: var(--tinta); word-break: break-word; }
+.drawer__contact svg { width: 18px; height: 18px; flex-shrink: 0; color: var(--azul-ink); }
+.drawer__contact:hover, .drawer__contact:focus-visible { color: var(--azul-ink); }
 
 /* =====================================================================
    HERO
@@ -311,7 +320,7 @@ h1, h2, h3 { font-family: var(--font-display); font-weight: 400; line-height: 1.
 /* =====================================================================
    CONVÊNIOS (planos parceiros)
    ===================================================================== */
-.convenios { display: grid; gap: 22px; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); max-width: 940px; margin-inline: auto; }
+.convenios { display: grid; gap: 22px; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); max-width: 1040px; margin-inline: auto; }
 .convenio {
   background: var(--branco); border-radius: var(--r-lg); padding: 28px 24px;
   display: flex; flex-direction: column; align-items: center; gap: 16px; text-align: center;
@@ -321,6 +330,7 @@ h1, h2, h3 { font-family: var(--font-display); font-weight: 400; line-height: 1.
 }
 .convenio:hover { transform: translateY(-6px); box-shadow: 0 24px 50px rgba(0,165,234,.16); }
 .convenio__logo { width: 100%; max-width: 180px; height: 56px; object-fit: contain; }
+.convenio__logo--text { display: grid; place-items: center; font: 800 21px/1 var(--font-body); letter-spacing: -.01em; color: #cc092f; }
 .convenio__name { font: 600 14.5px/1.3 var(--font-body); color: var(--tinta-muted); }
 .convenios__note { text-align: center; margin-top: 28px; font: 500 15.5px/1.65 var(--font-body); color: var(--tinta-muted); }
 .convenios__note a { color: var(--azul-ink); font-weight: 700; text-decoration: none; box-shadow: inset 0 -2px 0 var(--azul-soft); }
@@ -552,9 +562,16 @@ h1, h2, h3 { font-family: var(--font-display); font-weight: 400; line-height: 1.
   .cta__actions { justify-content: center; }
   .cta__title, .cta__text { max-width: none; margin-inline: auto; }
 }
-@media (max-width: 880px) {
+/* menu com 7 itens: aperta um pouco antes de virar hambúrguer */
+@media (max-width: 1320px) {
+  .nav { gap: 12px; }
+  .nav__link { padding: 9px 11px; font-size: 14.5px; gap: 6px; }
+}
+@media (max-width: 1140px) {
   .nav__links, .nav__cta { display: none; }
-  .nav__burger { display: flex; }
+  .nav__burger { display: flex; margin-left: auto; }
+}
+@media (max-width: 880px) {
   .footer__top { grid-template-columns: 1fr 1fr; gap: 32px; }
   .footer__brand { grid-column: 1 / -1; }
 }
@@ -787,7 +804,7 @@ h1, h2, h3 { font-family: var(--font-display); font-weight: 400; line-height: 1.
 .careitem__text { font: 400 14.5px/1.6 var(--font-body); color: var(--tinta-muted); margin-top: 5px; }
 
 /* ---------- Liderança (Equipe) ---------- */
-.leaders { display: grid; gap: 26px; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
+.leaders { display: grid; gap: 26px; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); max-width: 860px; margin-inline: auto; }
 .leader { background: var(--branco); border-radius: var(--r-lg); padding: 34px 28px; text-align: center; box-shadow: 0 12px 30px rgba(46,42,57,.06), 0 4px 10px rgba(46,42,57,.04); transition: transform .25s var(--ease-gentle), box-shadow .25s; }
 .leader:hover { transform: translateY(-6px); }
 .leader__avatar { width: 104px; height: 104px; border-radius: 50%; margin: 0 auto 18px; display: grid; place-items: center; font: 400 44px/1 var(--font-display); }
@@ -1117,3 +1134,17 @@ h1, h2, h3 { font-family: var(--font-display); font-weight: 400; line-height: 1.
   .like__btn, .like__heart{ transition:none; }
   .like__btn:hover{ transform:none; }
 }
+
+/* =====================================================================
+   FAQ (página dedicada) e formulário de currículo
+   ===================================================================== */
+.faq-group { max-width: 760px; margin: 0 auto clamp(36px, 5vw, 56px); }
+.faq-group:last-child { margin-bottom: 0; }
+.faq-group__title { display: flex; align-items: center; gap: 12px; font: 400 clamp(24px, 2.6vw, 32px)/1.1 var(--font-display); color: var(--tinta); margin-bottom: 18px; }
+.faq-group__title .eyebrow__dot { width: 12px; height: 12px; flex-shrink: 0; }
+.field__file { width: 100%; padding: 12px; border-radius: var(--r-sm); border: 2px dashed var(--linha); background: var(--creme); font: 500 15px/1.4 var(--font-body); color: var(--tinta-muted); cursor: pointer; }
+.field__file::file-selector-button { margin-right: 14px; padding: 10px 18px; border: 0; border-radius: var(--r-pill); background: var(--lilas-soft); color: var(--lilas-ink); font: 600 14px/1 var(--font-body); cursor: pointer; }
+.field__file:focus-visible { outline: 3px solid var(--azul); outline-offset: 2px; }
+.field__check { display: flex; align-items: flex-start; gap: 12px; margin: 4px 0 18px; font: 400 14px/1.55 var(--font-body); color: var(--tinta-muted); cursor: pointer; }
+.field__check input { width: 20px; height: 20px; margin-top: 1px; flex-shrink: 0; accent-color: var(--lilas); }
+.field__check a { color: var(--azul-ink); text-decoration: underline; }

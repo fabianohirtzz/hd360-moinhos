@@ -427,22 +427,43 @@
     });
   }
 
-  /* ---------- Formulários (ouvidoria, newsletter) — sucesso local ---------- */
+  /* ---------- Formulários ----------
+     [data-form]              → sucesso local (newsletter)
+     [data-form][data-form-send] → envia de verdade (FormSubmit) e volta com ?enviado=1 */
+  const showSent = (form) => {
+    form.classList.add("is-sent");
+    const ok = form.querySelector("[data-form-success]");
+    if (ok) {
+      ok.setAttribute("tabindex", "-1");
+      try { ok.focus({ preventScroll: true }); } catch (_) {}
+      ok.scrollIntoView({ behavior: calm() ? "auto" : "smooth", block: "center" });
+    }
+  };
   document.querySelectorAll("[data-form]").forEach((form) => {
+    const sends = form.hasAttribute("data-form-send");
+    const next = form.querySelector("[data-form-next]");
+    if (next) next.value = location.href.split(/[?#]/)[0] + "?enviado=1";
     form.addEventListener("submit", (e) => {
-      e.preventDefault();
+      // limite de tamanho dos anexos (data-max-mb)
+      form.querySelectorAll('input[type="file"][data-max-mb]').forEach((inp) => {
+        const max = parseFloat(inp.dataset.maxMb) * 1024 * 1024;
+        const big = Array.from(inp.files || []).some((f) => f.size > max);
+        inp.setCustomValidity(big ? "O arquivo precisa ter até " + inp.dataset.maxMb + " MB." : "");
+      });
       if (typeof form.checkValidity === "function" && !form.checkValidity()) {
+        e.preventDefault();
         form.reportValidity();
         return;
       }
-      form.classList.add("is-sent");
-      const ok = form.querySelector("[data-form-success]");
-      if (ok) {
-        ok.setAttribute("tabindex", "-1");
-        try { ok.focus({ preventScroll: true }); } catch (_) {}
-        ok.scrollIntoView({ behavior: calm() ? "auto" : "smooth", block: "center" });
+      if (sends) {
+        const btn = form.querySelector('[type="submit"]');
+        if (btn) { btn.disabled = true; btn.textContent = "Enviando..."; }
+        return; // segue o envio normal do formulário
       }
+      e.preventDefault();
+      showSent(form);
     });
+    if (sends && /[?&]enviado=1\b/.test(location.search)) showSent(form);
   });
 
   /* ---------- FAQ: abre um por vez dentro do mesmo grupo ---------- */
@@ -479,7 +500,8 @@
         bit.style.cssText =
           "top:" + p.t + ";left:" + p.l + ";--s:" + p.s + "px;--pc:" + cols[(p.c + fi) % cols.length] +
           ";--pf:" + p.pf + "s;--r0:" + p.r0 + "deg;--r1:" + p.r1 + "deg";
-        bit.innerHTML = '<span><svg viewBox="0 0 24 24"><use href="#ic-puzzle"/></svg></span>';
+        // alterna os 5 desenhos de peça (encaixes diferentes, como num quebra-cabeça de verdade)
+        bit.innerHTML = '<span><svg viewBox="0 0 24 24"><use href="#ic-puzzle-' + (((k + fi) % 5) + 1) + '"/></svg></span>';
         field.appendChild(bit);
       }
     });

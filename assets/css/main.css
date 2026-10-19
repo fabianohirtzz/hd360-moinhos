@@ -1148,3 +1148,8 @@ h1, h2, h3 { font-family: var(--font-display); font-weight: 400; line-height: 1.
 .field__check { display: flex; align-items: flex-start; gap: 12px; margin: 4px 0 18px; font: 400 14px/1.55 var(--font-body); color: var(--tinta-muted); cursor: pointer; }
 .field__check input { width: 20px; height: 20px; margin-top: 1px; flex-shrink: 0; accent-color: var(--lilas); }
 .field__check a { color: var(--azul-ink); text-decoration: underline; }
+
+/* assinatura da Freela In Home, linha própria no fim do rodapé */
+.footer__credit { flex-basis: 100%; text-align: center; margin-top: 6px; font: 500 13px/1.6 var(--font-body); color: var(--tinta-soft); }
+.footer__credit a { color: var(--lilas-ink); font-weight: 700; }
+.footer__credit a:hover { color: var(--rosa-ink); text-decoration: underline; }

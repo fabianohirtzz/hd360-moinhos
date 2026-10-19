@@ -80,7 +80,7 @@
 .lk-unit { background: var(--branco); border-radius: var(--r-lg); overflow: hidden; box-shadow: 0 12px 30px rgba(46,42,57,.07); }
 .lk-unit--azul { --c: var(--azul); --c-soft: var(--azul-soft); --c-ink: var(--azul-ink); }
 .lk-unit--rosa { --c: var(--rosa); --c-soft: var(--rosa-soft); --c-ink: var(--rosa-ink); }
-.lk-unit__photo { position: relative; aspect-ratio: 16 / 9; margin: 0; }
+.lk-unit__photo { position: relative; aspect-ratio: 4 / 3; margin: 0; }
 .lk-unit__photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
 .lk-unit__photo::after { content: ""; position: absolute; inset: auto 0 0; height: 55%; background: linear-gradient(0deg, rgba(46,42,57,.45), transparent); }
 .lk-unit__tag {

@@ -23,11 +23,21 @@ jobs:
         with:
           node-version: '20'
 
+      - name: Guardar a lista de posts de antes do build
+        run: cp assets/blog/generated-slugs.json "$RUNNER_TEMP/slugs-antes.json"
+
       - name: Build do site lendo do Supabase
         env:
           SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
           SUPABASE_SERVICE_KEY: ${{ secrets.SUPABASE_SERVICE_KEY }}
         run: node tools/blog-migration/build.mjs
+
+      - name: Publicar na hospedagem (ErêHost, FTP)
+        env:
+          FTP_HOST: ${{ secrets.FTP_HOST }}
+          FTP_USER: ${{ secrets.FTP_USER }}
+          FTP_PASS: ${{ secrets.FTP_PASS }}
+        run: node tools/blog-migration/deploy-ftp.mjs "$RUNNER_TEMP/slugs-antes.json"
 
       - name: Commit do HTML gerado
         run: |

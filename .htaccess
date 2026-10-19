@@ -14,6 +14,10 @@ Options -Indexes
 
   # /link sem barra no fim também abre a página do link da bio
   RewriteRule ^link$ /link/ [L,R=301]
+
+  # endereços das páginas no WordPress antigo -> páginas novas
+  RewriteRule ^(atendimento|equipe|unidades|ouvidoria|blog|faq|trabalhe-conosco|politica-de-privacidade|politica-de-cookies|termos-de-uso)/?$ /$1.html [L,R=301]
+  RewriteRule ^(contato|fale-conosco|sobre|quem-somos)/?$ / [L,R=301]
 </IfModule>
 
 # cache: páginas sempre frescas, mídia por mais tempo

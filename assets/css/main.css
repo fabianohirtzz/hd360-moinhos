@@ -1151,3 +1151,28 @@ h1, h2, h3 { font-family: var(--font-display); font-weight: 400; line-height: 1.
 .footer__credit { flex-basis: 100%; text-align: center; margin-top: 6px; font: 500 13px/1.6 var(--font-body); color: var(--tinta-soft); }
 .footer__credit a { color: var(--lilas-ink); font-weight: 700; }
 .footer__credit a:hover { color: var(--rosa-ink); text-decoration: underline; }
+
+/* =====================================================================
+   PDI e rede de apoio (atendimento)
+   ===================================================================== */
+.plan { display: grid; gap: 26px; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); max-width: 1080px; margin-inline: auto; }
+.plan__card { background: var(--creme); border-radius: var(--r-lg); padding: clamp(28px, 3.5vw, 40px); }
+.plan__icon { display: grid; place-items: center; width: 54px; height: 54px; border-radius: 18px; margin-bottom: 18px; }
+.plan__icon svg { width: 26px; height: 26px; }
+.plan__card--lilas .plan__icon { background: var(--lilas-soft); color: var(--lilas-ink); }
+.plan__card--azul .plan__icon { background: var(--azul-soft); color: var(--azul-ink); }
+.plan__title { font: 400 clamp(24px, 2.4vw, 30px)/1.15 var(--font-display); color: var(--tinta); margin-bottom: 14px; }
+.plan__text { font: 400 16px/1.7 var(--font-body); color: var(--tinta-muted); }
+.plan__text + .plan__text { margin-top: 12px; }
+
+/* "Por onde começar" com 5 passos */
+.steps--5 { grid-template-columns: repeat(5, 1fr); gap: 18px; }
+.step:nth-child(5) .step__num { background: var(--amarelo); color: var(--tinta); }
+.step:nth-child(5) .step__num::after { color: var(--amarelo); }
+.step:nth-child(5):hover .step__num { box-shadow: 0 14px 28px rgba(255,199,0,.5); }
+@media (max-width: 1100px) {
+  .steps--5 { grid-template-columns: repeat(3, 1fr); row-gap: 36px; }
+  .steps--5 .step::after { display: none; }
+}
+@media (max-width: 760px) { .steps--5 { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 560px) { .steps--5 { grid-template-columns: 1fr; } }

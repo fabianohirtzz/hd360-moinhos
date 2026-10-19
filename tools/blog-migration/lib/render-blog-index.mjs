@@ -1,3 +1,4 @@
+import { assetUrl } from './asset-url.mjs';
 function esc(s) {
   return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;')
     .replace(/>/g, '&gt;').replace(/"/g, '&quot;');
@@ -11,7 +12,7 @@ const PLACEHOLDER_SVG = '<svg viewBox="0 0 24 24" width="54" height="54" fill="n
  */
 function coverMarkup(coverImage, color, alt, prefix) {
   if (coverImage && String(coverImage).length > 0) {
-    return `<img src="${prefix}${coverImage}" alt="${esc(alt)}" loading="lazy">`;
+    return `<img src="${assetUrl(coverImage, prefix)}" alt="${esc(alt)}" loading="lazy">`;
   }
   return PLACEHOLDER_SVG;
 }

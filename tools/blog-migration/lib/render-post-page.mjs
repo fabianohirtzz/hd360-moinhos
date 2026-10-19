@@ -1,3 +1,4 @@
+import { assetUrl } from './asset-url.mjs';
 const SITE = 'https://hd360.com.br';
 
 function esc(s) {
@@ -29,14 +30,14 @@ const CATEGORIES = [
  */
 function coverMarkup(coverImage, color, alt, prefix) {
   if (coverImage && String(coverImage).length > 0) {
-    return `<img src="${prefix}${coverImage}" alt="${esc(alt)}" loading="lazy">`;
+    return `<img src="${assetUrl(coverImage, prefix)}" alt="${esc(alt)}" loading="lazy">`;
   }
   return PLACEHOLDER_SVG;
 }
 
 function recentThumb(p) {
   if (p.coverImage && String(p.coverImage).length > 0) {
-    return `<img src="../${p.coverImage}" alt="${esc(p.title)}" loading="lazy">`;
+    return `<img src="${assetUrl(p.coverImage, '../')}" alt="${esc(p.title)}" loading="lazy">`;
   }
   return PLACEHOLDER_THUMB;
 }
@@ -140,7 +141,7 @@ export function renderPostPage(post, related = [], recentPosts = []) {
   const title = post.seoTitle || `${post.title} · Blog HD360 Moinhos`;
   const desc = post.metaDescription || post.excerpt || '';
   const url = `${SITE}/${post.slug}/`;
-  const ogImg = `${SITE}/${post.ogImage || post.coverImage}`;
+  const ogImg = assetUrl(post.ogImage || post.coverImage, `${SITE}/`) || `${SITE}/assets/img/og-link.jpg`;
   const ld = {
     '@context': 'https://schema.org', '@type': 'Article',
     headline: post.title, description: desc, image: ogImg,
@@ -263,7 +264,7 @@ export function renderPostPage(post, related = [], recentPosts = []) {
       <div class="container">
         <div class="post-layout">
           <div class="post-main">
-            ${post.coverImage ? `<img class="post-hero-img reveal" src="../${post.coverImage}" alt="${esc(post.title)}" />` : ''}
+            ${post.coverImage ? `<img class="post-hero-img reveal" src="${assetUrl(post.coverImage, '../')}" alt="${esc(post.title)}" />` : ''}
             <article class="prose">
               ${rel(post.content)}
             </article>

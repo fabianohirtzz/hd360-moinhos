@@ -237,7 +237,9 @@ h1, h2, h3 { font-family: var(--font-display); font-weight: 400; line-height: 1.
   transition: background .2s var(--ease-soft), color .2s var(--ease-soft);
 }
 .nav__link:hover, .nav__link[aria-current="page"] { background: var(--azul-soft); color: var(--azul-ink); }
-.nav__cta { flex-shrink: 0; }
+/* versão compacta do botão para caber dentro da pílula do menu */
+.nav__cta { flex-shrink: 0; min-height: 40px; padding: 10px 20px; gap: 7px; font-size: 14px; box-shadow: 0 4px 12px rgba(143,100,200,.22); }
+.nav__cta .btn__ic { width: 17px; height: 17px; }
 .nav__burger { display: none; width: 46px; height: 46px; border-radius: 50%; background: var(--azul-soft); flex-direction: column; gap: 5px; align-items: center; justify-content: center; }
 .nav__burger span { width: 20px; height: 2.5px; border-radius: 2px; background: var(--azul-ink); transition: transform .3s var(--ease-gentle), opacity .2s; }
 .nav__burger[aria-expanded="true"] span:nth-child(1) { transform: translateY(7.5px) rotate(45deg); }

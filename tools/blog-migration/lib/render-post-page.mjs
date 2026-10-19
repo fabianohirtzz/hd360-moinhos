@@ -145,12 +145,21 @@ export function renderPostPage(post, related = [], recentPosts = []) {
     '@context': 'https://schema.org', '@type': 'Article',
     headline: post.title, description: desc, image: ogImg,
     datePublished: post.date, dateModified: post.modified,
-    author: { '@type': 'Organization', name: 'HD360 Moinhos' },
+    author: { '@type': 'Organization', '@id': `${SITE}/#organizacao`, name: 'HD360 Moinhos' },
     publisher: {
-      '@type': 'Organization', name: 'HD360 Moinhos',
-      logo: { '@type': 'ImageObject', url: `${SITE}/images/logo-3.png` },
+      '@type': 'Organization', '@id': `${SITE}/#organizacao`, name: 'HD360 Moinhos',
+      logo: { '@type': 'ImageObject', url: `${SITE}/images/logo-site3.png` },
     },
     mainEntityOfPage: url,
+    inLanguage: 'pt-BR',
+  };
+  const crumbs = {
+    '@context': 'https://schema.org', '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Início', item: `${SITE}/` },
+      { '@type': 'ListItem', position: 2, name: 'Blog', item: `${SITE}/blog.html` },
+      { '@type': 'ListItem', position: 3, name: post.title, item: url },
+    ],
   };
 
   return `<!DOCTYPE html>
@@ -161,11 +170,16 @@ export function renderPostPage(post, related = [], recentPosts = []) {
   <title>${esc(title)}</title>
   <meta name="description" content="${esc(desc)}" />
   <link rel="canonical" href="${url}" />
+  <meta name="robots" content="index, follow, max-image-preview:large" />
+  <meta property="og:locale" content="pt_BR" />
+  <meta property="og:site_name" content="HD360 Moinhos" />
   <meta property="og:type" content="article" />
   <meta property="og:title" content="${esc(title)}" />
   <meta property="og:description" content="${esc(desc)}" />
   <meta property="og:image" content="${esc(ogImg)}" />
   <meta property="og:url" content="${url}" />
+  <meta property="article:published_time" content="${post.date}" />
+  <meta name="twitter:card" content="summary_large_image" />
   <link rel="icon" type="image/png" href="../images/icon.png" />
   <link rel="apple-touch-icon" href="../images/icon.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -173,6 +187,8 @@ export function renderPostPage(post, related = [], recentPosts = []) {
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="../assets/css/main.css" />
   <script type="application/ld+json">${JSON.stringify(ld)}</script>
+  <script type="application/ld+json">${JSON.stringify(crumbs)}</script>
+  <script src="../assets/js/ga.js" defer></script>
 </head>
 <body>
 

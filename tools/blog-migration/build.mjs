@@ -4,6 +4,7 @@ import { renderCarousel } from './lib/render-carousel.mjs';
 import { renderPostPage } from './lib/render-post-page.mjs';
 import { loadPosts } from './lib/load-posts.mjs';
 import { slugsToPrune } from './lib/prune-slugs.mjs';
+import { renderSitemap } from './lib/render-sitemap.mjs';
 
 const ROOT = new URL('../../', import.meta.url);
 
@@ -52,6 +53,16 @@ async function main() {
     console.log('  removido', `${slug}/`);
   }
   await writeFile(manifestUrl, JSON.stringify(newSlugs, null, 2) + '\n');
+
+  // sitemap.xml na raiz, com as páginas fixas e todos os posts publicados.
+  await writeFile(new URL('sitemap.xml', ROOT), renderSitemap(posts));
+  console.log('sitemap.xml:', posts.length, 'posts.');
+
+  // llms.txt (GEO): a seção '## Blog' no fim do arquivo é sempre a lista atual de posts.
+  const llmsUrl = new URL('llms.txt', ROOT);
+  const llms = (await readFile(llmsUrl, 'utf8')).replace(/\r\n/g, '\n').split('## Blog\n')[0];
+  const lista = posts.map(p => `- [${p.title}](https://hd360.com.br/${p.slug}/)`).join('\n');
+  await writeFile(llmsUrl, `${llms}## Blog\n\n${lista}\n`);
 
   console.log('Pronto.');
 }

@@ -18,6 +18,7 @@ Options -Indexes
   # endereços das páginas no WordPress antigo -> páginas novas
   RewriteRule ^(atendimento|equipe|unidades|ouvidoria|blog|faq|trabalhe-conosco|politica-de-privacidade|politica-de-cookies|termos-de-uso)/?$ /$1.html [L,R=301]
   RewriteRule ^(contato|fale-conosco|sobre|quem-somos)/?$ / [L,R=301]
+  RewriteRule ^unidade/?$ /unidades.html [L,R=301]
 
   # restos do WordPress que o Google ainda conhece: sitemaps, feeds, categorias, tags, autores, paginação
   RewriteRule ^(wp-sitemap.*|sitemap_index|post-sitemap|page-sitemap|category-sitemap)\.xml$ /sitemap.xml [L,R=301]

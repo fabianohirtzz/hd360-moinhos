@@ -34,9 +34,11 @@ function remoteSize(path) {
 }
 
 const readJson = (p) => { try { return JSON.parse(readFileSync(p, 'utf8')); } catch { return []; } };
-const oldSlugs = readJson(process.argv[2]);
-const newSlugs = readJson(join(ROOT, 'assets/blog/generated-slugs.json'));
-const { upload, remove } = deployPlan(oldSlugs, newSlugs);
+// --files a b c: sobe só esses arquivos do site (workflow "Publicar arquivos do site")
+const fi = process.argv.indexOf('--files');
+const { upload, remove } = fi > -1
+  ? { upload: process.argv.slice(fi + 1).filter(Boolean), remove: [] }
+  : deployPlan(readJson(process.argv[2]), readJson(join(ROOT, 'assets/blog/generated-slugs.json')));
 
 // sem conexão com o FTP não adianta tentar arquivo por arquivo
 const teste = curl(['--list-only', BASE]);

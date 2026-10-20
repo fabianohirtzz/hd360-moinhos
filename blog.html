@@ -469,8 +469,13 @@
             <h2 class="split__title" style="font-size:clamp(26px,3.4vw,40px);">Receba conteúdo que <span class="hl hl--azul">ajuda</span></h2>
             <p class="split__text">Deixe seu e-mail e acompanhe nossas publicações sobre autismo e desenvolvimento. Sem spam, só o que importa.</p>
           </div>
-          <form class="newsletter__form" data-form novalidate>
+          <form class="newsletter__form" data-form data-form-send action="https://formsubmit.co/contato@hd360.com.br" method="POST" novalidate>
             <div data-form-body class="newsletter__form" style="width:100%;">
+              <input type="hidden" name="_subject" value="Nova inscrição na newsletter do blog" />
+              <input type="hidden" name="_template" value="table" />
+              <input type="hidden" name="_captcha" value="false" />
+              <input type="hidden" name="_next" value="" data-form-next />
+              <input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off" aria-hidden="true" />
               <label class="field__label" for="nl-email" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);">Seu e-mail</label>
               <input class="field__input" id="nl-email" type="email" name="email" required placeholder="voce@email.com" />
               <button class="btn btn--solid btn--azul" type="submit">Quero receber</button>

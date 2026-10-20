@@ -24,7 +24,7 @@ writeFileSync(netrc, `machine ${FTP_HOST} login ${FTP_USER} password ${FTP_PASS}
 const BASE = `ftp://${FTP_HOST}/`;
 const enc = (p) => p.split('/').map(encodeURIComponent).join('/');
 // -k: o certificado do FTP da ErêHost é do servidor compartilhado, não do domínio
-const curl = (args) => spawnSync('curl', ['-sS', '-k', '--ssl-reqd', '--netrc-file', netrc, ...args], { encoding: 'utf8' });
+const curl = (args) => spawnSync('curl', ['-sS', '-k', '--ssl-reqd', '--connect-timeout', '20', '--max-time', '120', '--netrc-file', netrc, ...args], { encoding: 'utf8' });
 const sleep = (ms) => Atomics.wait(new Int32Array(new SharedArrayBuffer(4)), 0, 0, ms);
 
 function remoteSize(path) {
@@ -38,13 +38,20 @@ const oldSlugs = readJson(process.argv[2]);
 const newSlugs = readJson(join(ROOT, 'assets/blog/generated-slugs.json'));
 const { upload, remove } = deployPlan(oldSlugs, newSlugs);
 
+// sem conexão com o FTP não adianta tentar arquivo por arquivo
+const teste = curl(['--list-only', BASE]);
+if (teste.status !== 0) {
+  console.error(`Não conectou no FTP ${FTP_HOST}: ${(teste.stderr || '').trim()}`);
+  process.exit(1);
+}
+
 const falhas = [];
 for (const f of upload) {
   let ok = false;
   for (let t = 1; t <= 5 && !ok; t++) {
     const r = curl(['--ftp-create-dirs', '-T', join(ROOT, f), BASE + enc(f)]);
     ok = r.status === 0 && remoteSize(f) === statSync(join(ROOT, f)).size;
-    if (!ok) sleep(1500 * t);
+    if (!ok) { console.log(`  tentativa ${t} de ${f}: ${(r.stderr || '').trim() || 'tamanho diferente no servidor'}`); sleep(1500 * t); }
   }
   console.log(ok ? '  ok' : '  FALHOU', f);
   if (!ok) falhas.push(f);

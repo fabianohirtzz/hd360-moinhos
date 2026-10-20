@@ -33,6 +33,7 @@ jobs:
         run: node tools/blog-migration/build.mjs
 
       - name: Publicar na hospedagem (ErêHost, FTP)
+        timeout-minutes: 15
         env:
           FTP_HOST: ${{ secrets.FTP_HOST }}
           FTP_USER: ${{ secrets.FTP_USER }}

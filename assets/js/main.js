@@ -56,6 +56,12 @@
     groups.forEach((g) => { if (!g.contains(e.target)) setOpen(g, false); });
   });
 
+  /* ---------- Tour em vídeo das unidades: um vídeo por vez ---------- */
+  const tours = document.querySelectorAll(".unit-tour__video");
+  tours.forEach((v) => v.addEventListener("play", () => {
+    tours.forEach((o) => { if (o !== v) o.pause(); });
+  }));
+
   /* ---------- Drawer mobile ---------- */
   const burger = document.querySelector("[data-burger]");
   const drawer = document.querySelector("[data-drawer]");
@@ -211,7 +217,7 @@
     }));
     const total = slides.length;
     const half = Math.floor(total / 2);
-    let index = half;       // começa no card central (igual ao componente)
+    let index = 0;          // começa no primeiro card (o reel mais recente)
     let current = null;     // vídeo tocando (um por vez)
     let autoTimer = null;
     let paused = false;     // pausa o giro automático (hover/foco/assistindo)

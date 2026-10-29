@@ -125,15 +125,14 @@
       </div>
     </section>
 
-    <!-- ============================ SWITCHER DE UNIDADES ============================ -->
-    <section class="section section--white">
+    <!-- ============================ UNIDADE QUINTINO ============================ -->
+    <section class="section section--white" id="quintino" style="scroll-margin-top:90px">
       <div class="container">
-        <div class="filters reveal" data-unit-tabs role="tablist" aria-label="Escolha a unidade">
-          <button class="filter is-active" data-unit-go="quintino" aria-selected="true">Quintino Bocaiúva</button>
-          <button class="filter" data-unit-go="casaaba" aria-selected="false">Casa ABA</button>
-        </div>
+        <nav class="filters unit-jump reveal" aria-label="Ir para a unidade">
+          <a class="filter is-active" href="#quintino" aria-current="true">Quintino Bocaiúva</a>
+          <a class="filter" href="#casa-aba">Casa ABA</a>
+        </nav>
 
-        <!-- Unidade Quintino -->
         <div class="unit" data-unit="quintino">
           <header class="section__head section__head--left reveal" style="max-width:760px;">
             <p class="eyebrow eyebrow--azul"><span class="eyebrow__dot" aria-hidden="true"></span> Unidade Quintino Bocaiúva</p>
@@ -173,6 +172,17 @@
             </div>
           </div>
 
+          <div class="unit-tour unit-tour--wide reveal">
+            <div class="unit-tour__copy">
+              <p class="eyebrow eyebrow--azul"><span class="eyebrow__dot" aria-hidden="true"></span> Tour em vídeo</p>
+              <h3 class="unit-tour__title">Um passeio pela <span class="hl hl--azul">Quintino</span></h3>
+              <p class="unit-tour__text">Os três andares temáticos, as salas de atendimento, a sala do cafezinho e a cozinha terapêutica. Dê o play e conheça a unidade por dentro.</p>
+            </div>
+            <figure class="unit-tour__media">
+              <video class="unit-tour__video" controls playsinline preload="none" poster="assets/img/unidades/quintino-poster.jpg" aria-label="Vídeo de apresentação da unidade Quintino Bocaiúva"><source src="assets/video/unidades/quintino.mp4" type="video/mp4" /></video>
+            </figure>
+          </div>
+
           <header class="section__head section__head--left reveal" style="margin-top:clamp(40px,5vw,64px);margin-bottom:24px;max-width:760px;">
             <h3 style="font:400 clamp(24px,3vw,34px)/1.1 var(--font-display);color:var(--tinta);">Conheça por <span class="hl hl--verde">dentro</span></h3>
           </header>
@@ -198,9 +208,18 @@
             <button class="gallery__arrow" data-gallery-next aria-label="Próxima foto"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg></button>
           </div>
         </div>
+      </div>
+    </section>
 
-        <!-- Unidade Casa ABA -->
-        <div class="unit" data-unit="casaaba" hidden>
+    <!-- ============================ UNIDADE CASA ABA ============================ -->
+    <section class="section section--cream" id="casa-aba" style="scroll-margin-top:90px">
+      <div class="container">
+        <nav class="filters unit-jump reveal" aria-label="Ir para a unidade">
+          <a class="filter" href="#quintino">Quintino Bocaiúva</a>
+          <a class="filter is-active" href="#casa-aba" aria-current="true">Casa ABA</a>
+        </nav>
+
+        <div class="unit" data-unit="casaaba">
           <header class="section__head section__head--left reveal" style="max-width:760px;">
             <p class="eyebrow eyebrow--rosa"><span class="eyebrow__dot" aria-hidden="true"></span> Casa ABA HD360</p>
             <h2 class="section__title" style="font-size:clamp(28px,4vw,46px)">Um ambiente dedicado ao desenvolvimento de habilidades e à promoção da <span class="hl hl--rosa">autonomia</span></h2>
@@ -239,6 +258,17 @@
             </div>
           </div>
 
+          <div class="unit-tour unit-tour--vertical reveal">
+            <div class="unit-tour__copy">
+              <p class="eyebrow eyebrow--rosa"><span class="eyebrow__dot" aria-hidden="true"></span> Tour em vídeo</p>
+              <h3 class="unit-tour__title">Um passeio pela <span class="hl hl--rosa">Casa ABA</span></h3>
+              <p class="unit-tour__text">Da entrada com jardim às salas que reproduzem a rotina de casa: cozinha lúdica, oficina, espaço podcast, integração sensorial, fisioterapia e horta. Dê o play e venha conhecer.</p>
+            </div>
+            <figure class="unit-tour__media">
+              <video class="unit-tour__video" controls playsinline preload="none" poster="assets/img/unidades/casa-aba-poster.jpg" aria-label="Vídeo de apresentação da Casa ABA"><source src="assets/video/reels/casa-aba.mp4" type="video/mp4" /></video>
+            </figure>
+          </div>
+
           <header class="section__head section__head--left reveal" style="margin-top:clamp(40px,5vw,64px);margin-bottom:24px;max-width:760px;">
             <h3 style="font:400 clamp(24px,3vw,34px)/1.1 var(--font-display);color:var(--tinta);">Conheça por <span class="hl hl--rosa">dentro</span></h3>
           </header>
@@ -275,7 +305,7 @@
     </section>
 
     <!-- ============================ SALAS TEMÁTICAS (mundos) ============================ -->
-    <section class="section section--cream" id="salas" style="scroll-margin-top:90px">
+    <section class="section section--white" id="salas" style="scroll-margin-top:90px">
       <div class="container">
         <header class="section__head reveal">
           <p class="eyebrow eyebrow--lilas" style="margin-inline:auto;"><span class="eyebrow__dot" aria-hidden="true"></span> Andares temáticos</p>

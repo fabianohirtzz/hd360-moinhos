@@ -888,6 +888,22 @@ h1, h2, h3 { font-family: var(--font-display); font-weight: 400; line-height: 1.
 @media (max-width: 860px) { .unit__split { grid-template-columns: 1fr; } }
 /* atalhos entre as seções das unidades (antes eram abas) */
 .unit-jump .filter { display: inline-flex; align-items: center; min-height: 44px; }
+/* cada unidade é uma seção com fundo próprio, número grande e onda na saída */
+.section--unit { padding-bottom: clamp(110px, 13vw, 180px); isolation: isolate; }
+.section--unit-azul { background: #eef9fe; --unit-c: var(--azul); --unit-rgb: 0,165,234; }
+.section--unit-rosa { background: #fff4f6; --unit-c: var(--rosa); --unit-rgb: 251,60,99; }
+.section--unit::before, .section--unit::after { content: ""; position: absolute; z-index: -1; border-radius: 50%; pointer-events: none; }
+.section--unit::before { width: 520px; height: 520px; top: 90px; right: -220px; background: radial-gradient(circle, rgba(var(--unit-rgb), .14), transparent 70%); }
+.section--unit::after { width: 420px; height: 420px; bottom: 40px; left: -200px; background: radial-gradient(circle, rgba(var(--unit-rgb), .10), transparent 70%); }
+.section--unit .unit { position: relative; }
+.unit__num {
+  position: absolute; top: -28px; right: 0; z-index: -1;
+  font: 400 clamp(110px, 16vw, 220px)/1 var(--font-display); color: rgba(var(--unit-rgb), .13);
+  pointer-events: none; user-select: none;
+}
+.section--unit .unit-tour { margin-top: clamp(28px, 4vw, 44px); }
+.section--unit .unit-tour + .unit__split { margin-top: clamp(48px, 6vw, 80px); }
+@media (max-width: 560px) { .unit__num { top: -10px; } }
 /* tour em vídeo de cada unidade */
 .unit-tour { display: grid; align-items: center; gap: clamp(24px, 4vw, 52px); margin-top: clamp(40px, 5vw, 64px); }
 .unit-tour--wide { grid-template-columns: minmax(0, .8fr) minmax(0, 1.4fr); }

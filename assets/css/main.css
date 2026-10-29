@@ -886,8 +886,6 @@ h1, h2, h3 { font-family: var(--font-display); font-weight: 400; line-height: 1.
 .unit[hidden] { display: none; }
 .unit__split { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(28px, 4vw, 52px); align-items: start; }
 @media (max-width: 860px) { .unit__split { grid-template-columns: 1fr; } }
-/* atalhos entre as seções das unidades (antes eram abas) */
-.unit-jump .filter { display: inline-flex; align-items: center; min-height: 44px; }
 /* cada unidade é uma seção com fundo próprio, número grande e onda na saída */
 .section--unit { padding-bottom: clamp(110px, 13vw, 180px); isolation: isolate; }
 .section--unit-azul { background: #eef9fe; --unit-c: var(--azul); --unit-rgb: 0,165,234; }

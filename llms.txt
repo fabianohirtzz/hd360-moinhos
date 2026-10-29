@@ -13,7 +13,7 @@
 - Especialidades: Acompanhamento Terapêutico, Avaliação Neuropsicológica, Avaliação Neuropsicopedagógica, Fisioterapia, Fonoaudiologia, Psicologia, Psicopedagogia, Terapia Alimentar e Terapia Ocupacional, todas integradas
 - Abordagens: Terapia ABA, modelo Denver (ESDM), Comunicação Alternativa e Aumentativa (CAA), PECS, Multigestos, orientação para pais e responsáveis, integração com a escola
 - Plano de Desenvolvimento Individualizado (PDI) para cada paciente, reavaliado a cada semestre (março e setembro)
-- Convênios: Bradesco Saúde, Cassi, Mediservice, SulAmérica e Unimed Porto Alegre; também atende por reembolso
+- Convênios: Bradesco Saúde, Cassi, Mediservice, SulAmérica e Unimed Porto Alegre (as duas unidades atendem Unimed); também atende por reembolso
 - Horário: segunda a sexta, das 08h às 19h
 - Telefone e WhatsApp: (51) 2112-8884
 - E-mail: contato@hd360.com.br
@@ -28,6 +28,7 @@
 
 - [Início](https://hd360.com.br/): quem somos, como funciona o cuidado em 5 passos, convênios
 - [Atendimento e especialidades](https://hd360.com.br/atendimento.html): as 9 especialidades, PDI, integração com a escola e programas
+- [Convênio Unimed](https://hd360.com.br/unimed.html): clínica de autismo que atende Unimed Porto Alegre, como usar o plano, especialidades cobertas, guia e dúvidas
 - [Unidades](https://hd360.com.br/unidades.html): endereços, horários, mapas e fotos das duas unidades
 - [Equipe](https://hd360.com.br/equipe.html): liderança e equipe multidisciplinar
 - [Perguntas frequentes](https://hd360.com.br/faq.html): idades, primeiro atendimento, diagnóstico, Terapia ABA, PDI, convênios

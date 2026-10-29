@@ -4,6 +4,7 @@ const SITE = 'https://hd360.com.br';
 export const STATIC_PAGES = [
   { path: '', priority: '1.0', changefreq: 'weekly' },
   { path: 'atendimento.html', priority: '0.9', changefreq: 'monthly' },
+  { path: 'unimed.html', priority: '0.9', changefreq: 'monthly' },
   { path: 'unidades.html', priority: '0.9', changefreq: 'monthly' },
   { path: 'equipe.html', priority: '0.8', changefreq: 'monthly' },
   { path: 'faq.html', priority: '0.8', changefreq: 'monthly' },

@@ -34,6 +34,28 @@
     window.addEventListener("scroll", onScroll, { passive: true });
   }
 
+  /* ---------- Submenus do menu (A HD360, Contato) ---------- */
+  const groups = document.querySelectorAll("[data-navgroup]");
+  const setOpen = (g, on) => {
+    g.classList.toggle("is-open", on);
+    g.querySelector(".nav__toggle")?.setAttribute("aria-expanded", on ? "true" : "false");
+  };
+  groups.forEach((g) => {
+    const toggle = g.querySelector(".nav__toggle");
+    toggle?.addEventListener("click", () => {
+      const on = !g.classList.contains("is-open");
+      groups.forEach((o) => setOpen(o, false));
+      setOpen(g, on);
+    });
+    g.addEventListener("focusout", (e) => { if (!g.contains(e.relatedTarget)) setOpen(g, false); });
+    g.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && g.classList.contains("is-open")) { setOpen(g, false); toggle?.focus(); }
+    });
+  });
+  if (groups.length) document.addEventListener("click", (e) => {
+    groups.forEach((g) => { if (!g.contains(e.target)) setOpen(g, false); });
+  });
+
   /* ---------- Drawer mobile ---------- */
   const burger = document.querySelector("[data-burger]");
   const drawer = document.querySelector("[data-drawer]");

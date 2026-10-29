@@ -42,12 +42,23 @@
     </a>
     <nav class="nav__links" aria-label="Navegação principal">
       <a class="nav__link" href="../index.html" data-color="azul"><span class="nav__puzzle" aria-hidden="true"><svg viewBox="0 0 24 24"><use href="#ic-puzzle-1"/></svg></span>Início</a>
-      <a class="nav__link" href="../atendimento.html" data-color="rosa"><span class="nav__puzzle" aria-hidden="true"><svg viewBox="0 0 24 24"><use href="#ic-puzzle-2"/></svg></span>Atendimento</a>
-      <a class="nav__link" href="../equipe.html" data-color="amarelo"><span class="nav__puzzle" aria-hidden="true"><svg viewBox="0 0 24 24"><use href="#ic-puzzle-3"/></svg></span>Equipe</a>
-      <a class="nav__link" href="../unidades.html" data-color="verde"><span class="nav__puzzle" aria-hidden="true"><svg viewBox="0 0 24 24"><use href="#ic-puzzle-4"/></svg></span>Unidades</a>
-      <a class="nav__link" href="../ouvidoria.html" data-color="lilas"><span class="nav__puzzle" aria-hidden="true"><svg viewBox="0 0 24 24"><use href="#ic-puzzle-5"/></svg></span>Ouvidoria</a>
-      <a class="nav__link" href="../blog.html" data-color="azul" aria-current="page"><span class="nav__puzzle" aria-hidden="true"><svg viewBox="0 0 24 24"><use href="#ic-puzzle-1"/></svg></span>Blog</a>
-      <a class="nav__link" href="../faq.html" data-color="amarelo"><span class="nav__puzzle" aria-hidden="true"><svg viewBox="0 0 24 24"><use href="#ic-puzzle-2"/></svg></span>FAQ</a>
+      <div class="nav__group" data-navgroup>
+        <button class="nav__link nav__toggle" type="button" data-color="rosa" aria-expanded="false" aria-controls="menu-hd360"><span class="nav__puzzle" aria-hidden="true"><svg viewBox="0 0 24 24"><use href="#ic-puzzle-2"/></svg></span>A HD360<svg class="nav__chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></button>
+        <div class="nav__sub" id="menu-hd360">
+          <a class="nav__sublink" href="../atendimento.html" data-color="rosa"><span class="nav__puzzle" aria-hidden="true"><svg viewBox="0 0 24 24"><use href="#ic-puzzle-2"/></svg></span>Atendimento</a>
+          <a class="nav__sublink" href="../equipe.html" data-color="amarelo"><span class="nav__puzzle" aria-hidden="true"><svg viewBox="0 0 24 24"><use href="#ic-puzzle-3"/></svg></span>Equipe</a>
+          <a class="nav__sublink" href="../unidades.html" data-color="verde"><span class="nav__puzzle" aria-hidden="true"><svg viewBox="0 0 24 24"><use href="#ic-puzzle-4"/></svg></span>Unidades</a>
+        </div>
+      </div>
+      <a class="nav__link nav__link--destaque" href="../unimed.html" data-color="verde"><span class="nav__puzzle" aria-hidden="true"><svg viewBox="0 0 24 24"><use href="#ic-puzzle-3"/></svg></span>Convênio Unimed</a>
+      <a class="nav__link" href="../blog.html" data-color="azul" aria-current="page"><span class="nav__puzzle" aria-hidden="true"><svg viewBox="0 0 24 24"><use href="#ic-puzzle-4"/></svg></span>Blog</a>
+      <div class="nav__group" data-navgroup>
+        <button class="nav__link nav__toggle" type="button" data-color="lilas" aria-expanded="false" aria-controls="menu-contato"><span class="nav__puzzle" aria-hidden="true"><svg viewBox="0 0 24 24"><use href="#ic-puzzle-5"/></svg></span>Contato<svg class="nav__chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></button>
+        <div class="nav__sub" id="menu-contato">
+          <a class="nav__sublink" href="../faq.html" data-color="amarelo"><span class="nav__puzzle" aria-hidden="true"><svg viewBox="0 0 24 24"><use href="#ic-puzzle-1"/></svg></span>Perguntas frequentes</a>
+          <a class="nav__sublink" href="../ouvidoria.html" data-color="lilas"><span class="nav__puzzle" aria-hidden="true"><svg viewBox="0 0 24 24"><use href="#ic-puzzle-5"/></svg></span>Ouvidoria</a>
+        </div>
+      </div>
     </nav>
     <a class="btn btn--solid btn--lilas nav__cta" href="https://wa.me/555121128884?text=Ol%C3%A1!%20Vim%20pelo%20site%20da%20HD360%20Moinhos%20e%20gostaria%20de%20falar%20com%20a%20equipe." target="_blank" rel="noopener"><svg class="btn__ic" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15l-1.4 5 5.1-1.3A10 10 0 1 0 12 2zm0 18a8 8 0 0 1-4.1-1.1l-.3-.2-3 .8.8-2.9-.2-.3A8 8 0 1 1 12 20zm4.6-6c-.2-.1-1.5-.7-1.7-.8s-.4-.1-.6.1-.6.8-.8 1-.3.2-.5.1a6.5 6.5 0 0 1-3.2-2.8c-.2-.4.2-.4.6-1.2a.4.4 0 0 0 0-.4l-.8-1.9c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.9 11.9 0 0 0 4.6 4c2 .8 2 .5 2.4.5a2.7 2.7 0 0 0 1.8-1.3 2.2 2.2 0 0 0 .2-1.3c-.1-.1-.3-.2-.5-.3z"/></svg>Fale conosco</a>
     <button class="nav__burger" data-burger aria-label="Abrir menu" aria-expanded="false" aria-controls="drawer">
@@ -62,12 +73,15 @@
       <button class="drawer__close" data-drawer-close aria-label="Fechar menu">&times;</button>
     </div>
     <a class="drawer__link" href="../index.html" data-color="azul"><span class="drawer__puzzle" aria-hidden="true"><svg viewBox="0 0 24 24"><use href="#ic-puzzle-3"/></svg></span>Início</a>
-    <a class="drawer__link" href="../atendimento.html" data-color="rosa"><span class="drawer__puzzle" aria-hidden="true"><svg viewBox="0 0 24 24"><use href="#ic-puzzle-4"/></svg></span>Atendimento</a>
-    <a class="drawer__link" href="../equipe.html" data-color="amarelo"><span class="drawer__puzzle" aria-hidden="true"><svg viewBox="0 0 24 24"><use href="#ic-puzzle-5"/></svg></span>Equipe</a>
-    <a class="drawer__link" href="../unidades.html" data-color="verde"><span class="drawer__puzzle" aria-hidden="true"><svg viewBox="0 0 24 24"><use href="#ic-puzzle-1"/></svg></span>Unidades</a>
-    <a class="drawer__link" href="../ouvidoria.html" data-color="lilas"><span class="drawer__puzzle" aria-hidden="true"><svg viewBox="0 0 24 24"><use href="#ic-puzzle-2"/></svg></span>Ouvidoria</a>
-    <a class="drawer__link" href="../blog.html" data-color="azul"><span class="drawer__puzzle" aria-hidden="true"><svg viewBox="0 0 24 24"><use href="#ic-puzzle-3"/></svg></span>Blog</a>
-      <a class="drawer__link" href="../faq.html" data-color="amarelo"><span class="drawer__puzzle" aria-hidden="true"><svg viewBox="0 0 24 24"><use href="#ic-puzzle-4"/></svg></span>FAQ</a>
+    <p class="drawer__group">A HD360</p>
+    <a class="drawer__link drawer__link--sub" href="../atendimento.html" data-color="rosa"><span class="drawer__puzzle" aria-hidden="true"><svg viewBox="0 0 24 24"><use href="#ic-puzzle-2"/></svg></span>Atendimento</a>
+    <a class="drawer__link drawer__link--sub" href="../equipe.html" data-color="amarelo"><span class="drawer__puzzle" aria-hidden="true"><svg viewBox="0 0 24 24"><use href="#ic-puzzle-3"/></svg></span>Equipe</a>
+    <a class="drawer__link drawer__link--sub" href="../unidades.html" data-color="verde"><span class="drawer__puzzle" aria-hidden="true"><svg viewBox="0 0 24 24"><use href="#ic-puzzle-4"/></svg></span>Unidades</a>
+    <a class="drawer__link drawer__link--destaque" href="../unimed.html" data-color="verde"><span class="drawer__puzzle" aria-hidden="true"><svg viewBox="0 0 24 24"><use href="#ic-puzzle-1"/></svg></span>Convênio Unimed</a>
+    <a class="drawer__link" href="../blog.html" data-color="azul" aria-current="page"><span class="drawer__puzzle" aria-hidden="true"><svg viewBox="0 0 24 24"><use href="#ic-puzzle-2"/></svg></span>Blog</a>
+    <p class="drawer__group">Contato</p>
+    <a class="drawer__link drawer__link--sub" href="../faq.html" data-color="amarelo"><span class="drawer__puzzle" aria-hidden="true"><svg viewBox="0 0 24 24"><use href="#ic-puzzle-1"/></svg></span>Perguntas frequentes</a>
+    <a class="drawer__link drawer__link--sub" href="../ouvidoria.html" data-color="lilas"><span class="drawer__puzzle" aria-hidden="true"><svg viewBox="0 0 24 24"><use href="#ic-puzzle-5"/></svg></span>Ouvidoria</a>
     <div class="drawer__contacts">
       <p class="drawer__label">Fale com a gente</p>
       <a class="drawer__contact" href="https://wa.me/555121128884" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15l-1.4 5 5.1-1.3A10 10 0 1 0 12 2zm0 18a8 8 0 0 1-4.1-1.1l-.3-.2-3 .8.8-2.9-.2-.3A8 8 0 1 1 12 20zm4.6-6c-.2-.1-1.5-.7-1.7-.8s-.4-.1-.6.1-.6.8-.8 1-.3.2-.5.1a6.5 6.5 0 0 1-3.2-2.8c-.2-.4.2-.4.6-1.2a.4.4 0 0 0 0-.4l-.8-1.9c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.9 11.9 0 0 0 4.6 4c2 .8 2 .5 2.4.5a2.7 2.7 0 0 0 1.8-1.3 2.2 2.2 0 0 0 .2-1.3c-.1-.1-.3-.2-.5-.3z"/></svg>WhatsApp (51) 2112-8884</a>
@@ -108,7 +122,13 @@
             </div>
           </div>
           <aside class="post-side">
-            <section class="side-card">
+            <section class="side-card side-unimed">
+      <img class="side-unimed__logo" src="../images/unimed.png" alt="Unimed Porto Alegre" width="120" height="47" loading="lazy" />
+      <h4 class="side-unimed__title">Tem Unimed? A HD360 atende pelo seu plano.</h4>
+      <p class="side-unimed__text">As nove especialidades nas duas unidades, e a nossa equipe cuida da parte burocrática com você.</p>
+      <a class="btn btn--solid btn--verde side-unimed__btn" href="../unimed.html">Como funciona pela Unimed</a>
+    </section>
+    <section class="side-card">
       <h4 class="side-card__title">Categorias</h4>
       <ul class="side-cats">
         <li><a href="../blog-todos.html?cat=Entendendo%20o%20Autismo"><span class="side-dot side-dot--verde" aria-hidden="true"></span>Entendendo o Autismo</a></li>
@@ -206,6 +226,7 @@
           <h4>Navegue</h4>
           <a href="../index.html">Início</a>
           <a href="../atendimento.html">Atendimento</a>
+          <a href="../unimed.html">Convênio Unimed</a>
           <a href="../equipe.html">Equipe</a>
           <a href="../unidades.html">Unidades</a>
           <a href="../ouvidoria.html">Ouvidoria</a>
